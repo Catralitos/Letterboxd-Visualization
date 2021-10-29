@@ -1,309 +1,314 @@
-var map = "/data/countries.json"; // world atlas
-var data_source = "/data/dataset.csv";
+const map_path = 'data/countries.json';
+const data_path = 'data/data.csv';
 
-var topology;
+const width = 500;
+const height = 500;
+const margin = { top: 20, right: 20, left: 60, bottom: 40 };
+const radius = 5;
+
 var dataset;
 
-var width = 1000;
-var height = 400;
+const x_var = 'lifeexpectancy';
+const y_var = 'alcconsumption';
 
-margin = { top: 20, right: 20, bottom: 20, left: 40 };
+var countries = [];
 
-var radius = 5;
+/*
+Mapa:
+    - quanto mais filmes desse país mais escuro o país
+    - hover: tooltip diz nome do pais e numero de filmes
+    - clicar num (ou mais paises) filtra so por esse pais(es)
+    os outros dados nos outros graficos
+    
+Scatterplot:
+    - eixo x - rating
+    - eixo y - runtime ou numero de ratings (toggle)
+    - hover: tooltip diz nome do filme e rating + runtime/numero de ratings 
+    e país é highlighted 
+*/
 
-var countryList = []
-
-Promise.all([d3.json(map), d3.csv(data_source)]).then(function ([map, data]) {
-	topology = map;
-	dataset = data;
-	gen_geo_map();
-	gen_scatterplot(dataset, false);
-	addZoom();
+Promise.all([d3.json(map_path), d3.csv(data_path)]).then(([map, data]) => {
+    dataset = data;
+    createGeoMap(map);
+    createScatterPlot(dataset);
+    addZoom();
 });
 
-function gen_geo_map() {
-	var projection = d3
-		.geoMercator()
-		.scale(height / 2)
-		.rotate([0, 0])
-		.center([0, 0])
-		.translate([width / 2, height / 2]);
+function createGeoMap(map) {
+    const cVar = 'armedforcesrate';
 
-	var path = d3.geoPath().projection(projection);
+    const projection = d3
+        .geoMercator()
+        .scale(height / 2)
+        .rotate([0, 0])
+        .center([0, 0])
+        .translate([width / 2, height / 2]);
 
-	d3.select("#geo_map")
-		.append("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.selectAll("path")
-		.style("fill", "steelblue")
-		.data(topojson.feature(topology, topology.objects.countries).features)
-		.join("path")
-		.attr("class", "country")
-		.attr("d", path)
-		.style("fill", "steelblue")
-		.on("mouseover", handleMouseOver)
-		.on("mouseleave", handleMouseLeave)
-		.on("click", handleClickGeo)
-		.attr("id", function (d, i) {
-			return d.properties.name;
-		})  
-		.append("title")
-		.text(function (d) {
-			var alcohol = 0;
-			var life = 0;
-			for (dataItem in dataset){
-				if (dataset[dataItem].country == d.properties.name){
-				    alcohol = dataset[dataItem].alcconsumption;
-					life = dataset[dataItem].lifeexpectancy;
-				    break;
-				}
-			}
-			return d.properties.name + " has alcohol consumption " + alcohol + " and life expectancy " + life;
-		});
+    const path = d3.geoPath().projection(projection);
+
+
+
+    const geo = d3
+        .select('#geo')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .selectAll('path')
+        .data(topojson.feature(map, map.objects.countries).features)
+        .join('path')
+        .attr('class', 'country')
+        .attr('d', path)
+        .attr('id', (d, i) => d.properties.name)
+        .style("fill", calculateFill)
+        .on('mouseover', handleMouseOver)
+        .on('mouseleave', handleMouseLeave)
+        .on('click', handleClick)
+        .append('title')
+        .text((d) => { 
+            var country = dataset.filter((d1) => d1.country === d.properties.name);
+            // console.log(country)
+            if (country.length != 0) {
+                return d.properties.name+"\n"+"Alcool Consumption: "+country[0]['alcconsumption']+" \n"+"Life Expectancy: "+country[0]['lifeexpectancy']
+            }
+        });
+
 }
-
-function gen_scatterplot(data, update) {
-
-    //var width = 640;
-    //var height = 400;
-    //margin = { top: 20, right: 20, bottom: 20, left: 40 };
-    
-    x = d3
-        .scaleLinear()
-        .domain([47, 85])
-        .nice()
-        .range([margin.left, width - margin.right]);
-
-    y = d3
-        .scaleLinear()
-        .domain([0, 20])
-        .range([height - margin.bottom, margin.top]);
-
-    xAxis = (g) => g
-        .attr("transform", `translate(0,${height - margin.bottom})`)
-        .call( d3.axisBottom(x));
-
-
-    yAxis = (g) => g
-        .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(y));
-
-
-    grid = (g) => g.attr("stroke", "currentColor").attr("stroke-opacity", 0.1).call((g) => g.append("g").selectAll("line").data(x.ticks()).join("line").attr("x1", (d) => 0.5 + x(d)).attr("x2", (d) => 0.5 + x(d)).attr("y1", margin.top).attr("y2", height - margin.bottom)).call((g) => g.append("g").selectAll("line").data(y.ticks()).join("line").attr("y1", (d) => 0.5 + y(d)).attr("y2", (d) => 0.5 + y(d)).attr("x1", margin.left).attr("x2", width - margin.right));
-    
-    if (!update) {
-        d3.select("div#scatterplot")
-          .append("svg")
-          .append("g")
-          .attr("class", "circles")
-          .style("stroke-width", 1.5);
-      }
-    
-      const svg = d3
-        .select("div#scatterplot")
-        .select("svg")
-        .attr("width", width)
-        .attr("height", height);
-    
-      svg
-        .select("g.circles")
-        .selectAll("circle")
-        .data(data)
-        .join(
-          (enter) => {
-            return enter
-              .append("circle")
-              .attr("cx", (d) => x(d.lifeexpectancy))
-            .attr("cy", (d) => { if (d.alcconsumption !=0 || d.alcconsumption != NaN) {return y(d.alcconsumption);}})
-              .attr("r", 2)
-              .style("fill", "steelblue")
-			  .on("click", handleClickScatter)
-			  .append("title")
-			  .text((d) => `${d.country} has alcohol consumption ${d.alcconsumption} and life expectancy ${d.lifeexpectancy}`)
-              .on("mouseover", handleMouseOver)
-              .on("mouseleave", handleMouseLeave)
-              .on("click", handleClickScatter)
-              .transition()
-              .duration(1000)
-              .style("opacity", "100%");
-          },
-          (update) => {
-            update
-              .transition()
-              .duration(1000)
-              .attr("cx", (d) => x(d.lifeexpectancy))
-            .attr("cy", (d) => { if (d.alcconsumption !=0 || d.alcconsumption != NaN) {return y(d.alcconsumption);}})
-              .attr("r", 2)
-              .style("fill", "steelblue");
-          },
-          (exit) => {
-            exit.remove();
-          }
-        );
-    
-      if (!update) {
-        svg.append("g").attr("class", "scatterXAxis");
-        svg.append("g").attr("class", "scatterYAxis");
-        svg.append("g").attr("class", "scatterGrid").call(grid);
-      } else {
-      }
-      d3.select("g.scatterXAxis").call(xAxis);
-      d3.select("g.scatterYAxis").call(yAxis);
-    }
-
-	function handleMouseOver(event, d) {
-		geo_map = d3.select("div#geo_map").select("svg");
-		scatterplot = d3.select("div#scatterplot").select("svg");
-	
-		/*
-		geo_map
-			.selectAll("path")
-			.filter(function (c) {
-				if (d.id == c.id) return c;
-			})
-			.style("fill", "red");
-	
-		scatterplot
-			.selectAll("circle")
-			.filter(function (c) {
-				if (d.id == c.id) return c;
-			})
-			.style("fill", "red");
-			*/
-	}
-	
-	function handleMouseLeave(event, d) {
-			
-		/*d3.select("div#geo_map")
-			.select("svg")
-			.selectAll("path")
-			.style("fill", "steelblue");
-	
-		d3.select("div#scatterplot")
-			.select("svg")
-			.selectAll("circle")
-			.style("fill", "steelblue");
-			*/
-	}
-
-function handleClickGeo(event, d) {
-	
-	if (countryList.includes(d.properties.name)){
-		countryList = countryList.filter(item => item !== d.properties.name);	
-		geo_map
-		.selectAll("path")
-		.filter(function (c) {
-			if (d.id == c.id) return c;
-		})
-		.style("fill", "steelblue");
-	
-	scatterplot
-		.selectAll("circle")
-		.filter(function (c) {
-			if (d.properties.name == c.country) return c;
-		})
-		.style("fill", "steelblue");
-		
-		document.getElementById(  d.properties.name + "listItem").remove();
-	
-	
-	} else {
-		countryList.push(d.properties.name);
-		geo_map
-		.selectAll("path")
-		.filter(function (c) {
-			if (d.id == c.id) return c;
-		})
-		.style("fill", "red");
-	
-	scatterplot
-		.selectAll("circle")
-		.filter(function (c) {
-			if (d.properties.name == c.country) return c;
-		})
-		.style("fill", "red");
-		
-		var list = document.getElementById('countryList');
-		var entry = document.createElement('li');
-		entry.appendChild(document.createTextNode(d.properties.name));
-		entry.setAttribute("id", d.properties.name + "listItem")
-		list.appendChild(entry);
-	}
-	
-	console.log(countryList);
-	
-	//window.alert(d.properties.name);
-}
-
-function handleClickScatter(event, d) {
-	console.log("Chamou on click scatter")
-	if (countryList.includes(d.country)){
-		countryList = countryList.filter(item => item !== d.country);	
-		geo_map
-		.selectAll("path")
-		.filter(function (c) {
-			if (d.country == c.properties.name) return c;
-		})
-		.style("fill", "steelblue");
-	
-	scatterplot
-		.selectAll("circle")
-		.filter(function (c) {
-			if (d.country == c.country) return c;
-		})
-		.style("fill", "steelblue");
-		
-		document.getElementById( d.country + "listItem").remove();
-	
-	
-	} else {
-		countryList.push(d.country);
-		geo_map
-		.selectAll("path")
-		.filter(function (c) {
-			if (d.country == c.properties.name) return c;
-		})
-		.style("fill", "red");
-	
-	scatterplot
-		.selectAll("circle")
-		.filter(function (c) {
-			if (d.country == c.country) return c;
-		})
-		.style("fill", "red");
-		
-		var list = document.getElementById('countryList');
-		var entry = document.createElement('li');
-		entry.appendChild(document.createTextNode(d.country));
-		entry.setAttribute("id", d.country + "listItem")
-		list.appendChild(entry);
-	}
-	
-	console.log(countryList);
-	
-	//window.alert(d.properties.name);
-}
-
 
 function addZoom() {
-	d3.select("#geo_map")
-		.selectAll("svg")
-		.call(d3.zoom().scaleExtent([1, 8]).on("zoom", zoomed));
+    d3.select('#geo')
+        .selectAll('svg')
+        .call(d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed));
 }
 
 function zoomed({ transform }) {
-	d3.select("#geo_map")
-		.selectAll("svg")
-		.selectAll("path")
-		.attr("transform", transform);
+    d3.select('#geo')
+        .selectAll('svg')
+        .selectAll('path')
+        .attr('transform', transform);
 }
 
 
 
 
+function createScatterPlot(data, update = false) {
+    const xValue = (d) => +d[x_var];
+    const yValue = (d) => +d[y_var];
+    const rValue = (d) => +d["incomeperperson"];
+
+    data = data.filter(
+        (d) =>
+        !isNaN(xValue(d) && !isNaN(yValue(d))) &&
+        !isNaN(rValue(d)) &&
+        xValue(d) > 0 &&
+        yValue(d) > 0 &&
+        rValue(d) > 0
+
+    );
+
+    data = data.filter(function (d) {
+          return d["incomeperperson"]=d["incomeperperson"]/5000;  
+      });
+
+    const xScale = d3
+        .scaleLinear()
+        .domain(d3.extent(d3.map(data, (d) => +xValue(d))))
+        .range([margin.left, width - margin.right])
+        .nice();
+
+    const yScale = d3
+        .scaleLinear()
+        .domain(d3.extent(d3.map(data, (d) => +yValue(d))))
+        .range([height - margin.bottom, margin.top])
+        .nice();
+
+    const rScale = d3
+        .scaleLinear()
+        .domain(d3.extent(d3.map(dataset, (d) => +rValue(d))));
+
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale);
+
+    const scatter = d3.select('#scatter');
+       
+    if (!update) {
+        const svg = scatter
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        svg
+            .append('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(0,${height - margin.bottom})`)
+            .append('text')
+            .attr('id', 'x-label')
+            .attr('x', width / 2)
+            .attr('y', margin.bottom - 5)
+            .attr('fill', 'black')
+            .style('font-size', '1.3em');
+
+        svg
+            .append('g')
+            .attr('class', 'y-axis')
+            .attr('transform', `translate(${margin.left},0)`)
+            .append('text')
+            .attr('id', 'y-label')
+            .attr('x', -height / 2 + margin.top + margin.bottom)
+            .attr('y', -30)
+            .attr('fill', 'black')
+            .style('font-size', '1.3em')
+            .attr('transform', 'rotate(-90)');
+
+        svg
+            .append('g')
+            .attr('fill', 'steelblue')
+            .attr('stroke-width', 1.5)
+            .attr('class', 'scatter');
+    }
+
+    scatter.select('g.x-axis').transition().duration(500).call(xAxis);
+    scatter.select('g.y-axis').transition().duration(500).call(yAxis);
+    scatter.select('#x-label').text(x_var);
+    scatter.select('#y-label').text(y_var);
+
+    const radius = d3
+        .select('g.scatter')
+        .attr('fill', 'steelblue')
+        .attr('stroke-width', 1.5)
+        .selectAll('circle')
+        .data(data)
+        .join(
+            (enter) => {
+                return (
+                    enter
+                    .append('circle')
+                    .on('mouseover', handleMouseOver)
+                    .on('mouseleave', handleMouseLeave)
+                    .on('click', handleClick)
+                    .attr('cx', (d) => xScale(xValue(d)))
+                    .attr('cy', (d) => yScale(yValue(d)))
+                    .attr('r', (d) => Math.ceil(rValue(d)))
+                    .append('title')
+                    .text((d) => { 
+                        // console.log(d)
+                        return d.country+"\n"+"Alcool Consumption: "+d.alcconsumption+" \n"+"Life Expectancy: "+d.lifeexpectancy
+                    })
+                );
+            },
+            (update) => {
+                update
+                    .transition()
+                    .duration(1000)
+                    .attr('cx', (d) => xScale(xValue(d)))
+                    .attr('cy', (d) => yScale(yValue(d)))
+                    .attr('r', (d) => Math.ceil(rValue(d)));
+            },
+            (exit) => {
+                return exit.remove();
+            }
+        );
+
+}
 
 
 
+function handleMouseOver(e, d) {
+    var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+    if (countries.includes(name)===false)
+        changeColor(d, 'red');
+}
+
+function handleMouseLeave(e, d) {
+    var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+    if (countries.includes(name)===false)
+        changeColor(d, 'steelblue');
+}
 
 
+function handleClick(e, d) {
+    var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+    // console.log(name);
+    if (countries.includes(name)===false){
+        addCountry(name);
+        changeColor(d, 'orange');
+        countries.push(name);
+    }
+    else{
+        removeCountry(name);
+        changeColor(d, 'steelblue');
+        
+        const index = countries.indexOf(name);
+        if (index > -1) {
+            countries.splice(index, 1);
+        }
+    }
+}   
+
+function calculateFill(dataItem, i) {
+    return "steelblue";
+  }
+
+function addCountry(country) {
+    var node = document.createElement("LI");
+    var textnode = document.createTextNode(country);
+    node.appendChild(textnode);
+    document.getElementById("myList").appendChild(node);
+}
+
+function removeCountry(country) {
+    var list = document.getElementById("myList");
+    list.removeChild(list.childNodes[countries.indexOf(country)]);
+}
+
+
+function changeColor(d, color) {
+    var name;
+    name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+
+    const paths = () =>
+        d3
+        .select('div#geo')
+        .selectAll('path')
+        .filter((c) => {
+            if (name === c.properties.name) return c;
+        })
+        .style('fill', color);
+    const circles = d3.select('div#scatter').selectAll('circle');
+
+    circles
+        .filter((c) => {
+            if (name === c.country) {
+                paths();
+                return c;
+            }
+        })
+        .transition()
+        .duration(300)
+        .style('fill', color)
+
+    const rects = d3.select('div#bar').selectAll('rect');
+
+    rects
+        .filter((c) => {
+            if (name === c.country) {
+                paths();
+                return c;
+            }
+        })
+        .transition()
+        .duration(300)
+        .style('fill', color);
+
+    const outliers = d3.select('div#box').selectAll('circle');
+
+    outliers
+        .filter((c) => {
+            if (name === c.country) {
+                paths();
+                return c;
+            }
+        })
+        .transition()
+        .duration(300)
+        .style('fill', color)
+}
