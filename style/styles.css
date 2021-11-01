@@ -1,17 +1,24 @@
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-rows: 0.7fr 0.5fr 1.3fr 1fr 1fr 1fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "GenreList GenreList GenreChart GenreChart Sliders Sliders Sliders Sliders Sliders"
+      "GenreList GenreList GenreChart GenreChart Sliders Sliders Sliders Sliders Sliders"
+      "geo geo geo geo geo geo YearChart YearChart YearChart"
+      "geo geo geo geo geo geo YearChart YearChart YearChart"
+      "geo geo geo geo geo geo YearChart YearChart YearChart"
+      "BarChart BarChart BarChart scatter scatter scatter YearChart YearChart YearChart"
+      "BarChart BarChart BarChart scatter scatter scatter YearChart YearChart YearChart"; 
     /*justify-items: center;*/
     /*align-items: center;*/
-    grid-template-areas:
-      "GenreList Sliders Sliders"
-      "GenreChart geo YearChart"
-      "BarChart scatter YearChart";
   }
   
+  .graphic{
+    border: 1px solid black;
+  }
+
   #GenreList { 
       grid-area: GenreList; 
       background-color: yellow;
@@ -35,7 +42,10 @@
   
   #scatter { grid-area: scatter; }
   
-  #geo { grid-area: geo; }
+  #geo { 
+      grid-area: geo; 
+      padding-left: 7px;
+    }
   
   #YearChart { 
       grid-area: YearChart; 
@@ -43,7 +53,7 @@
     }
   
   #geo-label{
-      padding-left: 110px;
+      padding-left: 275px;
     /*margin-left: 25%;*/
   }
 

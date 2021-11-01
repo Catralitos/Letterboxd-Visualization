@@ -76,8 +76,8 @@ function createGeoMap(map) {
     const geo = d3
         .select('#geo')
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+        .attr('width', 875)
+        .attr('height', 760)
         .selectAll('path')
         .data(topojson.feature(map, map.objects.countries).features)
         .join('path')
@@ -163,6 +163,10 @@ function zoomed({ transform }) {
 
 
 function createScatterPlot(data, update = false) {
+
+    const scatterWidth= 430;
+    const scatterHeight = 430;
+
     const xValue = (d) => +d[x_var];
     const yValue = (d) => +d[y_var];
     // const rValue = (d) => +d[y_var];
@@ -182,13 +186,13 @@ function createScatterPlot(data, update = false) {
     const xScale = d3
         .scaleLinear()
         .domain(d3.extent(d3.map(data, (d) => +xValue(d))))
-        .range([margin.left, width - margin.right])
+        .range([margin.left, scatterWidth - margin.right])
         .nice();
 
     const yScale = d3
         .scaleLinear()
         .domain(d3.extent(d3.map(data, (d) => +yValue(d))))
-        .range([height - margin.bottom, margin.top])
+        .range([scatterHeight - margin.bottom, margin.top])
         .nice();
 
     // const rScale = d3
@@ -203,16 +207,16 @@ function createScatterPlot(data, update = false) {
     if (!update) {
         const svg = scatter
             .append('svg')
-            .attr('width', width)
-            .attr('height', height);
+            .attr('width', scatterWidth)
+            .attr('height', scatterHeight);
 
         svg
             .append('g')
             .attr('class', 'x-axis')
-            .attr('transform', `translate(0,${height - margin.bottom})`)
+            .attr('transform', `translate(0,${scatterHeight - margin.bottom})`)
             .append('text')
             .attr('id', 'x-label')
-            .attr('x', width / 2)
+            .attr('x', scatterWidth / 2)
             .attr('y', margin.bottom - 5)
             .attr('fill', 'black')
             .style('font-size', '1.3em');
@@ -223,7 +227,7 @@ function createScatterPlot(data, update = false) {
             .attr('transform', `translate(${margin.left},0)`)
             .append('text')
             .attr('id', 'y-label')
-            .attr('x', -height / 2 + margin.top + margin.bottom)
+            .attr('x', -scatterHeight / 2 + margin.top + margin.bottom)
             .attr('y', -30)
             .attr('fill', 'black')
             .style('font-size', '1.3em')
