@@ -13,6 +13,7 @@ var main_dataset;
 const x_var = 'rating';
 const y_var1 = 'runtime';
 const y_var2 = 'nr_of_ratings';
+var y_var;
 
 var countries = [];
 
@@ -30,10 +31,12 @@ Scatterplot:
     e país é highlighted 
 */
 
-Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([map, data,main_dataset]) => {
+Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([map, data, main]) => {
     dataset = data;
+    main_dataset=main
     createGeoMap(map);
-    createScatterPlot(main_dataset);
+    y_var = y_var1;
+    createScatterPlot(main_dataset,false);
     addZoom();
 });
 
@@ -146,8 +149,8 @@ function zoomed({ transform }) {
 
 function createScatterPlot(data, update = false) {
     const xValue = (d) => +d[x_var];
-    const yValue = (d) => +d[y_var1];
-    // const rValue = (d) => +d[y_var1];
+    const yValue = (d) => +d[y_var];
+    // const rValue = (d) => +d[y_var];
 
     data = data.filter(
         (d) =>
@@ -158,7 +161,7 @@ function createScatterPlot(data, update = false) {
     );
   
     // data = data.filter(function (d) {
-    //       return d["runtime"]=d["runtime"]/100;  
+    //       return d["nr_of_ratings"]=d["nr_of_ratings"]/100;  
     //   });
 
     const xScale = d3
@@ -220,8 +223,10 @@ function createScatterPlot(data, update = false) {
 
     scatter.select('g.x-axis').transition().duration(500).call(xAxis);
     scatter.select('g.y-axis').transition().duration(500).call(yAxis);
-    scatter.select('#x-label').text(x_var);
-    scatter.select('#y-label').text(y_var1);
+    scatter.select('#x-label').text(
+        "Rating"
+        );
+    scatter.select('#y-label').text(y_var === "runtime" ? "Runtime (Minutes)" : "Number of Ratings" );
 
     const radius = d3
         .select('g.scatter')
@@ -266,37 +271,40 @@ function createScatterPlot(data, update = false) {
 
 
 function handleMouseOver(e, d) {
-    console.log(d);
-    var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
-    if (countries.includes(name)===false)
-        changeColor(d, 'red');
+    
+    // var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+    // if (countries.includes(name)===false)
+    //     changeColor(d, 'red');
+
+
+    
 }
 
 function handleMouseLeave(e, d) {
-    var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
-    if (countries.includes(name)===false)
-        changeColor(d, 'steelblue');
+    // var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+    // if (countries.includes(name)===false)
+    //     changeColor(d, 'steelblue');     
 }
 
 
 function handleClick(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
-    
-    if (countries.includes(name)===false){
-        addCountry(name);
-        changeColor(d, 'orange');
-        countries.push(name);
+    dataChange(name);
+    // if (countries.includes(name)===false){
+    //     addCountry(name);
+    //     changeColor(d, 'orange');
+    //     countries.push(name);
         
-    }
-    else{
-        removeCountry(name);
-        changeColor(d, 'steelblue');
+    // }
+    // else{
+    //     removeCountry(name);
+    //     changeColor(d, 'steelblue');
         
-        const index = countries.indexOf(name);
-        if (index > -1) {
-            countries.splice(index, 1);
-        }
-    }
+    //     const index = countries.indexOf(name);
+    //     if (index > -1) {
+    //         countries.splice(index, 1);
+    //     }
+    // }
 }   
 
 function calculateFill(dataItem, i) {
@@ -328,7 +336,9 @@ function changeColor(d, color) {
         .filter((c) => {
             if (name === c.properties.name) return c;
         })
-        .style('fill', color);
+        .style('fill',color);
+
+    
     const circles = d3.select('div#scatter').selectAll('circle');
 
     circles
@@ -369,3 +379,31 @@ function changeColor(d, color) {
         .style('fill', color)
   
 }
+
+function dataChange(country) {
+    d3.csv(main_data)
+      .then((data) => {
+        newData = data;
+        newData = data.filter(function (d) {
+            if (d.countries == country) {
+            return d;
+            }
+        });
+        createScatterPlot(newData, true);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+  }
+
+function axisChange(axis) {
+    console.log(axis);
+    if(axis==="runtime")
+        y_var=y_var1;
+    else
+        y_var=y_var2;
+    createScatterPlot(main_dataset, true);
+
+}
+
+
