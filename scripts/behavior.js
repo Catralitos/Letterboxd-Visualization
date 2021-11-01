@@ -98,12 +98,12 @@ function createGeoMap(map) {
 
         // console.log(d3.max(dataset.map((d) => +d[cVar])))
 
-        const scale = ['NA', 2, 4,6, 8 , 10];
+        const scale = ['NA', 1, 5,10, 50 , 100];
     
         d3.select('div#geo-label')
             .append('svg')
             .attr('id', 'legend')
-            .attr('width', 400)
+            .attr('width', 405)
             .attr('height', 40);
     
         d3.select('div#geo-label')
