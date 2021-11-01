@@ -32,17 +32,6 @@ Scatterplot:
 */
 
 
-
-
-// Falta:
-
-// Mapa:
-//     - Cor no pais destacado
-
-// Scatterplot:
-//     - Arranjar o CSS dos Botões
-//     - eixo y - runtime ou numero de ratings (toggle)
-
 Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([map, data, main]) => {
     dataset = data;
     main_dataset=main
