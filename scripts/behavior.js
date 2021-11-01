@@ -301,21 +301,22 @@ function handleMouseLeave(e, d) {
 function handleClick(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
     dataChange(name);
-    // if (countries.includes(name)===false){
-    //     addCountry(name);
-    //     changeColor(d, 'orange');
-    //     countries.push(name);
+    // changeColor(d, 'orange');
+    if (countries.includes(name)===false){
+        addCountry(name);
+        changeColor(d, 'orange');
+        countries.push(name);
         
-    // }
-    // else{
-    //     removeCountry(name);
-    //     changeColor(d, 'steelblue');
+    }
+    else{
+        removeCountry(name);
+        changeColor(d, 'steelblue');
         
-    //     const index = countries.indexOf(name);
-    //     if (index > -1) {
-    //         countries.splice(index, 1);
-    //     }
-    // }
+        const index = countries.indexOf(name);
+        if (index > -1) {
+            countries.splice(index, 1);
+        }
+    }
 }   
 
 function calculateFill(dataItem, i) {
@@ -338,14 +339,17 @@ function removeCountry(country) {
 function changeColor(d, color) {
     var name;
     
-    name = Object.keys(d).includes('country') ? d.title : d.properties.name;
+    name = Object.keys(d).includes('countries') ? d.countriesstr.split(", ") : d.properties.name;
+    // console.log(name);
     
+
+
     const paths = () =>
         d3
         .select('div#geo')
         .selectAll('path')
         .filter((c) => {
-            if (name === c.properties.name) return c;
+            if (name === c.properties.name || name.includes(c.properties.name)) return c;
         })
         .style('fill',color);
 
@@ -354,7 +358,7 @@ function changeColor(d, color) {
 
     circles
         .filter((c) => {
-            if (name === c.country) {
+            if (c.countries.includes(name)) {
                 paths();
                 return c;
             }
@@ -367,7 +371,7 @@ function changeColor(d, color) {
 
     rects
         .filter((c) => {
-            if (name === c.country) {
+            if (c.countries.includes(name)) {
                 paths();
                 return c;
             }
@@ -380,7 +384,7 @@ function changeColor(d, color) {
 
     outliers
         .filter((c) => {
-            if (name === c.country) {
+            if (c.countries.includes(name)) {
                 paths();
                 return c;
             }
@@ -396,7 +400,7 @@ function dataChange(country) {
       .then((data) => {
         newData = data;
         newData = data.filter(function (d) {
-            if (d.countries == country) {
+            if (d.countries.includes(country)) {
             return d;
             }
         });
