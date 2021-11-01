@@ -57,13 +57,16 @@ Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([ma
 
 function createGeoMap(map) {
     const cVar = 'nr_of_movies';
-
+    
+    const geoWidth = 590;
+    const geoHeight = 160;
+    
     const projection = d3
         .geoMercator()
         .scale(height / 2)
         .rotate([0, 0])
         .center([0, 0])
-        .translate([width / 2, height / 2]);
+        .translate([geoWidth / 2, geoHeight / 2]);
 
     const path = d3.geoPath().projection(projection);
 
@@ -76,8 +79,8 @@ function createGeoMap(map) {
     const geo = d3
         .select('#geo')
         .append('svg')
-        .attr('width', 875)
-        .attr('height', 760)
+        .attr('width', geoWidth)
+        .attr('height', geoHeight)
         .selectAll('path')
         .data(topojson.feature(map, map.objects.countries).features)
         .join('path')
@@ -165,8 +168,8 @@ function zoomed({ transform }) {
 function createScatterPlot(data, update = false) {
 
     const scatterWidth= 430;
-    const scatterHeight = 430;
-
+    const scatterHeight = 230;
+    
     const xValue = (d) => +d[x_var];
     const yValue = (d) => +d[y_var];
     // const rValue = (d) => +d[y_var];
