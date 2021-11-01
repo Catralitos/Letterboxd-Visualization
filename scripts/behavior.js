@@ -31,9 +31,24 @@ Scatterplot:
     e país é highlighted 
 */
 
+
+
+
+// Falta:
+
+// Mapa:
+//     - Cor no pais destacado
+
+// Scatterplot:
+//     - Arranjar o CSS dos Botões
+//     - eixo y - runtime ou numero de ratings (toggle)
+
 Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([map, data, main]) => {
     dataset = data;
     main_dataset=main
+    main_dataset = main_dataset.filter(function (d) {
+        return d["nr_of_ratings"]=d["nr_of_ratings"]/1000;  
+    });
     createGeoMap(map);
     y_var = y_var1;
     createScatterPlot(main_dataset,false);
@@ -226,7 +241,7 @@ function createScatterPlot(data, update = false) {
     scatter.select('#x-label').text(
         "Rating"
         );
-    scatter.select('#y-label').text(y_var === "runtime" ? "Runtime (Minutes)" : "Number of Ratings" );
+    scatter.select('#y-label').text(y_var === "runtime" ? "Runtime (Minutes)" : "Number of Ratings (Thousands)" );
 
     const radius = d3
         .select('g.scatter')
@@ -270,14 +285,10 @@ function createScatterPlot(data, update = false) {
 
 
 
-function handleMouseOver(e, d) {
-    
+function handleMouseOver(e, d) {    
     // var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
     // if (countries.includes(name)===false)
-    //     changeColor(d, 'red');
-
-
-    
+    //     changeColor(d, 'red');  
 }
 
 function handleMouseLeave(e, d) {
