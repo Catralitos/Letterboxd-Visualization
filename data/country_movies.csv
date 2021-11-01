@@ -1,177 +1,37 @@
 country,nr_of_movies
-Afghanistan,1
-Albania,2
-Angola,4
-Antarctica,5
-Argentina,1
-Armenia,2
-Australia,3
-Austria,4
-Azerbaijan,5
-Bahamas,1
-Bangladesh,2
-Belarus,3
-Belgium,4
-Belize,5
-Benin,1
-Bhutan,2
-Bolivia,3
-Bosnia and Herz.,4
-Botswana,5
-Brazil,1
-Brunei,2
-Bulgaria,3
-Burkina Faso,4
-Burundi,5
-Cambodia,1
-Cameroon,2
-Canada,3
-Central African Rep.,4
-Chad,5
-Chile,1
-China,2
-Colombia,3
-Congo,4
-Costa Rica,5
-Côte d'Ivoire,1
-Croatia,2
-Cuba,3
-Cyprus,4
-Czech Rep.,5
-Dem. Rep. Congo,1
-Denmark,2
-Djibouti,3
-Dominican Rep.,4
-Ecuador,5
-Egypt,1
-El Salvador,2
-Eq. Guinea,3
-Eritrea,4
-Estonia,5
-eSwatini,1
-Ethiopia,2
-Falkland Is.,3
-Fiji,4
-Finland,5
-Fr. S. Antarctic Lands,1
-France,2
-Gabon,3
-Gambia,4
-Georgia,5
-Germany,1
-Ghana,2
+South Korea,4
+Russia,11
+Japan,43
+United States of America,99
+Brazil,6
+Taiwan,3
+France,42
+United Kingdom,22
+Germany,18
+Italy,26
+Spain,1
+New Zealand,3
+Hungary,4
+Switzerland,3
+Sweden,10
+China,7
+Iran,6
+India,5
 Greece,3
-Greenland,4
-Guatemala,5
-Guinea,1
-Guinea-Bissau,2
-Guyana,3
-Haiti,4
-Honduras,5
-Hungary,1
-Iceland,2
-India,3
-Indonesia,4
-Iran,5
-Iraq,1
-Ireland,2
-Israel,3
-Italy,4
-Jamaica,5
-Japan,1
-Jordan,2
-Kazakhstan,3
-Kenya,4
-Kosovo,5
-Kuwait,1
-Kyrgyzstain,2
-Laos,3
-Latvia,4
-Lebanon,5
-Lesotho,1
-Liberia,2
-Libya,3
-Lithuania,4
-Luxembourg,5
-Macedonia,1
-Madagascar,2
-Malawi,3
-Malaysia,4
-Mali,5
-Mauritania,1
-Mexico,2
-Moldova,3
-Mongolia,4
-Montenegro,5
-Morocco,1
-Mozambique,2
-Myanmar,3
-N. Cyprus,4
-Namibia,5
-Nepal,1
-Netherlands,2
-New Caledonia,3
-New Zealand,4
-Nicaragua,5
-Niger,1
-Nigeria,2
-North Korea,3
-Norway,4
-Oman,5
-Pakistan,1
-Palestine,2
-Panama,3
-Papua New Guinea,4
-Paraguay,5
-Peru,1
-Philippines,2
-Poland,3
-Portugal,4
-Puerto Rico,5
-Qatar,1
-Romania,2
-Russia,3
-Rwanda,4
-S. Sudan,5
-Saudi Arabia,1
-Senegal,2
-Serbia,3
-Sierra Leone,4
-Slovakia,5
-Slovenia,1
-Solomon Is.,2
-Somalia,3
-Somaliland,4
-South Africa,5
-South Korea,1
-Spain,2
-Sri Lanka,3
-Sudan,4
-Suriname,5
-Sweden,1
-Switzerland,2
-Syria,3
-Taiwan,4
-Tajikistan,5
-Tanzania,1
-Thailand,2
-Timor-Leste,3
-Togo,4
-Trinidad and Tobago,5
-Tunisia,1
+Austria,1
+Denmark,2
+Algeria,2
+Cuba,1
+Canada,3
+Mexico,4
+Norway,1
+Poland,2
+Belgium,1
+Bosnia and Herz.,1
 Turkey,2
-Turkmenistan,3
-Uganda,4
-Ukraine,5
-United Arab Emirates,1
-United Kingdom,2
-United States of America,3
-Uruguay,4
-Uzbekistan,5
-Vanuatu,1
-Venezuela,2
-Vietnam,3
-W. Sahara,4
-Yemen,5
-Zambia,1
-Zimbabwe,2
+Czech Rep.,4
+Slovakia,3
+Bulgaria,1
+Argentina,1
+Australia,1
+South Africa,1
