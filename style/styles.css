@@ -59,11 +59,19 @@ body {
       padding-left: 3px;
     }
   
+  #geo-label{
+    margin-left: 15%;
+  }
+
   #YearChart { 
       grid-area: YearChart; 
       background-color: darkkhaki;
     }
   
+  #y-label{
+    padding-bottom: 30px;
+  }
+
   #geo-label{
      /* padding-left: 275px;*/
     /*margin-left: 25%;*/

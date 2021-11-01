@@ -59,7 +59,7 @@ function createGeoMap(map) {
     const cVar = 'nr_of_movies';
     
     const geoWidth = 590;
-    const geoHeight = 160;
+    const geoHeight = 230;
     
     const projection = d3
         .geoMercator()
@@ -115,24 +115,24 @@ function createGeoMap(map) {
             .append('svg')
             .attr('id', 'legend')
             .attr('width', 400)
-            .attr('height', 100);
+            .attr('height', 40);
     
         d3.select('div#geo-label')
             .select('#legend')
             .append('text')
-            .attr('x', 50)
-            .attr('y', 40)
-            .text('Movies by Country');
+            .attr('x', 3)
+            .attr('y', 17)
+            .text('Nª of Movies per Country:');
        
         for (let i = 0; i < scale.length; i++) {
             d3.select('#legend')
                 .append('rect')
-                .attr('x', 50 + 40 * i)
-                .attr('y', 50)
+                .attr('x', 180 + 40 * i)
+                .attr('y', 5)
                 .attr('rx', 4)
                 .attr('ry', 4)
-                .attr('width', 30)
-                .attr('height', 20)
+                .attr('width', 20)
+                .attr('height', 15)
                 .style('fill', () => {
                     return i === 0 ? 'grey' : colorScale(scale[i]);
                 });
@@ -141,8 +141,8 @@ function createGeoMap(map) {
         for (let i = 0; i < scale.length; i++) {
             d3.select('#legend')
                 .append('text')
-                .attr('x', 55 + 40 * i)
-                .attr('y', 90)
+                .attr('x', 180 + 40 * i)
+                .attr('y', 35)
                 .text(scale[i]);
            
         }
@@ -248,7 +248,7 @@ function createScatterPlot(data, update = false) {
     scatter.select('#x-label').text(
         "Rating"
         );
-    scatter.select('#y-label').text(y_var === "runtime" ? "Runtime (Minutes)" : "Number of Ratings (Thousands)" );
+    scatter.select('#y-label').text(y_var === "runtime" ? "Runtime (Minutes)" : "Nº of Ratings (Thousands)" );
 
     const radius = d3
         .select('g.scatter')
