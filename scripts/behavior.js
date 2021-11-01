@@ -239,30 +239,39 @@ function createScatterPlot(data, update = false) {
         );
     scatter.select('#y-label').text(y_var === "runtime" ? "Runtime (Minutes)" : "Nº of Ratings (Thousands)" );
 
+
+    if(update===true){
     const radius = d3
         .select('g.scatter')
         .attr('fill', 'steelblue')
         .attr('stroke-width', 1.5)
         .selectAll('circle')
+        .remove()
+        
+
+    radius = d3
+        .select('g.scatter')
+        .attr('fill', 'steelblue')
+        .attr('stroke-width', 1.5)
+        .selectAll('circle')  
         .data(data)
         .join(
             (enter) => {
-                return (
+                    return (
  
-                    enter
-                    .append('circle')
-                    // .on('mouseover', handleMouseOver)
-                    // .on('mouseleave', handleMouseLeave)
-                    // .on('click', handleClick)
-                    .attr('cx', (d) => xScale(xValue(d)))
-                    .attr('cy', (d) => yScale(yValue(d)))
-                    .attr('r', 2)//(d) => Math.ceil(rValue(d)))
-                    .append('title')
-                    .text((d) => { 
-
-                        return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
-                    })
-                );
+                        enter
+                        .append('circle')
+                        // .on('mouseover', handleMouseOver)
+                        // .on('mouseleave', handleMouseLeave)
+                        // .on('click', handleClick)
+                        .attr('cx', (d) => xScale(xValue(d)))
+                        .attr('cy', (d) => yScale(yValue(d)))
+                        .attr('r', 2)//(d) => Math.ceil(rValue(d)))
+                        .append('title')
+                        .text((d) => { 
+                            return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
+                        })
+                    );
             },
             (update) => {
                 
@@ -284,13 +293,68 @@ function createScatterPlot(data, update = false) {
                     //     return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
                     // });
                     
-                      
             },
             (exit) => {
                 // console.log(exit);
                 return exit.remove();
             }
         );
+
+
+    }
+    else{
+        const radius = d3
+        .select('g.scatter')
+        .attr('fill', 'steelblue')
+        .attr('stroke-width', 1.5)
+        .selectAll('circle')  
+        .data(data)
+        .join(
+            (enter) => {
+                    return (
+ 
+                        enter
+                        .append('circle')
+                        // .on('mouseover', handleMouseOver)
+                        // .on('mouseleave', handleMouseLeave)
+                        // .on('click', handleClick)
+                        .attr('cx', (d) => xScale(xValue(d)))
+                        .attr('cy', (d) => yScale(yValue(d)))
+                        .attr('r', 2)//(d) => Math.ceil(rValue(d)))
+                        .append('title')
+                        .text((d) => { 
+                            return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
+                        })
+                    );
+            },
+            (update) => {
+                
+                update
+                .transition()
+                .duration(1000)
+                .attr("cx", (d) => xScale(xValue(d)))
+                .attr("cy", (d) => yScale(yValue(d)))
+                .attr("r", 2)
+                // .append('title')
+                // .text((d) => { 
+                //     return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
+                // })
+                .style("fill", "steelblue");
+
+                    // .append('title')
+                    // .text((d) => { 
+
+                    //     return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
+                    // });
+                    
+            },
+            (exit) => {
+                // console.log(exit);
+                return exit.remove();
+            }
+        );
+    }
+
  
     
 }
