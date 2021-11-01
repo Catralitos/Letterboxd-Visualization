@@ -112,7 +112,7 @@ function createGeoMap(map) {
             .append('svg')
             .attr('id', 'legend')
             .attr('width', 400)
-            .attr('height', 400);
+            .attr('height', 100);
     
         d3.select('div#geo-label')
             .select('#legend')

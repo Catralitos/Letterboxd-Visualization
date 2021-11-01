@@ -1,21 +1,73 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    /*justify-items: center;*/
+    /*align-items: center;*/
+    grid-template-areas:
+      "GenreList Sliders Sliders"
+      "GenreChart geo YearChart"
+      "BarChart scatter YearChart";
+  }
+  
+  #GenreList { 
+      grid-area: GenreList; 
+      background-color: yellow;
+}
+  
+  #Sliders { 
+      grid-area: Sliders; 
+      background-color: royalblue;
+    
+    }
+  
+  #GenreChart {
+       grid-area: GenreChart; 
+       background-color: aquamarine;
+    }
+  
+  #BarChart { 
+      grid-area: BarChart; 
+      background-color: yellowgreen;
+    }
+  
+  #scatter { grid-area: scatter; }
+  
+  #geo { grid-area: geo; }
+  
+  #YearChart { 
+      grid-area: YearChart; 
+      background-color: darkkhaki;
+    }
+  
+  #geo-label{
+      padding-left: 110px;
+    /*margin-left: 25%;*/
+  }
+
+  /*
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0%;
 }
-
+*/
+~
+/*
 .graphic {
     width: 100%;
     float: left;
     text-align: center;
-}
+}*/
 
-
-.label {
+/*.label {
     width: 100%;
     text-align: left;
 }
-
+*/
+/*
 .button {
     background-color: #4c56af;
     border: none;
@@ -27,4 +79,4 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-  }
+  }*/
