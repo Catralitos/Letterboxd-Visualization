@@ -248,34 +248,50 @@ function createScatterPlot(data, update = false) {
         .join(
             (enter) => {
                 return (
+ 
                     enter
                     .append('circle')
-                    .on('mouseover', handleMouseOver)
-                    .on('mouseleave', handleMouseLeave)
-                    .on('click', handleClick)
+                    // .on('mouseover', handleMouseOver)
+                    // .on('mouseleave', handleMouseLeave)
+                    // .on('click', handleClick)
                     .attr('cx', (d) => xScale(xValue(d)))
                     .attr('cy', (d) => yScale(yValue(d)))
                     .attr('r', 2)//(d) => Math.ceil(rValue(d)))
                     .append('title')
                     .text((d) => { 
-                      
-                        return d.title+"\n"+"Rating: "+d.rating+"\nRuntime"+d.runtime;
+
+                        return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
                     })
                 );
             },
             (update) => {
+                
                 update
-                    .transition()
-                    .duration(1000)
-                    .attr('cx', (d) => xScale(xValue(d)))
-                    .attr('cy', (d) => yScale(yValue(d)))
-                    .attr('r', (d) => Math.ceil(2));
+                .transition()
+                .duration(1000)
+                .attr("cx", (d) => xScale(xValue(d)))
+                .attr("cy", (d) => yScale(yValue(d)))
+                .attr("r", 2)
+                // .append('title')
+                // .text((d) => { 
+                //     return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
+                // })
+                .style("fill", "steelblue");
+
+                    // .append('title')
+                    // .text((d) => { 
+
+                    //     return d.title+"\n"+"Rating: "+d.rating+"\nRuntime: "+d.runtime;
+                    // });
+                    
+                      
             },
             (exit) => {
+                // console.log(exit);
                 return exit.remove();
             }
         );
-
+ 
     
 }
 
@@ -296,7 +312,7 @@ function handleMouseLeave(e, d) {
 
 function handleClick(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
-    
+    // console.log(countries)
     // changeColor(d, 'orange');
     if (countries.includes(name)===false){
         // addCountry(name);
@@ -413,15 +429,17 @@ function dataChange(country) {
         .then((data) => {
           newData = data;
           newData = data.filter(function (d) {
-              if (d.countries.includes(country)) {
-              return d;
-              }
+            // console.log(d);
+            if (d.countries.includes(country)) {
+                // console.log(d);
+                return d;
+            }
           });
-          main_dataset = newData;
-          main_dataset = main_dataset.filter(function (d) {
+          
+          newData = newData.filter(function (d) {
             return d["nr_of_ratings"]=d["nr_of_ratings"]/1000;  
           });
-          createScatterPlot(main_dataset, true);
+          createScatterPlot(newData, true);
       })
       .catch((error) => {
           console.log(error);
@@ -444,7 +462,7 @@ function dataChange(country) {
   }
 
 function axisChange(axis) {
-    console.log(axis);
+
     if(axis==="runtime")
         y_var=y_var1;
     else
