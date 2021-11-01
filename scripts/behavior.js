@@ -307,10 +307,11 @@ function handleMouseLeave(e, d) {
 
 function handleClick(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
-    dataChange(name);
+    
     // changeColor(d, 'orange');
     if (countries.includes(name)===false){
-        addCountry(name);
+        // addCountry(name);
+        dataChange(name);
         changeColor(d, 'orange');
         countries.push(name);
         
@@ -330,7 +331,8 @@ function handleClick(e, d) {
         } else {
             color =  colorScale(country[0][cVar]);
         }    
-        removeCountry(name);
+        // removeCountry(name);
+        dataChange(false);
         changeColor(d, color);
         
         const index = countries.indexOf(name);
@@ -344,17 +346,17 @@ function calculateFill(dataItem, i) {
     return "steelblue";
   }
 
-function addCountry(country) {
-    var node = document.createElement("LI");
-    var textnode = document.createTextNode(country);
-    node.appendChild(textnode);
-    document.getElementById("myList").appendChild(node);
-}
+// function addCountry(country) {
+//     var node = document.createElement("LI");
+//     var textnode = document.createTextNode(country);
+//     node.appendChild(textnode);
+//     document.getElementById("myList").appendChild(node);
+// }
 
-function removeCountry(country) {
-    var list = document.getElementById("myList");
-    list.removeChild(list.childNodes[countries.indexOf(country)]);
-}
+// function removeCountry(country) {
+//     var list = document.getElementById("myList");
+//     list.removeChild(list.childNodes[countries.indexOf(country)]);
+// }
 
 
 function changeColor(d, color) {
@@ -417,19 +419,39 @@ function changeColor(d, color) {
 }
 
 function dataChange(country) {
-    d3.csv(main_data)
-      .then((data) => {
-        newData = data;
-        newData = data.filter(function (d) {
-            if (d.countries.includes(country)) {
-            return d;
-            }
+    if(country!==false){
+        d3.csv(main_data)
+        .then((data) => {
+          newData = data;
+          newData = data.filter(function (d) {
+              if (d.countries.includes(country)) {
+              return d;
+              }
+          });
+          main_dataset = newData;
+          main_dataset = main_dataset.filter(function (d) {
+            return d["nr_of_ratings"]=d["nr_of_ratings"]/1000;  
+          });
+          createScatterPlot(main_dataset, true);
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+    }
+    else{
+        d3.csv(main_data)
+        .then((data) => {
+          newData = data;
+          main_dataset = data;
+          main_dataset = main_dataset.filter(function (d) {
+            return d["nr_of_ratings"]=d["nr_of_ratings"]/1000;  
+          });
+          createScatterPlot(main_dataset, true);
+        })
+        .catch((error) => {
+            console.log(error);
         });
-        createScatterPlot(newData, true);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+    }    
   }
 
 function axisChange(axis) {
