@@ -1,16 +1,29 @@
+body {
+    margin: 0;
+    /*background-color: lightcyan;*/
+    box-sizing: border-box;
+    overflow: hidden
+  
+  }
+
+
+
 .container {
     display: grid; 
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 0.7fr 0.5fr 1.3fr 1fr 1fr 1fr 1fr; 
-    gap: 0px 0px; 
+    grid-template-rows: 0.7fr 0.5fr 1.3fr 1fr 1fr 2fr 1fr; 
+    /*gap: 0px 0px; */
     grid-template-areas: 
-      "GenreList GenreList GenreChart GenreChart Sliders Sliders Sliders Sliders Sliders"
-      "GenreList GenreList GenreChart GenreChart Sliders Sliders Sliders Sliders Sliders"
-      "geo geo geo geo geo geo YearChart YearChart YearChart"
-      "geo geo geo geo geo geo YearChart YearChart YearChart"
-      "geo geo geo geo geo geo YearChart YearChart YearChart"
+      "GenreList GenreList Sliders Sliders Sliders Sliders Sliders Sliders Sliders"
+      "GenreList GenreList Sliders Sliders Sliders Sliders Sliders Sliders Sliders"
+      "GenreChart GenreChart geo geo geo geo YearChart YearChart YearChart"
+      "GenreChart GenreChart geo geo geo geo YearChart YearChart YearChart"
+      "GenreChart GenreChart geo geo geo geo YearChart YearChart YearChart"
       "BarChart BarChart BarChart scatter scatter scatter YearChart YearChart YearChart"
       "BarChart BarChart BarChart scatter scatter scatter YearChart YearChart YearChart"; 
+      /*grid-gap: 8px;*/
+      /*padding: 8px;*/ /* NEW */
+      height: 100vh;
     /*justify-items: center;*/
     /*align-items: center;*/
   }
@@ -44,16 +57,24 @@
   
   #geo { 
       grid-area: geo; 
-      padding-left: 7px;
+      padding-left: 3px;
     }
   
+  #geo-label{
+    margin-left: 15%;
+  }
+
   #YearChart { 
       grid-area: YearChart; 
       background-color: darkkhaki;
     }
   
+  #y-label{
+    padding-bottom: 30px;
+  }
+
   #geo-label{
-      padding-left: 275px;
+     /* padding-left: 275px;*/
     /*margin-left: 25%;*/
   }
 
