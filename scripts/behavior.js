@@ -259,7 +259,7 @@ function createScatterPlot(data, update = false) {
                     .append('title')
                     .text((d) => { 
                       
-                        return d.title+"\n"+"Rating: "+d.rating+"\n Runtime"+d.runtime;
+                        return d.title+"\n"+"Rating: "+d.rating+"\nRuntime"+d.runtime;
                     })
                 );
             },
