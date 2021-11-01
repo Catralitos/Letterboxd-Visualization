@@ -141,7 +141,7 @@ function createGeoMap(map) {
 function addZoom() {
     d3.select('#geo')
         .selectAll('svg')
-        .call(d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed));
+        .call(d3.zoom().scaleExtent([0.25, 8]).on('zoom', zoomed));
 }
 
 function zoomed({ transform }) {
