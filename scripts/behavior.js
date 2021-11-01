@@ -76,8 +76,8 @@ function createGeoMap(map) {
     const geo = d3
         .select('#geo')
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+        .attr('width', 875)
+        .attr('height', 760)
         .selectAll('path')
         .data(topojson.feature(map, map.objects.countries).features)
         .join('path')
