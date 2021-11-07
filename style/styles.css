@@ -1,14 +1,5 @@
 @import url(//db.onlinewebfonts.com/c/629ed6829f706958b9bdf4f6300dfca0?family=Sharp+Grotesk+SmBold+20);
 
-body {
-  margin: 0;
-  background-color: #2c3440;
-  box-sizing: border-box;
-  overflow: hidden;
-  font-family: "Sharp Grotesk SmBold 20";
-  color: #f1f3f5;
-}
-
 @font-face {
   font-family: "Sharp Grotesk SmBold 20";
   src: url("//db.onlinewebfonts.com/t/629ed6829f706958b9bdf4f6300dfca0.eot");
@@ -24,6 +15,19 @@ body {
       format("svg");
 }
 
+body {
+  margin: 0;
+  background-color: #2c3440;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: "Sharp Grotesk SmBold 20", sans-serif;;
+  color: #f1f3f5;
+}
+
+p {
+  margin: 0px;
+  text-align: center;
+}
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -95,18 +99,22 @@ body {
   /*background-color: darkkhaki;*/
 }
 
+#x-label, #y-label {
+  font-family: "Sharp Grotesk SmBold 20", sans-serif;
+  color: #f1f3f5;
+}
+
 #y-label {
   padding-bottom: 30px;
 }
 
 .button {
-  background-color: #4c56af;
+  background-color: #40bcf4;
+  font-family: "Sharp Grotesk SmBold 20", sans-serif;
+  color: #f1f3f5;
   border: none;
-  color: white;
-  /*padding: 15px 32px;*/
   text-align: center;
   text-decoration: none;
-  /*display: inline-block;*/
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
