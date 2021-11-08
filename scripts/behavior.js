@@ -88,15 +88,16 @@ Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([ma
 
 function createGeoMap(map) {
     const cVar = 'nr_of_movies';
+    
+    const geoWidthPx = 590;
+    const geoHeightPx = 230;
 
     const projection = d3
-        .geoMercator();
-    /*
+        .geoMercator()
     .scale(height / 2)
     .rotate([0, 0])
     .center([0, 0])
-    .translate([geoWidth / 2, geoHeight / 2]);
-    */
+    .translate([geoWidthPx / 2, geoHeightPx / 2]);
 
     const path = d3.geoPath().projection(projection);
 
@@ -140,42 +141,40 @@ function createGeoMap(map) {
     const scale = ['NA', 1, 5, 10, 50, 100];
 
     d3.select('div#geo-label')
-        .append('svg')
-        .attr('id', 'legend')
-        .attr('width', geoLabelWidth)
-        .attr('height', geoLabelHeight)
-        .attr("fill", lb_fontColor);
-
-    d3.select('div#geo-label')
-        .select('#legend')
-        .append('text')
-        .attr('x', geoLabelX)
-        .attr('y', geoLabelY)
-        .text('Nª of Movies per Country:');
-
-    for (let i = 0; i < scale.length; i++) {
-        var posX = geoLabelRectX + geoLabelStep * i;
-        d3.select('#legend')
-            .append('rect')
-            .attr('x', posX + "vw")
-            .attr('y', geoLabelRectY)
-            .attr('rx', geoLabelRectRx)
-            .attr('ry', geoLabelRectRy)
-            .attr('width', geoLabelRectWidth)
-            .attr('height', geoLabelRectHeight)
-            .style('fill', () => {
-                return i === 0 ? lb_lightGrey : colorScale(scale[i]);
-            });
-    }
-
-    for (let i = 0; i < scale.length; i++) {
-        var posX = geoLabelTextX + geoLabelStep * i;
-        d3.select('#legend')
+            .append('svg')
+            .attr('id', 'legend')
+            .attr('width', 405)
+            .attr('height', 40);
+    
+        d3.select('div#geo-label')
+            .select('#legend')
             .append('text')
-            .attr('x', posX + "vw")
-            .attr('y', geoLabelTextY)
-            .text(scale[i]);
-    }
+            .attr('x', 3)
+            .attr('y', 17)
+            .text('Nª of Movies per Country:');
+       
+        for (let i = 0; i < scale.length; i++) {
+            d3.select('#legend')
+                .append('rect')
+                .attr('x', 180 + 40 * i)
+                .attr('y', 5)
+                .attr('rx', 4)
+                .attr('ry', 4)
+                .attr('width', 20)
+                .attr('height', 15)
+                .style('fill', () => {
+                    return i === 0 ? 'grey' : colorScale(scale[i]);
+                });
+        }
+      
+        for (let i = 0; i < scale.length; i++) {
+            d3.select('#legend')
+                .append('text')
+                .attr('x', 180 + 40 * i)
+                .attr('y', 35)
+                .text(scale[i]);
+           
+        }
 }
 
 function createScatterPlot(data, update = false) {
