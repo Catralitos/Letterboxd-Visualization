@@ -39,8 +39,8 @@ p {
     "GenreList GenreList geo geo geo geo YearChart YearChart YearChart"
     "GenreChart GenreChart geo geo geo geo YearChart YearChart YearChart"
     "GenreChart GenreChart geo geo geo geo YearChart YearChart YearChart"
-    "BarChart BarChart BarChart scatter scatter scatter YearChart YearChart YearChart"
-    "BarChart BarChart BarChart scatter scatter scatter YearChart YearChart YearChart";
+    "BarChart BarChart BarChart ScatterPlot ScatterPlot ScatterPlot YearChart YearChart YearChart"
+    "BarChart BarChart BarChart ScatterPlot ScatterPlot ScatterPlot YearChart YearChart YearChart";
   /*grid-gap: 8px;*/
   /*padding: 8px;*/ /* NEW */
   height: 100vh;
@@ -88,8 +88,8 @@ p {
   /*background-color: yellowgreen;*/
 }
 
-#scatter {
-  grid-area: scatter;
+#ScatterPlot {
+  grid-area: ScatterPlot;
 }
 
 #geo {
@@ -97,7 +97,7 @@ p {
   padding-left: 3px;
 }
 
-#geo-label {
+#legend {
   margin-left: 15%;
 }
 

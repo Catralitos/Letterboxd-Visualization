@@ -125,13 +125,13 @@ function createGeoMap(map) {
 
         const scale = ['NA', 1, 5,10, 50 , 100];
     
-        d3.select('div#geo-label')
+        d3.select('div#geo')
             .append('svg')
             .attr('id', 'legend')
             .attr('width', geoWidth)
             .attr('height', 40);
     
-        d3.select('div#geo-label')
+        d3.select('div#geo')
             .select('#legend')
             .append('text')
             .attr('x', 0)
