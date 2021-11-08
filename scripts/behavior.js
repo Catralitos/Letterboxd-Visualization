@@ -24,21 +24,8 @@ const radius = 5;
 //Note, the ones without vw or vh it's because they get converted later down
 
 //Geo
-const geoWidth = "44vw";
-const geoHeight = "41vh";
-const geoLabelWidth = "42vw"
-const geoLabelHeight = "6vh";
-const geoLabelX = "0vw"
-const geoLabelY = "3vh";
-const geoLabelRectX = 16
-const geoLabelRectY = "1.25vh";
-const geoLabelRectRx = "1vw";
-const geoLabelRectRy = "1vh";
-const geoLabelRectWidth = "2vh";
-const geoLabelRectHeight = "2vh";
-const geoLabelStep = 3;
-const geoLabelTextX = 16;
-const geoLabelTextY = "5.5vh";
+const geoWidth = 590;
+const geoHeight = 230;
 
 //Scatter (not vw/vh)
 const scatterWidth = 430;
@@ -88,15 +75,13 @@ Promise.all([d3.json(map_path), d3.csv(data_path), d3.csv(main_data)]).then(([ma
 
 function createGeoMap(map) {
     const cVar = 'nr_of_movies';
-
+        
     const projection = d3
-        .geoMercator();
-    /*
-    .scale(height / 2)
-    .rotate([0, 0])
-    .center([0, 0])
-    .translate([geoWidth / 2, geoHeight / 2]);
-    */
+        .geoMercator()
+        .scale(height / 2)
+        .rotate([0, 0])
+        .center([0, 0])
+        .translate([geoWidth / 2, geoHeight / 2]);
 
     const path = d3.geoPath().projection(projection);
 
@@ -116,6 +101,7 @@ function createGeoMap(map) {
         .attr('class', 'country')
         .attr('d', path)
         .attr('id', (d, i) => d.properties.name)
+        // .style("fill", calculateFill)
         .attr('fill', (d) => {
             var country = dataset.filter((da) => da.country === d.properties.name);
             if (country.length === 0) {
@@ -128,54 +114,55 @@ function createGeoMap(map) {
         .on('mouseleave', handleMouseLeave)
         .on('click', handleClick)
         .append('title')
-        .text((d) => {
+        .text((d) => { 
             var country = dataset.filter((d1) => d1.country === d.properties.name);
             if (country.length != 0) {
-                return d.properties.name + "\n" + "Number of movies: " + country[0]['nr_of_movies']
+                return d.properties.name+"\n"+"Number of movies: "+country[0]['nr_of_movies']
             }
         });
 
-    // console.log(d3.max(dataset.map((d) => +d[cVar])))
+        // console.log(d3.max(dataset.map((d) => +d[cVar])))
 
-    const scale = ['NA', 1, 5, 10, 50, 100];
-
-    d3.select('div#geo-label')
-        .append('svg')
-        .attr('id', 'legend')
-        .attr('width', geoLabelWidth)
-        .attr('height', geoLabelHeight)
-        .attr("fill", lb_fontColor);
-
-    d3.select('div#geo-label')
-        .select('#legend')
-        .append('text')
-        .attr('x', geoLabelX)
-        .attr('y', geoLabelY)
-        .text('Nª of Movies per Country:');
-
-    for (let i = 0; i < scale.length; i++) {
-        var posX = geoLabelRectX + geoLabelStep * i;
-        d3.select('#legend')
-            .append('rect')
-            .attr('x', posX + "vw")
-            .attr('y', geoLabelRectY)
-            .attr('rx', geoLabelRectRx)
-            .attr('ry', geoLabelRectRy)
-            .attr('width', geoLabelRectWidth)
-            .attr('height', geoLabelRectHeight)
-            .style('fill', () => {
-                return i === 0 ? lb_lightGrey : colorScale(scale[i]);
-            });
-    }
-
-    for (let i = 0; i < scale.length; i++) {
-        var posX = geoLabelTextX + geoLabelStep * i;
-        d3.select('#legend')
+        const scale = ['NA', 1, 5,10, 50 , 100];
+    
+        d3.select('div#geo-label')
+            .append('svg')
+            .attr('id', 'legend')
+            .attr('width', geoWidth)
+            .attr('height', 40);
+    
+        d3.select('div#geo-label')
+            .select('#legend')
             .append('text')
-            .attr('x', posX + "vw")
-            .attr('y', geoLabelTextY)
-            .text(scale[i]);
-    }
+            .attr('x', 0)
+            .attr('y', 17)
+            .text('Nª of Movies per Country:')
+            .style("fill", lb_fontColor);
+       
+        for (let i = 0; i < scale.length; i++) {
+            d3.select('#legend')
+                .append('rect')
+                .attr('x', 215 + 40 * i)
+                .attr('y', 5)
+                .attr('rx', 4)
+                .attr('ry', 4)
+                .attr('width', 20)
+                .attr('height', 15)
+                .style('fill', () => {
+                    return i === 0 ? lb_lightGrey : colorScale(scale[i]);
+                });
+        }
+      
+        for (let i = 0; i < scale.length; i++) {
+            d3.select('#legend')
+                .append('text')
+                .attr('x', 215 + 40 * i)
+                .attr('y', 35)
+                .text(scale[i])
+                .style("fill", lb_fontColor);
+           
+        }
+
 }
 
 function createScatterPlot(data, update = false) {
@@ -195,7 +182,7 @@ function createScatterPlot(data, update = false) {
     // data = data.filter(function (d) {
     //       return d["nr_of_ratings"]=d["nr_of_ratings"]/100;  
     //   });
-    
+
     const xScale = d3
         .scaleLinear()
         .domain(d3.extent(d3.map(data, (d) => +xValue(d))))
@@ -290,10 +277,10 @@ function createScatterPlot(data, update = false) {
                             .attr('r', 2)//(d) => Math.ceil(rValue(d)))
                             .append('title')
                             .text((d) => {
-                                if (y_var === "runtime"){
-                                return d.title + "\n" + "Rating: " + d.rating + "\nRuntime: " + d.runtime;
+                                if (y_var === "runtime") {
+                                    return d.title + "\n" + "Rating: " + d.rating + "\nRuntime: " + d.runtime;
                                 } else {
-                                return d.title + "\n" + "Rating: " + d.rating + "\nNº of Ratings: " + d.nr_of_ratings;
+                                    return d.title + "\n" + "Rating: " + d.rating + "\nNº of Ratings: " + d.nr_of_ratings;
                                 }
                             })
                     );
