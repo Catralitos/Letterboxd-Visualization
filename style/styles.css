@@ -61,6 +61,13 @@ p {
   background-color: #14181c;
 }
 
+#GraphTitle{
+  text-align: center;
+  justify-items: center;
+  align-items: center;
+  font-size: 2vh;
+}
+
 #GenreList {
   grid-area: GenreList;
   /*background-color: yellow;*/
@@ -104,10 +111,6 @@ p {
   color: #f1f3f5;
 }
 
-#y-label {
-  padding-bottom: 30px;
-}
-
 .button {
   background-color: #40bcf4;
   font-family: "Sharp Grotesk SmBold 20", sans-serif;
@@ -116,6 +119,7 @@ p {
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  margin: 4px 2px;
+  /*margin: 4px 2px;*/
+  padding: 0.5%;
   cursor: pointer;
 }

@@ -7,6 +7,9 @@ lb_orange = "#ff8000";
 lb_green = "#00e054";
 lb_cyan = "#40bcf4";
 lb_fontColor = "#f1f3f5";
+lb_grey = "#2c3440";
+lb_black = "#14181c";
+lb_lightGrey = "#678";
 
 
 //better to keep this as pixels, at least for now
@@ -116,7 +119,7 @@ function createGeoMap(map) {
         .attr('fill', (d) => {
             var country = dataset.filter((da) => da.country === d.properties.name);
             if (country.length === 0) {
-                return 'white';
+                return lb_lightGrey;
             } else {
                 return colorScale(country[0][cVar]);
             }
@@ -237,8 +240,8 @@ function createScatterPlot(data, update = false) {
             .attr('transform', `translate(${margin.left},0)`)
             .append('text')
             .attr('id', 'y-label')
-            .attr('x', -scatterHeight / 2 + margin.top + margin.bottom)
-            .attr('y', -30)
+            .attr('x', -scatterHeight / 2 + margin.top + margin.bottom + 35)
+            .attr('y', -40)
             .attr('fill', lb_fontColor)
             .style('font-size', '1.3em')
             .attr('transform', 'rotate(-90)');
