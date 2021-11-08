@@ -102,7 +102,7 @@ function createGeoMap(map) {
 
     const colorScale = d3
         .scaleLinear()
-        .range(['#d4e4f4', '#08306b'])
+        .range(['#86c2ff', '#08306b'])
         .domain(d3.extent(dataset.map((d) => +d[cVar])));
 
     const geo = d3
@@ -164,7 +164,7 @@ function createGeoMap(map) {
             .attr('width', geoLabelRectWidth)
             .attr('height', geoLabelRectHeight)
             .style('fill', () => {
-                return i === 0 ? 'grey' : colorScale(scale[i]);
+                return i === 0 ? lb_lightGrey : colorScale(scale[i]);
             });
     }
 
