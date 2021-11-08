@@ -134,16 +134,16 @@ function createGeoMap(map) {
         d3.select('div#geo')
             .select('#legend')
             .append('text')
-            .attr('x', 0)
-            .attr('y', 17)
+            .attr('x', 30)
+            .attr('y', 25)
             .text('Nª of Movies per Country:')
             .style("fill", lb_fontColor);
        
         for (let i = 0; i < scale.length; i++) {
             d3.select('#legend')
                 .append('rect')
-                .attr('x', 215 + 40 * i)
-                .attr('y', 5)
+                .attr('x', 175 + 40 * i)
+                .attr('y', 15)
                 .attr('rx', 4)
                 .attr('ry', 4)
                 .attr('width', 20)
@@ -156,8 +156,8 @@ function createGeoMap(map) {
         for (let i = 0; i < scale.length; i++) {
             d3.select('#legend')
                 .append('text')
-                .attr('x', 215 + 40 * i)
-                .attr('y', 35)
+                .attr('x', 175 + 40 * i)
+                .attr('y', 40)
                 .text(scale[i])
                 .style("fill", lb_fontColor);
            

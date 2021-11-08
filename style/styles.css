@@ -99,6 +99,7 @@ p {
 
 #legend {
   margin-left: 15%;
+  font-size: 1.5vh;
 }
 
 #YearChart {
@@ -109,6 +110,7 @@ p {
 #x-label, #y-label {
   font-family: "Sharp Grotesk SmBold 20", sans-serif;
   color: #f1f3f5;
+  font-size: 1.5vh;
 }
 
 .button {
