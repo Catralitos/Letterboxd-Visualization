@@ -290,7 +290,11 @@ function createScatterPlot(data, update = false) {
                             .attr('r', 2)//(d) => Math.ceil(rValue(d)))
                             .append('title')
                             .text((d) => {
+                                if (y_var === "runtime"){
                                 return d.title + "\n" + "Rating: " + d.rating + "\nRuntime: " + d.runtime;
+                                } else {
+                                return d.title + "\n" + "Rating: " + d.rating + "\nNº of Ratings: " + d.nr_of_ratings;
+                                }
                             })
                     );
                 },
