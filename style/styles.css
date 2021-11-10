@@ -20,7 +20,7 @@ body {
   background-color: #2c3440;
   box-sizing: border-box;
   overflow: hidden;
-  font-family: "Sharp Grotesk SmBold 20", sans-serif;;
+  font-family: "Sharp Grotesk SmBold 20", sans-serif;
   color: #f1f3f5;
 }
 
@@ -32,7 +32,7 @@ p {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 0.5fr 0.9r 1.1fr 1fr 1fr 2fr 1fr;
-  gap: 0px 0px; 
+  gap: 0px 0px;
   grid-template-areas:
     "Title Title Title Title Title Title Title Title Title"
     "GenreList GenreList Sliders Sliders Sliders Sliders Sliders Sliders Sliders"
@@ -59,9 +59,11 @@ p {
   justify-items: center;
   align-items: center;
   background-color: #14181c;
+  background-image: url("cinema.jpg");
+  object-fit: fill;
 }
 
-#GraphTitle{
+#GraphTitle {
   text-align: center;
   justify-items: center;
   align-items: center;
@@ -99,6 +101,7 @@ p {
 
 #legend {
   margin-left: 15%;
+  font-size: 1.5vh;
 }
 
 #YearChart {
@@ -106,9 +109,11 @@ p {
   /*background-color: darkkhaki;*/
 }
 
-#x-label, #y-label {
+#x-label,
+#y-label {
   font-family: "Sharp Grotesk SmBold 20", sans-serif;
   color: #f1f3f5;
+  font-size: 1.5vh;
 }
 
 .button {
