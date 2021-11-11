@@ -444,6 +444,7 @@ function handleClick(e, d) {
         var color;
         if (Array.isArray(name) === false) {
             if (countries.includes(name) === false) {
+                changeColor(d, lb_orange);
                 countries.push(name);
                 dataChange(name);
             }
