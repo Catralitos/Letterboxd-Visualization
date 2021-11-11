@@ -59,7 +59,7 @@ p {
   justify-items: center;
   align-items: center;
   background-color: #14181c;
-  background-image: url("cinema.jpg");
+  /* background-image: url("cinema.jpg"); */
   object-fit: fill;
 }
 
