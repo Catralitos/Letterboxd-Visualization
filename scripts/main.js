@@ -2,6 +2,16 @@ var movies_dataset;
 //var countries_dataset;
 var decades_dataset;
 
+//Colors to use
+lb_orange = "#ff8000";
+lb_green = "#00e054";
+lb_cyan = "#40bcf4";
+lb_fontColor = "#f1f3f5";
+lb_grey = "#2c3440";
+lb_black = "#14181c";
+lb_lightGrey = "#678";
+
+
 var svg_radar_chart;
 var svg_scatterplot;
 var svg_map;
@@ -36,9 +46,6 @@ var movies_per_actor = {};
 
 var bar_chart_data = {};
 
-var is_by_genre = true;
-var is_duration = true;
-
 // color associated to each genre
 var color_scale = {
     "Action": "#D5294E",
@@ -55,7 +62,7 @@ var color_scale = {
     "Music": "#B2DF8A",
     "Mystery": "#A6CEE3",
     "Romance": "#FDBF6F",
-    "Science Fiction": "#183517",
+    "Science-Fiction": "#183517",
     "Thriller": "#F1E833",
     //TODO meter 3 cores novas
     "Tv-movie": "#FDBF6F",
@@ -111,9 +118,8 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
             }
         }
 
-
+        // count nr of movies for each genre
         for (var i = 0; i < d.genres.length; i++) {
-            // count nr of movies and gross for each genre
             if (movies_per_genre[d.genres[i]] === undefined) {
                 movies_per_genre[d.genres[i]] = 1;
             }
@@ -121,9 +127,9 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
                 movies_per_genre[d.genres[i]]++;
             }
         }
-        
+
+        // count nr of movies for each country
         for (var i = 0; i < d.countries.length; i++) {
-            // count nr of movies and gross for each studio
             if (movies_per_country[d.countries[i]] === undefined) {
                 movies_per_country[d.countries[i]] = 1;
             }
@@ -132,8 +138,8 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
             }
         }
 
+        // count nr of movies for each director
         for (var i = 0; i < d.directors.length; i++) {
-            // count nr of movies and gross for each studio
             if (movies_per_director[d.directors[i]] === undefined) {
                 movies_per_director[d.directors[i]] = 1;
             }
@@ -142,8 +148,8 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
             }
         }
 
+        // count nr of movies for each actor
         for (var i = 0; i < d.actors.length; i++) {
-            // count nr of movies and gross for each studio
             if (movies_per_actor[d.actors[i]] === undefined) {
                 movies_per_actor[d.actors[i]] = 1;
             }
@@ -185,26 +191,19 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
     current_dataset = data;
     //nominations_dataset = data;
 
-    //gen_scatterplot();
-
-    /*
-    gen_time_bar();
+    gen_scatterplot();
     gen_bar_chart();
-    gen_genre_list();
-    gen_studio_list();
-    */
     gen_radar_chart();
-    /*gen_scatterplot();
-    gen_bubble_chart();
-    gen_word_cloud();
-    gen_oscar_statistics();
-    */
+    gen_genre_list();
+    gen_map_chart();
+    gen_year_chart();
+    gen_sliders();
 });
 
 
 // updates current_dataset with current filters (TODO oscars filter)
 function updateDataset() {
-    current_dataset = current_dataset.filter(function (d) {
+    current_dataset = movies_dataset.filter(function (d) {
         return d.year >= filters["years"][0] && d.year <= filters["years"][1] &&
             containsGenres(d) && containsCountries(d) && containsDirectors(d) && containsActors(d);
     });
@@ -246,18 +245,6 @@ function containsActors(d) {
     return false;
 }
 
-
-function getAllStudios() {
-    var all_studios = blockbusters_dataset.map((a) => a.studio);
-
-    // takes out repeated studios
-    const studios = all_studios.filter((d, i) => {
-        return all_studios.indexOf(d) === i;
-    });
-    
-    return studios.sort(d3.ascending);
-}
-
 function getAllGenres() {
     return genreList.sort(d3.ascending);
 }
@@ -268,28 +255,6 @@ function getCurrentMovies() {
         titles.push(d.title);
     })
     return titles;
-}
-
-function getCurrentStudios(data) {
-    var current_studios = data.map((a) => a.studio);
-
-    // takes out repeated studios
-    const studios = current_studios.filter((d, i) => {
-        return current_studios.indexOf(d) === i;
-    });
-
-    return studios.sort(d3.ascending);
-}
-
-function getCurrentGenres(data) {
-    var current_genres = data.map((a) => a.Main_Genre);
-
-    // takes out repeated genres
-    const genres = current_genres.filter((d, i) => {
-        return current_genres.indexOf(d) === i;
-    });
-
-    return genres.sort(d3.ascending);
 }
 
 function measureText(pText, pFontSize, pStyle) {

@@ -131,7 +131,7 @@ function updateRadarByGenre() {
                 return 7;
             })
             .attr("stroke", function () {
-                if (filters["genres"].length == 1 && filters["genres"].includes(d[0])) {
+                if (filters["genres"].length != getAllGenres().length && filters["genres"].includes(d[0])) {
                     return "red";
                 }
                 else if (isMaxNumOfMovies(d[1])) {
@@ -399,23 +399,23 @@ dispatch_radar.on("click_radar", function (event, d) {
     /************ Update Idioms ************/
 
     updateDataset();
-    //TODO VER SE USAR MOVIE_DATASET EM VEZ DE CURRENT NÃO FODE ISTO
+    // VER SE USAR MOVIE_DATASET EM VEZ DE CURRENT NÃO FODE ISTO
     //pode ser preciso meter os genres todos de volta no filtered E depois filtrar por generos outra vez
-    var filtered_dataset = movies_dataset.filter(function (item) {
+    /*var filtered_dataset = movies_dataset.filter(function (item) {
         return containsGenres(item)
     });
 
     var filtered_data = Object.entries(filtered_dataset);
+    */
+    //console.log(current_dataset);
 
-    console.log(filtered_dataset);
-
-    //updateScatterplot(false);
-    //updateWordCloud();
-    //updateBubbleChart();
-    //updateBarChart();
-    //updateRectangles();
-    //updateOscarChart();
-    //updateLists();
+    updateScatterplot();
+    updateBarChart();
+    updateRadarChart();
+    updateLists();
+    updateMapChart();
+    updateYearChart();
+    updateSliders();
 });
 
 /*********************************************************/
