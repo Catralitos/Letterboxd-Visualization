@@ -19,7 +19,7 @@ body {
   margin: 0;
   background-color: #2c3440;
   box-sizing: border-box;
-  overflow: hidden;
+  /*overflow: hidden;*/
   font-family: "Sharp Grotesk SmBold 20", sans-serif;
   color: #f1f3f5;
 }
@@ -46,6 +46,8 @@ p {
   height: 100vh;
   /*justify-items: center;*/
   /*align-items: center;*/
+  min-height: 0;  /* NEW */
+  min-width: 0;   /* NEW; needed for Firefox */
 }
 
 .graphic {

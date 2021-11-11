@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
 
     <meta name="description" content="Cinema" />
@@ -11,48 +10,94 @@
     <title>Cinema</title>
 
     <!-- Import libraries. -->
-    <script language="JavaScript" type="text/javascript" src="libs/d3.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="libs/topojson.min.js"></script>
-
-
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="libs/d3.min.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="libs/topojson.min.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="libs/d3.v6.min.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="libs/d3-dsv.v1.min.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="libs/d3-collection.v1.min.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="libs/d3.layout.cloud.js"
+    ></script>
     <!-- JS -->
-    <script language="JavaScript" type="text/javascript" src="scripts/behavior.js"></script>
+    <!--<script language="JavaScript" type="text/javascript" src="scripts/behavior.js"></script>-->
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="scripts/radar_chart.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="scripts/main.js"
+    ></script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style/styles.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="graphic" id="Title">
-            <h>&#127916; Top 250 Narrative Feature Films According to Letterboxd &#127916;</h>
-        </div> 
-        <div class="graphic" id="GenreList">
-            <p>The Genre List will be here</p>
-        </div>
-        <div class="graphic" id="Sliders">
-            <p>The Sliders be here</p>
-        </div>
-        <div class="graphic" id="GenreChart">
-            <p>The Genre Chart will be here</p>
-        </div>
-        <div class="graphic" id="BarChart">
-            <p>The Directors Bar Chart will be here</p>
-        </div>
-        <div class="graphic" id="ScatterPlot">
-            <p id="GraphTitle">Rating vs Runtime/Number of Ratings</p>
-            <div id="scatter"></div>
-             <button class="button" style="margin-left: 25%;" onclick="axisChange('runtime')">Runtime</button>
-            <button class="button" onclick="axisChange('ratings')">Number of Ratings</button>
-        </div>
-        <div class="graphic" id="geo">
-            <p id="GraphTitle">Movies by Country</p>
-            <div class="label" id="geo-label"></div>
-        </div>       
-         <div class="graphic" id="YearChart">
-            <p>The Year Chart List will be here</p>
-         </div>
+      <div class="graphic" id="Title">
+        <h
+          >&#127916; Top 250 Narrative Feature Films According to Letterboxd
+          &#127916;</h
+        >
       </div>
-</body>
-
+      <div class="graphic" id="GenreList">
+        <p>The Genre List will be here</p>
+      </div>
+      <div class="graphic" id="Sliders">
+        <p>The Sliders be here</p>
+      </div>
+      <div class="graphic" id="GenreChart">
+        <p id="GraphTitle">Most Recurring Genres</p>
+      </div>
+      <div class="graphic" id="BarChart">
+        <p>The Directors Bar Chart will be here</p>
+      </div>
+      <div class="graphic" id="ScatterPlot">
+        <p id="GraphTitle">Rating vs Runtime/Number of Ratings</p>
+        <div id="scatter"></div>
+        <button
+          class="button"
+          style="margin-left: 25%"
+          onclick="axisChange('runtime')"
+        >
+          Runtime
+        </button>
+        <button class="button" onclick="axisChange('ratings')">
+          Number of Ratings
+        </button>
+      </div>
+      <div class="graphic" id="geo">
+        <p id="GraphTitle">Movies by Country</p>
+        <div class="label" id="geo-label"></div>
+      </div>
+      <div class="graphic" id="YearChart">
+        <p>The Year Chart List will be here</p>
+      </div>
+    </div>
+  </body>
 </html>
