@@ -1,5 +1,3 @@
-var svg_bar_chart;
-
 var directors = true;
 
 var dispatch_bar_chart = d3.dispatch(

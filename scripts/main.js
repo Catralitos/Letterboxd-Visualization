@@ -10,11 +10,15 @@ lb_grey = "#2c3440";
 lb_black = "#14181c";
 lb_lightGrey = "#678";
 
+var svg_genre_list;
 var svg_radar_chart;
 var svg_scatterplot;
 var svg_map;
 var svg_circular;
-var svg_bar;
+var svg_bar_chart;
+var svg_runtime_slider;
+var svg_rating_slider;
+var svg_nr_of_ratings_slider;
 
 
 var width_radar_chart = 500;
@@ -80,7 +84,10 @@ var filters = {
     countries: [],
     directors: [],
     actors: [],
-    years: [1924, 2021]
+    years: [1924, 2021],
+    runtime: [45, 434],
+    rating: [4.15, 4.60],
+    nr_of_ratings: [2534, 960591]
 }
 
 d3.dsv(',', "data/movie_data.csv").then(function (data) {
@@ -255,11 +262,22 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
 // updates current_dataset with current filters
 function updateDataset() {
     current_dataset = movies_dataset.filter(function (d) {
-        return d.year >= filters["years"][0] && d.year <= filters["years"][1] &&
-            containsGenres(d) && containsCountries(d) && containsDirectors(d) && containsActors(d);
+        var boolYear = d.year >= filters["years"][0] && d.year <= filters["years"][1];
+        var boolRating = d.rating >= filters["rating"][0] && d.rating <= filters["rating"][1];
+        var boolRuntime = d.runtime >= Math.floor(filters["runtime"][0]) && d.runtime <= Math.round(filters["runtime"][1]);
+        var boolNrRatings = d.nr_of_ratings >= Math.floor(filters["nr_of_ratings"][0]) && d.nr_of_ratings <= Math.round(filters["nr_of_ratings"][1]);
+        var boolGenres = containsGenres(d);
+        var boolCountries = containsCountries(d);
+        var boolDirectors = containsDirectors(d);
+        var boolActors = containsActors(d);
+        /*if (d.title === "Sátántangó"){
+            console.log (d.rating + " " + filters["rating"][0] + " " + filters["rating"][1]);
+            console.log(boolYear + " " + boolRating + " " + boolRuntime + " " + boolNrRatings + " " + boolGenres + " " + boolCountries + " " + boolDirectors)
+        }*/
+        return boolYear && boolRating && boolRuntime && boolNrRatings && boolGenres && boolCountries && boolDirectors && boolActors;
     });
 
-    console.log("Current dataset")
+    //console.log("Current dataset")
     console.log(current_dataset);
 
     current_movies_per_director =
@@ -273,11 +291,11 @@ function updateDataset() {
                 }
                 return false;
             }).slice(0, 10);
-    
+
     for (var i = 0; i < current_movies_per_director.length; i++) {
         current_movies_per_director[i][1] = 0;
-        for (var j = 0; j < current_dataset.length; j++){
-            if (current_dataset[j].directors.includes(current_movies_per_director[i][0])){
+        for (var j = 0; j < current_dataset.length; j++) {
+            if (current_dataset[j].directors.includes(current_movies_per_director[i][0])) {
                 current_movies_per_director[i][1]++;
             }
         }
@@ -294,9 +312,9 @@ function updateDataset() {
             return a[1] > b[1] ? -1 : 1;
         }
     })
-    
-    console.log("Current movies per director")
-    console.log(current_movies_per_director);
+
+    //console.log("Current movies per director")
+    //console.log(current_movies_per_director);
 
     current_movies_per_actor =
         Object
@@ -309,11 +327,11 @@ function updateDataset() {
                 }
                 return false;
             }).slice(0, 10);
-    
+
     for (var i = 0; i < current_movies_per_actor.length; i++) {
         current_movies_per_actor[i][1] = 0;
-        for (var j = 0; j < current_dataset.length; j++){
-            if (current_dataset[j].actors.includes(current_movies_per_actor[0])){
+        for (var j = 0; j < current_dataset.length; j++) {
+            if (current_dataset[j].actors.includes(current_movies_per_actor[0])) {
                 current_movies_per_actor[i][1]++;
             }
         }
@@ -330,9 +348,9 @@ function updateDataset() {
             return a[1] > b[1] ? -1 : 1;
         }
     })
-    
-    console.log("Current movies per actor")
-    console.log(current_movies_per_actor);
+
+    //console.log("Current movies per actor")
+    //console.log(current_movies_per_actor);
 }
 
 function containsGenres(d) {

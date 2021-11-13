@@ -12,14 +12,14 @@ function gen_genre_list() {
         .attr("style", "width: 80%; height: " + (height_row_2 - 60) + "px; \
             margin-left: 10%;")
 
-    var svg = d3
+    svg_genre_list = d3
         .select("#GenreList")
         .append("svg")
         .attr("viewBox", "0, 0, 150, " + list_height);
 
     const genres = getAllGenres();
 
-    var group = svg
+    var group = svg_genre_list
         .selectAll("g.list_group")
         .data(genres)
         .enter()
