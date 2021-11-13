@@ -115,12 +115,12 @@ dispatch_list.on("list_mouseleave", function (event, d) {
 
 dispatch_list.on("genre_list_click", function (event, d) {
     if (filters["genres"].includes(d) && filters["genres"].length != getAllGenres().length) {
-
+        
         d3.select("rect")
             .transition("list_mouseevent")
             .duration(1000)
             .attr("stroke", "none")
-
+        
         for (var i = 0; i < filters["genres"].length; i++) {
             if (filters["genres"][i] == d) {
                 filters["genres"].splice(i, 1);

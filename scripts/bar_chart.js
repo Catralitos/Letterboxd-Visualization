@@ -11,6 +11,7 @@ var dispatch_bar_chart = d3.dispatch(
 var width_col_1 = window.innerWidth * 0.28;
 
 var bar_chart_width = width_col_1 - (width_col_1 / 5) - 30;
+
 function gen_bar_chart() {
     /*d3
         .select("#barChart")
@@ -27,7 +28,6 @@ function gen_bar_chart() {
 }
 
 function updateBarChart() {
-
     svg_bar_chart.remove();
 
     width = 400;
@@ -155,14 +155,6 @@ function prepareBarChartGroupEvents() {
                     "highlight_bar_on",
                     this, event, d
                 );
-            })
-            .on('mouseleave', function (event, d) {
-                dispatch_bar_chart.call(
-                    "highlight_bar_off",
-                    this, event, d
-                );
-            })
-            /*.on('mouseenter', function (event, d) {
                 dispatch_bar_chart.call(
                     "highlight_scatter_on",
                     this, event, d
@@ -170,17 +162,20 @@ function prepareBarChartGroupEvents() {
             })
             .on('mouseleave', function (event, d) {
                 dispatch_bar_chart.call(
+                    "highlight_bar_off",
+                    this, event, d
+                );
+                dispatch_bar_chart.call(
                     "highlight_scatter_off",
                     this, event, d
                 );
-            })*/
+            })
             .on("click", function (event, d) {
                 dispatch_bar_chart.call(
                     "click_bar",
                     this, event, d
                 );
-            });;
-
+            });
     }
     else {
         svg_bar_chart

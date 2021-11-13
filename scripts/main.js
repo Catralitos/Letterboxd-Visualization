@@ -1,6 +1,12 @@
 var movies_dataset;
 var decades_dataset;
 
+var map_dataset;
+var countries_dataset;
+
+var current_dataset;
+
+
 //Colors to use
 lb_orange = "#ff8000";
 lb_green = "#00e054";
@@ -15,7 +21,7 @@ var svg_radar_chart;
 var svg_scatterplot;
 var svg_map;
 var svg_circular;
-var svg_bar_chart;
+var svg_map_chart;
 var svg_runtime_slider;
 var svg_rating_slider;
 var svg_nr_of_ratings_slider;
@@ -39,19 +45,21 @@ var movies_per_genre = {};
 
 // define counter that holds count for each country
 var movies_per_country = {};
+// current movies per country
+var current_movies_per_country = [];
 
 // define counter that holds count for each director
 var movies_per_director = {};
 // define object that holds each director's movies
 var movie_list_per_director = [];
-//this one will be filtered for use by the bar chart
+//this one will be filtered for use by the map chart
 var current_movies_per_director = [];
 
 // define counter that holds count for each actor
 var movies_per_actor = {};
 // define object that holds each actors's movies
 var movie_list_per_actor = [];
-//this one will be filtered for use by the bar chart
+//this one will be filtered for use by the map chart
 var current_movies_per_actor = [];
 
 // color associated to each genre
@@ -89,6 +97,14 @@ var filters = {
     rating: [4.15, 4.60],
     nr_of_ratings: [2534, 960591]
 }
+
+d3.json("data/countries.json").then(function (data) {
+    map_dataset = data;
+})
+
+d3.csv("data/country_movies.csv").then(function (data) {
+    countries_dataset = data;
+})
 
 d3.dsv(',', "data/movie_data.csv").then(function (data) {
 
@@ -201,6 +217,8 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
 
     })
 
+    current_movies_per_country = movies_per_country;
+
     current_movie_list_per_director = movie_list_per_director;
 
     movies_per_director = Object.fromEntries(
@@ -251,9 +269,9 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
 
     gen_scatterplot();
     gen_bar_chart();
+    gen_map_chart();
     gen_radar_chart();
     gen_genre_list();
-    gen_map_chart();
     gen_year_chart();
     gen_sliders();
 });
@@ -270,13 +288,33 @@ function updateDataset() {
         var boolCountries = containsCountries(d);
         var boolDirectors = containsDirectors(d);
         var boolActors = containsActors(d);
-        /*if (d.title === "Sátántangó"){
+        if (d.title === "Sátántangó"){
             console.log (d.rating + " " + filters["rating"][0] + " " + filters["rating"][1]);
             console.log(boolYear + " " + boolRating + " " + boolRuntime + " " + boolNrRatings + " " + boolGenres + " " + boolCountries + " " + boolDirectors)
-        }*/
+        }
         return boolYear && boolRating && boolRuntime && boolNrRatings && boolGenres && boolCountries && boolDirectors && boolActors;
     });
 
+    current_movies_per_country =
+        Object
+            .entries(movies_per_country)
+            .filter(function (d) {
+                for (var i = 0; i < current_dataset.length; i++) {
+                    if (current_dataset[i].countries.includes(d[0])) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+    for (var i = 0; i < current_movies_per_country.length; i++) {
+        current_movies_per_country[i][1] = 0;
+        for (var j = 0; j < current_dataset.length; j++) {
+            if (current_dataset[j].directors.includes(current_movies_per_country[i][0])) {
+                current_movies_per_country[i][1]++;
+            }
+        }
+    }
     //console.log("Current dataset")
     console.log(current_dataset);
 
@@ -395,6 +433,10 @@ function getAllGenres() {
 
 function getAllDirectors() {
     return Object.keys(movies_per_director).sort(d3.ascending);
+}
+
+function getAllCountries() {
+    return Object.keys(movies_per_country).sort(d3.ascending);
 }
 
 function getCurrentMovies() {
