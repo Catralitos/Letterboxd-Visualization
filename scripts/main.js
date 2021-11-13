@@ -1,5 +1,4 @@
 var movies_dataset;
-//var countries_dataset;
 var decades_dataset;
 
 //Colors to use
@@ -10,7 +9,6 @@ lb_fontColor = "#f1f3f5";
 lb_grey = "#2c3440";
 lb_black = "#14181c";
 lb_lightGrey = "#678";
-
 
 var svg_radar_chart;
 var svg_scatterplot;
@@ -38,13 +36,19 @@ var movies_per_genre = {};
 // define counter that holds count for each country
 var movies_per_country = {};
 
-// define counter that holds count for each genre
+// define counter that holds count for each director
 var movies_per_director = {};
+// define object that holds each director's movies
+var movie_list_per_director = [];
+//this one will be filtered for use by the bar chart
+var current_movies_per_director = [];
 
-// define counter that holds count for each genre
+// define counter that holds count for each actor
 var movies_per_actor = {};
-
-var bar_chart_data = {};
+// define object that holds each actors's movies
+var movie_list_per_actor = [];
+//this one will be filtered for use by the bar chart
+var current_movies_per_actor = [];
 
 // color associated to each genre
 var color_scale = {
@@ -111,10 +115,40 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
             if (filters["directors"].indexOf(d.directors[i]) < 0) {
                 filters["directors"].push(d.directors[i]);
             }
-        } for (var i = 0; i < d.actors.length; i++) {
+
+            var toCreate = true;
+
+            for (var j = 0; j < movie_list_per_director.length; j++) {
+                if (movie_list_per_director[j][0] === d.directors[i]) {
+                    movie_list_per_director[j][1].push(d);
+                    toCreate = false;
+                    break;
+                }
+            }
+
+            if (toCreate) {
+                movie_list_per_director.push([d.directors[i], [d]])
+            }
+
+        }
+        for (var i = 0; i < d.actors.length; i++) {
             d.actors[i] = d.actors[i].trim();
             if (filters["actors"].indexOf(d.actors[i]) < 0) {
                 filters["actors"].push(d.actors[i]);
+            }
+
+            var toCreate = true;
+
+            for (var j = 0; j < movie_list_per_actor.length; j++) {
+                if (movie_list_per_actor[j][0] === d.actors[i]) {
+                    movie_list_per_actor[j][1].push(d);
+                    toCreate = false;
+                    break;
+                }
+            }
+
+            if (toCreate) {
+                movie_list_per_actor.push([d.actors[i], [d]])
             }
         }
 
@@ -158,38 +192,55 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
             }
         }
 
-        /*
-        // count total gross for each year
-        if (bar_chart_data[d.year] === undefined) {
-            bar_chart_data[d.year] = {};
-            bar_chart_data[d.year]["studios"] = {};
-            bar_chart_data[d.year]["genres"] = {};
-            bar_chart_data[d.year]["total_gross"] = d.worldwide_gross;
-            bar_chart_data[d.year]["studios"][d.studio] = d.worldwide_gross;
-            bar_chart_data[d.year]["genres"][d.Main_Genre] = d.worldwide_gross;
-        }
-        else {
-            bar_chart_data[d.year]["total_gross"] += d.worldwide_gross;
-            if (bar_chart_data[d.year]["studios"][d.studio] === undefined) {
-                bar_chart_data[d.year]["studios"][d.studio] = d.worldwide_gross;
-            }
-            else {
-                bar_chart_data[d.year]["studios"][d.studio] += d.worldwide_gross;
-            }
-            if (bar_chart_data[d.year]["genres"][d.Main_Genre] === undefined) {
-                bar_chart_data[d.year]["genres"][d.Main_Genre] = d.worldwide_gross;
-            }
-            else {
-                bar_chart_data[d.year]["genres"][d.Main_Genre] += d.worldwide_gross;
-            }
-        }*/
     })
 
+    current_movie_list_per_director = movie_list_per_director;
 
-    //blockbusters_dataset = data;
+    movies_per_director = Object.fromEntries(
+        Object
+            .entries(movies_per_director)
+            .sort(function (a, b) {
+                if (a[1] === b[1]) {
+                    var surnameA = a[0].split(' ');
+                    surnameA = surnameA[surnameA.length - 1];
+                    var surnameB = b[0].split(' ');
+                    surnameB = surnameB[surnameB.length - 1];
+                    return surnameA > surnameB ? 1 : -1;
+                } else {
+                    return a[1] > b[1] ? -1 : 1;
+                }
+            })
+    );
+
+    current_movies_per_director =
+        Object
+            .entries(movies_per_director)
+            .slice(0, 10);
+
+
+    movies_per_actor = Object.fromEntries(
+        Object
+            .entries(movies_per_actor)
+            .sort(function (a, b) {
+                if (a[1] === b[1]) {
+                    var surnameA = a[0].split(' ');
+                    surnameA = surnameA[surnameA.length - 1];
+                    var surnameB = b[0].split(' ');
+                    surnameB = surnameB[surnameB.length - 1];
+                    return surnameA > surnameB ? 1 : -1;
+                } else {
+                    return a[1] > b[1] ? -1 : 1;
+                }
+            })
+    );
+
+    current_movies_per_actor =
+        Object
+            .entries(movies_per_actor)
+            .slice(0, 10);
+
     movies_dataset = data;
     current_dataset = data;
-    //nominations_dataset = data;
 
     gen_scatterplot();
     gen_bar_chart();
@@ -201,12 +252,87 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
 });
 
 
-// updates current_dataset with current filters (TODO oscars filter)
+// updates current_dataset with current filters
 function updateDataset() {
     current_dataset = movies_dataset.filter(function (d) {
         return d.year >= filters["years"][0] && d.year <= filters["years"][1] &&
             containsGenres(d) && containsCountries(d) && containsDirectors(d) && containsActors(d);
     });
+
+    console.log("Current dataset")
+    console.log(current_dataset);
+
+    current_movies_per_director =
+        Object
+            .entries(movies_per_director)
+            .filter(function (d) {
+                for (var i = 0; i < current_dataset.length; i++) {
+                    if (current_dataset[i].directors.includes(d[0])) {
+                        return true;
+                    }
+                }
+                return false;
+            }).slice(0, 10);
+    
+    for (var i = 0; i < current_movies_per_director.length; i++) {
+        current_movies_per_director[i][1] = 0;
+        for (var j = 0; j < current_dataset.length; j++){
+            if (current_dataset[j].directors.includes(current_movies_per_director[i][0])){
+                current_movies_per_director[i][1]++;
+            }
+        }
+    }
+
+    current_movies_per_director.sort(function (a, b) {
+        if (a[1] === b[1]) {
+            var surnameA = a[0].split(' ');
+            surnameA = surnameA[surnameA.length - 1];
+            var surnameB = b[0].split(' ');
+            surnameB = surnameB[surnameB.length - 1];
+            return surnameA > surnameB ? 1 : -1;
+        } else {
+            return a[1] > b[1] ? -1 : 1;
+        }
+    })
+    
+    console.log("Current movies per director")
+    console.log(current_movies_per_director);
+
+    current_movies_per_actor =
+        Object
+            .entries(movies_per_actor)
+            .filter(function (d) {
+                for (var i = 0; i < current_dataset.length; i++) {
+                    if (current_dataset[i].actors.includes(d[0])) {
+                        return true;
+                    }
+                }
+                return false;
+            }).slice(0, 10);
+    
+    for (var i = 0; i < current_movies_per_actor.length; i++) {
+        current_movies_per_actor[i][1] = 0;
+        for (var j = 0; j < current_dataset.length; j++){
+            if (current_dataset[j].actors.includes(current_movies_per_actor[0])){
+                current_movies_per_actor[i][1]++;
+            }
+        }
+    }
+
+    current_movies_per_actor.sort(function (a, b) {
+        if (a[1] === b[1]) {
+            var surnameA = a[0].split(' ');
+            surnameA = surnameA[surnameA.length - 1];
+            var surnameB = b[0].split(' ');
+            surnameB = surnameB[surnameB.length - 1];
+            return surnameA > surnameB ? 1 : -1;
+        } else {
+            return a[1] > b[1] ? -1 : 1;
+        }
+    })
+    
+    console.log("Current movies per actor")
+    console.log(current_movies_per_actor);
 }
 
 function containsGenres(d) {
@@ -247,6 +373,10 @@ function containsActors(d) {
 
 function getAllGenres() {
     return genreList.sort(d3.ascending);
+}
+
+function getAllDirectors() {
+    return Object.keys(movies_per_director).sort(d3.ascending);
 }
 
 function getCurrentMovies() {

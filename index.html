@@ -85,7 +85,18 @@
         <p id="GraphTitle">Most Recurring Genres</p>
       </div>
       <div class="graphic" id="BarChart">
-        <p>The Directors Bar Chart will be here</p>
+        <p>Most Prolific Directors/Actors</p>
+        <div id="barChart"></div>
+        <button
+          class="button"
+          style="margin-left: 25%"
+          onclick="axisChange('runtime')"
+        >
+          Directors
+        </button>
+        <button class="button" onclick="axisChange('ratings')">
+          Actors
+        </button>
       </div>
       <div class="graphic" id="ScatterPlot">
         <p id="GraphTitle">Rating vs Runtime/Number of Ratings</p>
