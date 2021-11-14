@@ -3,11 +3,6 @@ height = 500;
 margin = { top: 20, right: 20, left: 60, bottom: 40 };
 radius = 5;
 
-//I'm putting everything to change idiom sizes on top
-//vw = view width
-//vh = view height
-//Note, the ones without vw or vh it's because they get converted later down
-
 //Geo
 var geoWidth = 590;
 var geoHeight = 230;

@@ -112,7 +112,7 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
 
         d.length = parseInt(d.length);
         d.rating = parseFloat(d.rating);
-        d.nr_of_ratings = parseInt(d.nr_of_ratings);
+        d.nr_of_ratings = parseInt(d.nr_of_ratings) / 1000;
         d.year = parseInt(d.year);
 
         d.genres = d.genres.split(",");
@@ -283,7 +283,7 @@ function updateDataset() {
         var boolYear = d.year >= filters["years"][0] && d.year <= filters["years"][1];
         var boolRating = d.rating >= filters["rating"][0] && d.rating <= filters["rating"][1];
         var boolRuntime = d.runtime >= Math.floor(filters["runtime"][0]) && d.runtime <= Math.round(filters["runtime"][1]);
-        var boolNrRatings = d.nr_of_ratings >= Math.floor(filters["nr_of_ratings"][0]) && d.nr_of_ratings <= Math.round(filters["nr_of_ratings"][1]);
+        var boolNrRatings = d.nr_of_ratings >= Math.floor(filters["nr_of_ratings"][0]) / 1000 && d.nr_of_ratings <= Math.round(filters["nr_of_ratings"][1]) / 1000;
         var boolGenres = containsGenres(d);
         var boolCountries = containsCountries(d);
         var boolDirectors = containsDirectors(d);

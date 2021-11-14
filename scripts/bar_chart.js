@@ -206,7 +206,7 @@ function prepareBarChartGroupEvents() {
                     "click_bar",
                     this, event, d
                 );
-            });;
+            });
     }
 }
 
