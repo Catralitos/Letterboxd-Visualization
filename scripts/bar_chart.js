@@ -37,7 +37,7 @@ function updateBarChart() {
     if (directors) {
         x = d3
             .scaleLinear()
-            .domain([0, 9])
+            .domain([0, 10])
             .range([margin.left, width - margin.right]);
         y = d3
             .scaleBand()
@@ -91,7 +91,7 @@ function updateBarChart() {
     } else {
         x = d3
             .scaleLinear()
-            .domain([0, 72])
+            .domain([0, 10])
             .range([margin.left, width - margin.right]);
         y = d3
             .scaleBand()
