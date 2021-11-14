@@ -44,7 +44,7 @@ function gen_map_chart() {
         .join('path')
         .attr('class', 'country')
         .attr('d', path)
-        .attr('id', (d, i) => d.properties.name)
+        .attr('id', (d, i) => d.properties.name.replace(/\s/g, '').replace(/\./g, ''))
         .attr('fill', (d) => {
             var countryMovies = current_dataset.filter(function (da) {
                 return da.countries.includes(d.properties.name);
@@ -54,14 +54,14 @@ function gen_map_chart() {
             } else {
                 return colorScale(countryMovies.length);
             }
-        })    
+        })
 
     addZoom();
     updateMapChart();
 }
 
 function updateMapChart() {
-    
+
     d3.selectAll("svg.map").remove();
     d3.selectAll("#legend").remove();
 
@@ -94,7 +94,7 @@ function updateMapChart() {
         .join('path')
         .attr('class', 'country')
         .attr('d', path)
-        .attr('id', (d, i) => d.properties.name)
+        .attr('id', (d, i) => d.properties.name.replace(/\s/g, '').replace(/\./g, ''))
         .attr('fill', (d) => {
             var countryMovies = current_dataset.filter(function (da) {
                 return da.countries.includes(d.properties.name);
@@ -116,14 +116,11 @@ function updateMapChart() {
             if (countryMovies.length === 0) {
                 return d.properties.name + ": 0 movies";
             } else {
-                if (d.properties.name === "Hungary") {
-                    console.log(countryMovies);
-                }
                 return d.properties.name + ": " + countryMovies.length + " movies";
             }
         });
-    
-        
+
+
     const scale = ['NA', 1, 5, 10, 50, 100];
 
     d3.select('div#geo')
@@ -163,7 +160,7 @@ function updateMapChart() {
             .style("fill", lb_fontColor);
 
     }
-    
+
     prepareMapChartGroupEvents();
 
 }
@@ -194,18 +191,36 @@ function prepareMapChartGroupEvents() {
 }
 
 dispatch_map.on("highlight_scatterplot_on", function (event, d) {
-    //escolher os elementos do scatter e dar highlight
+    var circles = d3.select('div#scatter').selectAll('circle');
+    circles
+        .filter((f) => {
+            if (f.countries.includes(d.properties.name)) {
+                return f;
+            }
+        })
+        //.transition()
+        //.duration(300)
+        .style('fill', lb_green)
+        .attr('r', 5)
 });
 
 dispatch_map.on("highlight_scatterplot_off", function (event, d) {
-    //escolher os elementos do scatter e tirar highlight
+    var circles = d3.select('div#scatter').selectAll('circle');
+    circles
+        .filter((f) => {
+            if (f.countries.includes(d.properties.name)) {
+                return f;
+            }
+        })
+        //.transition()
+        //.duration(300)
+        .style('fill', lb_cyan)
+        .attr('r', 2)
 });
 
 dispatch_map.on("click_map", function (event, d) {
-    console.log(getAllCountries().length);
     if (filters["countries"].includes(d.properties.name) && filters["countries"].length != getAllCountries().length) {
         const cVar = 'nr_of_movies';
-        console.log("Entrou no if");
         const colorScale = d3
             .scaleLinear()
             .range(['#86c2ff', '#08306b'])

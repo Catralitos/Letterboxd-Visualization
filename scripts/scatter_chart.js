@@ -3,11 +3,15 @@ height = 500;
 margin = { top: 20, right: 20, left: 60, bottom: 40 };
 radius = 5;
 
+var previousCountryColors = [];
+var previousListStroke = [];
+var previousGenreStroke = [];
+
 var dispatch_scatter = d3.dispatch(
-    "highlight_radar_on",
-    "highlight_radar_off",
-    "highlight_list_on",
-    "highlight_list_off",
+    "highlight_scatter_on",
+    "highlight_scatter_off",
+    "highlight_genre_on",
+    "highlight_genre_off",
     "highlight_bar_on",
     "highlight_bar_off",
     "highlight_country_on",
@@ -16,7 +20,6 @@ var dispatch_scatter = d3.dispatch(
     "highlight_year_off",
     "click_scatter"
 );
-var respective, respective_bubble;
 
 const x_var = 'rating';
 const y_var1 = 'runtime';
@@ -38,7 +41,7 @@ const scatterWidth = 430;
 const scatterHeight = 230;
 
 function gen_scatterplot() {
-    
+
     y_var = y_var1;
 
     xValue = (d) => +d[x_var];
@@ -121,11 +124,11 @@ function gen_scatterplot() {
                         .append('circle')
                         .on('mouseenter', function (event, d) {
                             dispatch_scatter.call(
-                                "highlight_radar_on",
+                                "highlight_scatter_on",
                                 this, event, d
                             );
                             dispatch_scatter.call(
-                                "highlight_list_on",
+                                "highlight_genre_on",
                                 this, event, d
                             );
                             dispatch_scatter.call(
@@ -143,11 +146,11 @@ function gen_scatterplot() {
                         })
                         .on('mouseleave', function (event, d) {
                             dispatch_scatter.call(
-                                "highlight_radar_off",
+                                "highlight_scatter_off",
                                 this, event, d
                             );
                             dispatch_scatter.call(
-                                "highlight_list_off",
+                                "highlight_genre_off",
                                 this, event, d
                             );
                             dispatch_scatter.call(
@@ -196,14 +199,12 @@ function gen_scatterplot() {
             }
         );
 
-    updateScatterplot();
+    //updateScatterplot();
 
 }
 
 function updateScatterplot() {
 
-    console.log("Entrou no update com x_var = " + x_var + " e y_var " + y_var);
-    
     var yValue = y_var === 'runtime' ? yValue1 : yValue2;
     var yAxis = y_var === 'runtime' ? yAxis1 : yAxis2;
 
@@ -234,11 +235,11 @@ function updateScatterplot() {
                         .append('circle')
                         .on('mouseenter', function (event, d) {
                             dispatch_scatter.call(
-                                "highlight_radar_on",
+                                "highlight_scatter_on",
                                 this, event, d
                             );
                             dispatch_scatter.call(
-                                "highlight_list_on",
+                                "highlight_genre_on",
                                 this, event, d
                             );
                             dispatch_scatter.call(
@@ -256,11 +257,11 @@ function updateScatterplot() {
                         })
                         .on('mouseleave', function (event, d) {
                             dispatch_scatter.call(
-                                "highlight_radar_off",
+                                "highlight_scatter_off",
                                 this, event, d
                             );
                             dispatch_scatter.call(
-                                "highlight_list_off",
+                                "highlight_genre_off",
                                 this, event, d
                             );
                             dispatch_scatter.call(
@@ -315,7 +316,6 @@ function updateScatterplot() {
 }
 
 function axisChange(axis) {
-
     if (axis === "runtime")
         y_var = y_var1;
     else
@@ -323,36 +323,93 @@ function axisChange(axis) {
     updateScatterplot();
 }
 
-dispatch_scatter.on("highlight_radar_on", function (event, d) {
-
+dispatch_scatter.on("highlight_scatter_on", function (event, d) {
+    d3.select(this)
+        .attr("r", 5)
+        .style("fill", lb_green);
 });
 
-dispatch_scatter.on("highlight_radar_off", function (event, d) {
-
+dispatch_scatter.on("highlight_scatter_off", function (event, d) {
+    d3.select(this)
+        .attr("r", 2)
+        .style("fill", lb_cyan);
 });
 
-dispatch_scatter.on("highlight_list_on", function (event, d) {
-
+dispatch_scatter.on("highlight_genre_on", function (event, d) {
+    for (var i = 0; i < d.genres.length; i++) {
+        var str = "#" + d.genres[i];
+        str = str.replace(/\s/g, '').replace(/\./g, '');
+        var item = d3.select(str);
+        if (item !== undefined) {
+            previousGenreStroke.push(item.attr('stroke'));
+            item.attr("stroke", lb_green);
+        }
+        item = d3.select(str + "List");
+        if (item !== undefined) {
+            previousListStroke.push(item.attr('stroke'));
+            item.attr("stroke", lb_green);
+        }
+    }
 });
 
-dispatch_scatter.on("highlight_list_off", function (event, d) {
-
+dispatch_scatter.on("highlight_genre_off", function (event, d) {
+    for (var i = 0; i < d.genres.length; i++) {
+        var str = "#" + d.genres[i];
+        str = str.replace(/\s/g, '').replace(/\./g, '');
+        var item = d3.select(str);
+        if (item !== undefined) {
+            item.attr("stroke", previousGenreStroke[i]);
+        }
+        item = d3.select(str + "List");
+        if (item !== undefined) {
+            item.attr("stroke", previousListStroke[i]);
+        }
+    }
+    previousGenreStroke = [];
+    previousListStroke = [];
 });
+
 
 dispatch_scatter.on("highlight_bar_on", function (event, d) {
-
+    for (var i = 0; i < d.directors.length; i++) {
+        var str = "#" + d.directors[i];
+        str = str.replace(/\s/g, '').replace(/\./g, '');
+        d3.select(str)
+            .style("fill", lb_green);
+    }
 });
 
 dispatch_scatter.on("highlight_bar_off", function (event, d) {
-
+    for (var i = 0; i < d.directors.length; i++) {
+        var str = "#" + d.directors[i];
+        str = str.replace(/\s/g, '').replace(/\./g, '');
+        d3.select(str)
+            .style("fill", lb_cyan);
+    }
 });
 
 dispatch_scatter.on("highlight_country_on", function (event, d) {
-
+    for (var i = 0; i < d.countries.length; i++) {
+        var str = "#" + d.countries[i];
+        str = str.replace(/\s/g, '').replace(/\./g, '');
+        var item = d3.select(str);
+        if (item !== undefined) {
+            previousCountryColors.push(item.style('fill'));
+            item.style("fill", lb_green);
+        }
+    }
 });
 
 dispatch_scatter.on("highlight_country_off", function (event, d) {
-
+    for (var i = 0; i < d.countries.length; i++) {
+        var str = "#" + d.countries[i];
+        str = str.replace(/\s/g, '').replace(/\./g, '');
+        var item = d3.select(str);
+        if (item !== undefined) {
+            item.style("fill", previousCountryColors[i]);
+        }
+    }
+    previousCountryColors = [];
 });
 
 dispatch_scatter.on("highlight_year_on", function (event, d) {
@@ -363,10 +420,14 @@ dispatch_scatter.on("highlight_year_off", function (event, d) {
 
 });
 
-dispatch_scatter.on("highlight_bar_on", function (event, d) {
-
-});
-
 dispatch_scatter.on("click_scatter", function (event, d) {
-
+    var str = d.title + " (" + d.year + ")\n";
+    str += "Directed by: " + d.directors + "\n";
+    str += "Starring: " + d.actors + "\n";
+    str += "Runtime: " + d.runtime + "\n";
+    str += "Rating: " + d.rating + "\n";
+    str += "Number of Ratings: " + (d.nr_of_ratings * 1000) + "\n";
+    str += "Countries: " + d.countries + "\n";
+    str += "Genres: " + d.genres + "\n";
+    window.alert(str);
 });

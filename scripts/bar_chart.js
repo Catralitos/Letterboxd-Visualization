@@ -17,7 +17,7 @@ function gen_bar_chart() {
         .select("#barChart")
         .attr("style", "width: " + bar_chart_width +
             "px; float: left; height: " + (height_row_1 - 20) + "px;");*/
-    
+
     svg_bar_chart = d3
         .select("#barChart")
         .append("svg")
@@ -79,16 +79,19 @@ function updateBarChart() {
             .attr("y", (d, i) => y(i))
             .attr("width", (d) => x(d[1]) - x(0))
             .attr("height", y.bandwidth())
+            .attr("id", function (d) {
+                return d[0].replace(/\s/g, '');
+            })
             .style("fill", function (d) {
-                if (filters["directors"].length == getAllDirectors().length) {
+                if (filters["directors"].length === getAllDirectors().length) {
                     return lb_cyan;
                 }
-                return lb_orange
+                return lb_green
             });
     } else {
         x = d3
             .scaleLinear()
-            .domain([0, 9])
+            .domain([0, 72])
             .range([margin.left, width - margin.right]);
         y = d3
             .scaleBand()
@@ -131,10 +134,10 @@ function updateBarChart() {
             .attr("width", (d) => x(d[1]) - x(0))
             .attr("height", y.bandwidth())
             .style("fill", function (d) {
-                if (filters["directors"].length == getAllDirectors().length) {
+                if (filters["actors"].length === getAllActors().length) {
                     return lb_cyan;
                 }
-                return lb_orange
+                return lb_green;
             });
     }
 
@@ -214,7 +217,7 @@ dispatch_bar_chart.on("highlight_bar_on", function (event, d) {
     d3.select(this)
         //.transition("list_mouseevent")
         //.duration(100)
-        .style("fill", lb_orange);
+        .style("fill", lb_green);
 });
 
 dispatch_bar_chart.on("highlight_bar_off", function (event, d) {
@@ -224,22 +227,59 @@ dispatch_bar_chart.on("highlight_bar_off", function (event, d) {
         .style("fill", lb_cyan);
 });
 
-dispatch_bar_chart.on("highlight_scatter_on", function (event, d) {
-    if (directors) {
+dispatch_bar_chart.on("highlight_scatter_on", function (event, d) {    
+    var circles = d3.select('div#scatter').selectAll('circle');
 
+    if (directors) {
+        circles
+            .filter((f) => {
+                if (f.directors.includes(d[1][0])) {
+                    return f;
+                }
+            })
+            //.transition()
+            //.duration(300)
+            .style('fill', lb_green)
+            .attr('r', 5)
     } else {
-    
+        circles
+            .filter((f) => {
+                if (f.actors.includes(d[1][0])) {
+                    return f;
+                }
+            })
+            //.transition()
+            //.duration(300)
+            .style('fill', lb_green)
+            .attr('r', 5)
     }
-    //escolher os elementos do scatter e dar highlight
 });
 
 dispatch_bar_chart.on("highlight_scatter_off", function (event, d) {
+    var circles = d3.select('div#scatter').selectAll('circle');
     if (directors) {
-
+        circles
+            .filter((f) => {
+                if (f.directors.includes(d[1][0])) {
+                    return f;
+                }
+            })
+            //.transition()
+            //.duration(300)
+            .style('fill', lb_cyan)
+            .attr('r', 2)
     } else {
-
+        circles
+            .filter((f) => {
+                if (f.actors.includes(d[1][0])) {
+                    return f;
+                }
+            })
+            //.transition()
+            //.duration(300)
+            .style('fill', lb_cyan)
+            .attr('r', 2)
     }
-    //escolher os elementos do scatter e tirar highlight
 });
 
 
@@ -294,6 +334,10 @@ dispatch_bar_chart.on("click_bar", function (event, d) {
         }
     }
     */
+    /*d3.select(this)
+        //.transition("list_mouseevent")
+        //.duration(100)
+        .style("fill", lb_orange);*/
 
     if (directors) {
         var stringToPrint = d[1][0] + "'s Filmography (From Best to Worst):\n";
@@ -323,12 +367,21 @@ dispatch_bar_chart.on("click_bar", function (event, d) {
         window.alert(stringToPrint);
     }
 
-    updateDataset();
+    /*updateDataset();
     updateScatterplot();
     updateBarChart();
     updateRadarChart();
     updateLists();
     updateMapChart();
     updateYearChart();
-    updateSliders();
+    updateSliders();*/
 });
+
+function directorsChange(value) {
+    if (value === 'directors') {
+        directors = true;
+    } else if (value === 'actors') {
+        directors = false;
+    }
+    updateBarChart();
+}

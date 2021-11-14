@@ -1,6 +1,8 @@
 var dispatch_list = d3.dispatch(
     "list_mouseenter",
     "list_mouseleave",
+    "highlight_scatter_on",
+    "highlight_scatter_off",
     "genre_list_click"
 );
 
@@ -31,10 +33,18 @@ function gen_genre_list() {
                 "list_mouseenter",
                 this, event, d
             );
+            dispatch_list.call(
+                "highlight_scatter_on",
+                this, event, d
+            );
         })
         .on('mouseleave', function (event, d) {
             dispatch_list.call(
                 "list_mouseleave",
+                this, event, d
+            );
+            dispatch_list.call(
+                "highlight_scatter_off",
                 this, event, d
             );
         })
@@ -53,10 +63,11 @@ function gen_genre_list() {
         .attr("fill", lb_grey)
         .attr("stroke", function (d) {
             if (filters["genres"].length != getAllGenres().length && filters["genres"].includes(d)) {
-                return "red";
+                return lb_orange;
             }
             else return "none";
         })
+        .attr("id", (d) => d + "List")
         .attr("rx", 6)
         .attr("x", 10)
         .attr("y", function (d, i) {
@@ -91,7 +102,7 @@ function updateLists() {
         .duration(1000)
         .attr("stroke", function (d) {
             if (filters["genres"].length != getAllGenres().length && filters["genres"].includes(d)) {
-                return "red";
+                return lb_orange;
             }
             else return "none";
         });
@@ -111,6 +122,34 @@ dispatch_list.on("list_mouseleave", function (event, d) {
         .transition("list_mouseevent")
         .duration(100)
         .attr("fill", lb_grey)
+});
+
+dispatch_list.on("highlight_scatter_on", function (event, d) {
+    var circles = d3.select('div#scatter').selectAll('circle');
+        circles
+            .filter((f) => {
+                if (f.genres.includes(d)) {
+                    return f;
+                }
+            })
+            //.transition()
+            //.duration(300)
+            .style('fill', lb_green)
+            .attr('r', 5)
+});
+
+dispatch_list.on("highlight_scatter_off", function (event, d) {
+    var circles = d3.select('div#scatter').selectAll('circle');
+    circles
+        .filter((f) => {
+            if (f.genres.includes(d)) {
+                return f;
+            }
+        })
+        //.transition()
+        //.duration(300)
+        .style('fill', lb_cyan)
+        .attr('r', 2)
 });
 
 dispatch_list.on("genre_list_click", function (event, d) {
@@ -138,9 +177,9 @@ dispatch_list.on("genre_list_click", function (event, d) {
         filters["genres"].push(d);
 
         d3.select("rect")
-            .transition("list_mouseevent")
-            .duration(1000)
-            .attr("stroke", "red");
+            //.transition("list_mouseevent")
+            //.duration(1000)
+            .attr("stroke", lb_orange);
     }
     updateDataset();
     updateScatterplot();
@@ -151,47 +190,3 @@ dispatch_list.on("genre_list_click", function (event, d) {
     updateYearChart();
     updateSliders();
 });
-
-/*********************************************************/
-/*********************** AUXILIAR ************************/
-/*********************************************************/
-
-function wrap(text, width) {
-    text.each(function () {
-
-        let text = d3.select(this),
-            words = text.text().split(/[ -]+/).reverse(),
-            word,
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.2, // ems
-            x = text.attr("x"),
-            y = text.attr("y"),
-            dy = 0.1,
-            tspan = text
-                .text(null)
-                .append("tspan")
-                .attr("class", "tspan")
-                .attr("x", x)
-                .attr("y", y)
-                .attr("dy", dy + "em");
-
-        while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-
-            if (tspan.node().getComputedTextLength() > width) {
-                line.pop();
-                tspan.text(line.join(" "));
-                line = [word];
-                tspan = text
-                    .append("tspan")
-                    .attr("class", "tspan")
-                    .attr("x", x)
-                    .attr("y", y)
-                    .attr("dy", ++lineNumber * lineHeight + dy + "em")
-                    .text(word);
-            }
-        }
-    });
-}

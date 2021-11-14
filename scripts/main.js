@@ -6,7 +6,6 @@ var countries_dataset;
 
 var current_dataset;
 
-
 //Colors to use
 lb_orange = "#ff8000";
 lb_green = "#00e054";
@@ -42,6 +41,8 @@ var genreList = [];
 
 // define counter that holds count for each genre
 var movies_per_genre = {};
+// current movies per country
+var current_movies_per_genre = [];
 
 // define counter that holds count for each country
 var movies_per_country = {};
@@ -114,9 +115,9 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
         d.rating = parseFloat(d.rating);
         d.nr_of_ratings = parseInt(d.nr_of_ratings) / 1000;
         d.year = parseInt(d.year);
-
-        d.genres = d.genres.split(",");
-        d.countries = d.countries.split(",");
+        
+        d.genres = d.genres.split(",").sort();
+        d.countries = d.countries.split(",").sort();
         d.directors = d.directors.split(",");
         d.actors = d.actors.split(",");
 
@@ -127,12 +128,14 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
                 genreList.push(d.genres[i]);
             }
         }
+        d.genres.sort();
         for (var i = 0; i < d.countries.length; i++) {
             d.countries[i] = d.countries[i].trim();
             if (filters["countries"].indexOf(d.countries[i]) < 0) {
                 filters["countries"].push(d.countries[i]);
             }
         }
+        d.countries.sort();
         for (var i = 0; i < d.directors.length; i++) {
             d.directors[i] = d.directors[i].trim();
             if (filters["directors"].indexOf(d.directors[i]) < 0) {
@@ -216,10 +219,12 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
         }
 
     })
+    
+    current_movies_per_genre = Object.entries(movies_per_genre);
 
-    current_movies_per_country = movies_per_country;
+    current_movies_per_country = Object.entries(movies_per_country);
 
-    current_movie_list_per_director = movie_list_per_director;
+    current_movie_list_per_director = Object.entries(movie_list_per_director);
 
     movies_per_director = Object.fromEntries(
         Object
@@ -288,12 +293,31 @@ function updateDataset() {
         var boolCountries = containsCountries(d);
         var boolDirectors = containsDirectors(d);
         var boolActors = containsActors(d);
-        /*if (d.title === "Sátántangó"){
-            console.log (d.rating + " " + filters["rating"][0] + " " + filters["rating"][1]);
-            console.log(boolYear + " " + boolRating + " " + boolRuntime + " " + boolNrRatings + " " + boolGenres + " " + boolCountries + " " + boolDirectors)
-        }*/
         return boolYear && boolRating && boolRuntime && boolNrRatings && boolGenres && boolCountries && boolDirectors && boolActors;
     });
+    
+    current_movies_per_genre =
+        Object
+            .entries(movies_per_genre)
+            .filter(function (d) {
+                for (var i = 0; i < current_dataset.length; i++) {
+                    if (current_dataset[i].genres.includes(d[0])) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+    
+    for (var i = 0; i < current_movies_per_genre.length; i++) {
+        current_movies_per_genre[i][1] = 0;
+        for (var j = 0; j < current_dataset.length; j++) {
+            if (current_dataset[j].genres.includes(current_movies_per_genre[i][0])) {
+                current_movies_per_genre[i][1]++;
+            }
+        }
+    }
+    
+    console.log(current_movies_per_genre);
 
     current_movies_per_country =
         Object
@@ -306,7 +330,7 @@ function updateDataset() {
                 }
                 return false;
             });
-
+    
     for (var i = 0; i < current_movies_per_country.length; i++) {
         current_movies_per_country[i][1] = 0;
         for (var j = 0; j < current_dataset.length; j++) {
@@ -315,6 +339,7 @@ function updateDataset() {
             }
         }
     }
+    
     //console.log("Current dataset")
     console.log(current_dataset);
 
@@ -433,6 +458,10 @@ function getAllGenres() {
 
 function getAllDirectors() {
     return Object.keys(movies_per_director).sort(d3.ascending);
+}
+
+function getAllActors() {
+    return Object.keys(movies_per_actor).sort(d3.ascending);
 }
 
 function getAllCountries() {
