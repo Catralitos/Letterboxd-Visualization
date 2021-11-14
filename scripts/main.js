@@ -288,10 +288,10 @@ function updateDataset() {
         var boolCountries = containsCountries(d);
         var boolDirectors = containsDirectors(d);
         var boolActors = containsActors(d);
-        if (d.title === "Sátántangó"){
+        /*if (d.title === "Sátántangó"){
             console.log (d.rating + " " + filters["rating"][0] + " " + filters["rating"][1]);
             console.log(boolYear + " " + boolRating + " " + boolRuntime + " " + boolNrRatings + " " + boolGenres + " " + boolCountries + " " + boolDirectors)
-        }
+        }*/
         return boolYear && boolRating && boolRuntime && boolNrRatings && boolGenres && boolCountries && boolDirectors && boolActors;
     });
 

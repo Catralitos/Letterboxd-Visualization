@@ -17,7 +17,7 @@ function gen_bar_chart() {
         .select("#barChart")
         .attr("style", "width: " + bar_chart_width +
             "px; float: left; height: " + (height_row_1 - 20) + "px;");*/
-
+    
     svg_bar_chart = d3
         .select("#barChart")
         .append("svg")
@@ -228,7 +228,7 @@ dispatch_bar_chart.on("highlight_scatter_on", function (event, d) {
     if (directors) {
 
     } else {
-
+    
     }
     //escolher os elementos do scatter e dar highlight
 });

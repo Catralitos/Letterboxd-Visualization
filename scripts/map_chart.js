@@ -32,7 +32,56 @@ function gen_map_chart() {
         .geoPath()
         .projection(projection);
 
-    //console.log(countries_dataset);
+
+    const colorScale = d3
+        .scaleLinear()
+        .range(['#86c2ff', '#08306b'])
+        .domain(d3.extent(countries_dataset.map((d) => +d[cVar])));
+
+    svg_map = d3
+        .select('#geo')
+        .append('svg')
+        .attr('width', geoWidth)
+        .attr('height', geoHeight)
+        .attr('class', 'map')
+        .selectAll('path')
+        .data(topojson.feature(map_dataset, map_dataset.objects.countries).features)
+        .join('path')
+        .attr('class', 'country')
+        .attr('d', path)
+        .attr('id', (d, i) => d.properties.name)
+        .attr('fill', (d) => {
+            var countryMovies = current_dataset.filter(function (da) {
+                return da.countries.includes(d.properties.name);
+            });
+            if (countryMovies.length === 0) {
+                return lb_lightGrey;
+            } else {
+                return colorScale(countryMovies.length);
+            }
+        })    
+
+    addZoom();
+    updateMapChart();
+}
+
+function updateMapChart() {
+    
+    d3.selectAll("svg.map").remove();
+    d3.selectAll("#legend").remove();
+
+    const cVar = 'nr_of_movies';
+
+    const projection = d3
+        .geoMercator()
+        .scale(height / 6)
+        .rotate([0, 0])
+        .center([0, 0])
+        .translate([geoWidth / 2, geoHeight / 1.5]);
+
+    const path = d3
+        .geoPath()
+        .projection(projection);
 
     const colorScale = d3
         .scaleLinear()
@@ -57,53 +106,8 @@ function gen_map_chart() {
             });
             if (countryMovies.length === 0) {
                 return lb_lightGrey;
-            } else {
-                return colorScale(countryMovies.length);
-            }
-        })
-
-    addZoom();
-    updateMapChart();
-}
-
-function updateMapChart() {
-    const cVar = 'nr_of_movies';
-
-    const projection = d3
-        .geoMercator()
-        .scale(height / 6)
-        .rotate([0, 0])
-        .center([0, 0])
-        .translate([geoWidth / 2, geoHeight / 1.5]);
-
-    const path = d3
-        .geoPath()
-        .projection(projection);
-
-    const colorScale = d3
-        .scaleLinear()
-        .range(['#86c2ff', '#08306b'])
-        .domain(d3.extent(countries_dataset.map((d) => +d[cVar])));
-
-    svg_map = d3
-        .select('#geo')
-        .select('svg')
-        .attr('width', geoWidth)
-        .attr('height', geoHeight)
-        .selectAll('path')
-        .data(topojson.feature(map_dataset, map_dataset.objects.countries).features)
-        .join('path')
-        .attr('class', 'country')
-        .attr('d', path)
-        .attr('id', (d, i) => d.properties.name)
-        .attr('fill', (d) => {
-            var countryMovies = current_dataset.filter(function (da) {
-                return da.countries.includes(d.properties.name);
-            });
-            if (countryMovies.length === 0) {
-                return lb_lightGrey;
-            } else if (filters["countries"].includes(d.properties.name) 
-            && filters["countries"].length != getAllCountries().length) {
+            } else if (filters["countries"].includes(d.properties.name)
+                && filters["countries"].length != getAllCountries().length) {
                 return lb_orange;
             } else {
                 return colorScale(countryMovies.length);
@@ -117,10 +121,14 @@ function updateMapChart() {
             if (countryMovies.length === 0) {
                 return d.properties.name + ": 0 movies";
             } else {
+                if (d.properties.name === "Hungary") {
+                    console.log(countryMovies);
+                }
                 return d.properties.name + ": " + countryMovies.length + " movies";
             }
         });
-
+    
+        
     const scale = ['NA', 1, 5, 10, 50, 100];
 
     d3.select('div#geo')
@@ -160,7 +168,7 @@ function updateMapChart() {
             .style("fill", lb_fontColor);
 
     }
-
+    
     prepareMapChartGroupEvents();
 
 }
@@ -169,7 +177,6 @@ function prepareMapChartGroupEvents() {
     //svg_map
     d3.select("body")
         .selectAll(".country")
-        //TODO rever se é o dataset certo
         .data(topojson.feature(map_dataset, map_dataset.objects.countries).features)
         .on('mouseenter', function (event, d) {
             dispatch_map.call(
@@ -238,10 +245,10 @@ dispatch_map.on("click_map", function (event, d) {
         }
         filters["countries"].push(d.properties.name);
 
-       /* d3.select(this)
-            //.transition("list_mouseevent")
-            // .duration(1000)
-            .style("fill", lb_orange);*/
+        /* d3.select(this)
+             //.transition("list_mouseevent")
+             // .duration(1000)
+             .style("fill", lb_orange);*/
     }
     updateDataset();
     updateScatterplot();
