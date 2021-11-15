@@ -45,7 +45,7 @@ function gen_map_chart() {
         .attr('class', 'country')
         .attr('d', path)
         .attr('id', (d, i) => d.properties.name.replace(/\s/g, '').replace(/\./g, ''))
-        .attr('fill', (d) => {
+        .style('fill', (d) => {
             var countryMovies = current_dataset.filter(function (da) {
                 return da.countries.includes(d.properties.name);
             });
@@ -95,7 +95,7 @@ function updateMapChart() {
         .attr('class', 'country')
         .attr('d', path)
         .attr('id', (d, i) => d.properties.name.replace(/\s/g, '').replace(/\./g, ''))
-        .attr('fill', (d) => {
+        .style('fill', (d) => {
             var countryMovies = current_dataset.filter(function (da) {
                 return da.countries.includes(d.properties.name);
             });

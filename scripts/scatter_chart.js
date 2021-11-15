@@ -341,13 +341,13 @@ dispatch_scatter.on("highlight_genre_on", function (event, d) {
         str = str.replace(/\s/g, '').replace(/\./g, '');
         var item = d3.select(str);
         if (item !== undefined) {
-            previousGenreStroke.push(item.attr('stroke'));
-            item.attr("stroke", lb_green);
+            previousGenreStroke.push(item.style('stroke'));
+            item.style("stroke", lb_green);
         }
         item = d3.select(str + "List");
         if (item !== undefined) {
-            previousListStroke.push(item.attr('stroke'));
-            item.attr("stroke", lb_green);
+            previousListStroke.push(item.style('stroke'));
+            item.style("stroke", lb_green);
         }
     }
 });
@@ -358,11 +358,11 @@ dispatch_scatter.on("highlight_genre_off", function (event, d) {
         str = str.replace(/\s/g, '').replace(/\./g, '');
         var item = d3.select(str);
         if (item !== undefined) {
-            item.attr("stroke", previousGenreStroke[i]);
+            item.style("stroke", previousGenreStroke[i]);
         }
         item = d3.select(str + "List");
         if (item !== undefined) {
-            item.attr("stroke", previousListStroke[i]);
+            item.style("stroke", previousListStroke[i]);
         }
     }
     previousGenreStroke = [];

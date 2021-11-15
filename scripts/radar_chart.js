@@ -69,7 +69,7 @@ function updateRadarChartLines() {
             .append("line")
             .attr("class", "solid")
             .attr("fill", "none")
-            .attr("stroke", "black")
+            .style("stroke", "black")
             .attr("stroke-width", 1)
             .attr("x1", 0)
             .attr("y1", 0)
@@ -104,7 +104,7 @@ function updateRadarByGenre() {
                 }
                 return 7;
             })
-            .attr("stroke", function () {
+            .style("stroke", function () {
                 if (filters["genres"].length != getAllGenres().length && filters["genres"].includes(d[0])) {
                     return lb_orange;
                 }
@@ -113,13 +113,13 @@ function updateRadarByGenre() {
                 }
                 return "none";
             })
-            .attr("stroke-width", function () {
+            .style("stroke-width", function () {
                 if (isMaxNumOfMovies(d[1])) {
                     return "2";
                 }
                 return "2";
             })
-            .attr("fill", function () {
+            .style("fill", function () {
                 return color_scale[d[0]];
             })
             .attr("id", d[0])
@@ -236,14 +236,14 @@ dispatch_radar.on("click_radar", function (event, d) {
                 .select(this)
                 //.transition("click_radar")
                 //.duration('200')
-                .attr("stroke", "black");
+                .style("stroke", "black");
         }
         else {
             d3
                 .select(this)
                 //.transition("click_radar")
                 //.duration('200')
-                .attr("stroke", "none");
+                .style("stroke", "none");
         }
 
         for (var i = 0; i < filters["genres"].length; i++) {
@@ -268,7 +268,7 @@ dispatch_radar.on("click_radar", function (event, d) {
             .selectAll("circle.radar")
             //.transition("click_radar")
             //.duration(100)
-            .attr("stroke", function (d) {
+            .style("stroke", function (d) {
                 /*if (isMaxNumOfMovies(d[1])) {
                     return "black";
                 }

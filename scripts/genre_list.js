@@ -60,8 +60,8 @@ function gen_genre_list() {
         .attr("width", 130)
         .attr("height", genre_height)
         .attr("class", "list_rect")
-        .attr("fill", lb_grey)
-        .attr("stroke", function (d) {
+        .style("fill", lb_grey)
+        .style("stroke", function (d) {
             if (filters["genres"].length != getAllGenres().length && filters["genres"].includes(d)) {
                 return lb_orange;
             }
@@ -77,7 +77,7 @@ function gen_genre_list() {
     group
         .append("circle")
         .attr("r", 6)
-        .attr("fill", function (d) { return color_scale[d.replace(/\s/g, '')]; })
+        .style("fill", function (d) { return color_scale[d.replace(/\s/g, '')]; })
         .attr("cx", 25)
         .attr("cy", function (d, i) {
             return 15 + 10 + (genre_height + 5) * i;
@@ -100,7 +100,7 @@ function updateLists() {
         .data(getAllGenres())
         .transition()
         .duration(1000)
-        .attr("stroke", function (d) {
+        .style("stroke", function (d) {
             if (filters["genres"].length != getAllGenres().length && filters["genres"].includes(d)) {
                 return lb_orange;
             }
@@ -113,7 +113,7 @@ dispatch_list.on("list_mouseenter", function (event, d) {
         .select("rect")
         .transition("list_mouseevent")
         .duration(100)
-        .attr("fill", lb_lightGrey)
+        .style("fill", lb_lightGrey)
 });
 
 dispatch_list.on("list_mouseleave", function (event, d) {
@@ -121,7 +121,7 @@ dispatch_list.on("list_mouseleave", function (event, d) {
         .select("rect")
         .transition("list_mouseevent")
         .duration(100)
-        .attr("fill", lb_grey)
+        .style("fill", lb_grey)
 });
 
 dispatch_list.on("highlight_scatter_on", function (event, d) {
@@ -158,7 +158,7 @@ dispatch_list.on("genre_list_click", function (event, d) {
         d3.select("rect")
             .transition("list_mouseevent")
             .duration(1000)
-            .attr("stroke", "none")
+            .style("stroke", "none")
         
         for (var i = 0; i < filters["genres"].length; i++) {
             if (filters["genres"][i] == d) {
@@ -179,7 +179,7 @@ dispatch_list.on("genre_list_click", function (event, d) {
         d3.select("rect")
             //.transition("list_mouseevent")
             //.duration(1000)
-            .attr("stroke", lb_orange);
+            .style("stroke", lb_orange);
     }
     updateDataset();
     updateScatterplot();
