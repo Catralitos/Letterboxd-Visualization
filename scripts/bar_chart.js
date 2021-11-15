@@ -44,7 +44,7 @@ function updateBarChart() {
             .domain(d3.range(current_movies_per_director.length))
             .range([margin.top, height - margin.bottom])
             .padding(0.1);
-
+        
         function xAxis(g) {
             g.attr("transform", `translate(0, ${margin.top})`).call(d3.axisTop(x));
         }
@@ -66,7 +66,7 @@ function updateBarChart() {
             .append("svg")
             .attr("width", width)
             .attr("height", height);
-
+        
         svg_bar_chart
             .append("g")
             .attr("class", "bars")
@@ -86,7 +86,7 @@ function updateBarChart() {
                 if (filters["directors"].length === getAllDirectors().length) {
                     return lb_cyan;
                 }
-                return lb_green
+                return lb_orange
             });
     } else {
         x = d3
@@ -98,7 +98,7 @@ function updateBarChart() {
             .domain(d3.range(current_movies_per_actor.length))
             .range([margin.top, height - margin.bottom])
             .padding(0.1);
-
+        
         function xAxis(g) {
             g.attr("transform", `translate(0, ${margin.top})`).call(d3.axisTop(x));
         }
@@ -120,7 +120,7 @@ function updateBarChart() {
             .append("svg")
             .attr("width", width)
             .attr("height", height);
-
+        
         svg_bar_chart
             .append("g")
             .attr("class", "bars")
@@ -133,11 +133,14 @@ function updateBarChart() {
             .attr("y", (d, i) => y(i))
             .attr("width", (d) => x(d[1]) - x(0))
             .attr("height", y.bandwidth())
+            .attr("id", function (d) {
+                return d[0].replace(/\s/g, '');
+            })
             .style("fill", function (d) {
                 if (filters["actors"].length === getAllActors().length) {
                     return lb_cyan;
                 }
-                return lb_green;
+                return lb_orange
             });
     }
 
