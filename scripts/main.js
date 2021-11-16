@@ -99,13 +99,27 @@ var filters = {
     nr_of_ratings: [2534, 960591]
 }
 
-d3.json("data/countries.json").then(function (data) {
-    map_dataset = data;
-})
 
-d3.csv("data/country_movies.csv").then(function (data) {
-    countries_dataset = data;
-})
+Promise.all([d3.json("data/countries.json"), d3.csv("data/country_movies.csv"),d3.dsv(',', "data/movie_data.csv")]).then(([map, data,dataset]) => {
+    try { 
+        map_dataset = map;
+        countries_dataset = data;
+        current_dataset = dataset;
+        gen_map_chart();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    
+});
+
+// d3.json("data/countries.json").then(function (data) {
+//     map_dataset = data;
+// })
+
+// d3.csv("data/country_movies.csv").then(function (data) {
+//     countries_dataset = data;
+// })
 
 d3.dsv(',', "data/movie_data.csv").then(function (data) {
 
@@ -274,11 +288,13 @@ d3.dsv(',', "data/movie_data.csv").then(function (data) {
 
     gen_scatterplot();
     gen_bar_chart();
-    gen_map_chart();
+
+    
     gen_radar_chart();
     gen_genre_list();
     gen_year_chart();
     gen_sliders();
+    //gen_map_chart();
 });
 
 
