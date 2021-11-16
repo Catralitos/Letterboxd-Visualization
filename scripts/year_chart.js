@@ -1,10 +1,10 @@
 
 //DIV DIMENSIONS
-var width = 800;
-var height = 800;
+var width = 600;
+var height = 600;
 //BIGGEST CIRCLE/ROOT DIMENSION
-var vWidth = 600;
-var vHeight = 600;
+var vWidth = 480;
+var vHeight = 480;
 var size = 1;
 var textSize = 1;
 var diameter = width;
@@ -65,12 +65,15 @@ function createCPacking(data) {
     .attr('font-size', 10)
     .attr('stroke-linejoin', 'round')
     .attr('stroke-width', 3)
-    .attr('x', function (d) { return d.x * textSize * 0.93; })
-    .attr('y', (d) => d.y * textSize)
+    .attr('x', function (d) { return d.x * textSize + 20; })
+    .attr('y', (d) => d.y * textSize - 10)
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      return d.data.name.substring(0,5);
+      if (d.data.children!== undefined && d.data.name.substring(0, 5) !== "root" && d.data.name.substring(4) === 's') {
+        return d.data.name.substring(0, 5);
+      }
+      return "";
     })
     .filter((d) => d.children)
     .attr('text-anchor', 'end')
