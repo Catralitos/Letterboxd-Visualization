@@ -90,16 +90,36 @@ function createCPacking(data) {
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      if (d.data.children!== undefined && d.data.name.substring(0, 5) !== "root" && d.data.name.substring(4) === 's') {
+      if (d.depth==1) {
         return d.data.name.substring(0, 5);
       }
-      return "";
     })
     .filter((d) => d.children)
     .attr('text-anchor', 'end')
     .clone(true)
     .lower()
     .attr('stroke', 'white');
+
+    // var text = circlesG
+    //   .append('text')
+    //   .attr('font-family', 'sans-serif')
+    //   .attr('font-size', 10)
+    //   .attr('stroke-linejoin', 'round')
+    //   .attr('stroke-width', 3)
+    //   .attr('x', function (d) { return d.x * textSize - 10; })
+    //   .attr('y', (d) => d.y * textSize - 20)
+    //   .attr('dy', '0.31em')
+    //   .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
+    //   .text(function (d) {
+    //     if (d.depth=== 2) {
+    //       return d.data.name.substring(0, 5);
+    //     }
+    //   })
+    //   .filter((d) => d.children)
+    //   .attr('text-anchor', 'end')
+    //   .clone(true)
+    //   .lower()
+    // .style('fill', 'black'); 
 }
 
 function updateYearChart(){
