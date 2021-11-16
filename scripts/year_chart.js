@@ -84,17 +84,7 @@ function createCPacking() {
         return '#57A367';
       else
         return '#9D41E0';
-      // var countryMovies = current_dataset.filter(function (da) {
-      //     return da.countries.includes(d.properties.name);
-      // });
-      // if (countryMovies.length === 0) {
-      //     return lb_lightGrey;
-      // } else if (filters["countries"].includes(d.properties.name)
-      //     && filters["countries"].length != getAllCountries().length) {
-      //     return lb_orange;
-      // } else {
-      //     return colorScale(countryMovies.length);
-      // }
+
     })
     .attr('opacity', 0.3)
     .attr('stroke-width', '2px')
@@ -194,47 +184,61 @@ function createCPacking() {
       }
     })
     .attr("id", (d) => d.data.name);
-
-  var text = circlesG
-    .append('text')
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', 10)
-    .attr('stroke-linejoin', 'round')
-    .attr('stroke-width', 3)
-    .attr('x', function (d) { return d.x * textSize +10; })
-    .attr('y', (d) => d.y * textSize - 10)
-    .attr('dy', '0.31em')
-    .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
-    .text(function (d) {
-      if (d.depth == 1) 
-      {
-        if(d.data.name!==undefined){
-          
-          return d.data.name;
-        }else{
-          if (d.data.data.name!==undefined) 
-            return d.data.data.name;
-          else{
-            if (d.data.data.data.name!==undefined) 
-              return d.data.data.data.name;
-          }  
-
+    
+      var text = circlesG
+      .append('text')
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', 10)
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-width', 3)
+      .attr('x', function (d) { 
+        if (d.depth == 1) 
+        {
+          if(d.data.name!==undefined){
+            
+            return d.x * textSize +10; 
+          }else{
+            if (d.data.data.name!==undefined) 
+              return d.x * textSize + 10; 
+            else{
+              if (d.data.data.data.name!==undefined) 
+                return d.x * textSize - 50;
+            }  
+  
+          }
         }
-      }
-      // else{
-      //   if(d.data.name!==undefined && d.data.name !== "root")
-      //     return d.data.name
-      //   else if(d.data.data.name!==undefined)
-      //     return d.data.data.name;
-      //   else if(d.data.data.data.name!==undefined)
-      //     return d.data.data.data.name;  
-      // }
-    })
-    .filter((d) => d.children)
-    .attr('text-anchor', 'end')
-    .clone(true)
-    .lower()
-    .attr('stroke', 'white');
+        return d.x * textSize +10; 
+      })
+      .attr('y', (d) => d.y * textSize - 10)
+      .attr('dy', '0.31em')
+      .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
+      .text(function (d) {
+        if (d.depth == 1) 
+        {
+          if(d.data.name!==undefined){
+            
+            return d.data.name;
+          }else{
+            if (d.data.data.name!==undefined) 
+              return d.data.data.name;
+            else{
+              if (d.data.data.data.name!==undefined) 
+                return d.data.data.data.name;
+            }  
+  
+          }
+        }
+  
+      })
+      .filter((d) => d.children)
+      .attr('text-anchor', 'end')
+      .clone(true)
+      .lower()
+      .attr('stroke', 'white');
+    
+  
+  
+  
 
 }
 
