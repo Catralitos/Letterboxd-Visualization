@@ -31,7 +31,7 @@ function updateBarChart() {
     svg_bar_chart.remove();
 
     width = 400;
-    height = 400;
+    height = 200;
     margin = { top: 20, right: 20, bottom: 20, left: 130 };
 
     if (directors) {
