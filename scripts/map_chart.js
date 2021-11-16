@@ -134,8 +134,9 @@ function updateMapChart() {
         .append('text')
         .attr('x', 30)
         .attr('y', 25)
-        .text('Nª of Movies per Country:')
-        .style("fill", lb_fontColor);
+        .text('Number of Movies:')
+        .style("fill", lb_fontColor)
+        
 
     for (let i = 0; i < scale.length; i++) {
         d3.select('#legend')
