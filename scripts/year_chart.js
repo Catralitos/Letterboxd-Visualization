@@ -168,7 +168,11 @@ function createCPacking() {
       );
     })
     .on("click", function (event, d) {
-
+      if (d.depth !== 0 && d.depth < 2){
+        current_json = d;
+        createCPacking();
+      }
+        
 
       if (d.depth === 0) {
         //do nothing
