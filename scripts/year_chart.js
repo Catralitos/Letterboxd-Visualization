@@ -168,6 +168,8 @@ function createCPacking() {
       );
     })
     .on("click", function (event, d) {
+
+
       if (d.depth === 0) {
         //do nothing
       } else if (d.depth === 3) {
