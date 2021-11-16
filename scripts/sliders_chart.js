@@ -35,10 +35,10 @@ function gen_sliders() {
         });
 
     var gRangeRuntime = d3
-        .select('#Sliders')
+        .select('#slider-runtime')
         .append('svg')
         .attr('width', 500)
-        .attr('height', 100)
+        .attr('height', 80)
         .append('g')
         .attr('transform', 'translate(30,30)');
 
@@ -68,10 +68,10 @@ function gen_sliders() {
         });
 
     var gRangeRating = d3
-        .select('#Sliders')
+        .select('#slider-rating')
         .append('svg')
         .attr('width', 500)
-        .attr('height', 100)
+        .attr('height', 80)
         .append('g')
         .attr('transform', 'translate(30,30)');
 
@@ -101,10 +101,10 @@ function gen_sliders() {
         });
 
     var gRangeNrRatings = d3
-        .select('#Sliders')
+        .select('#slider-ratings')
         .append('svg')
         .attr('width', 500)
-        .attr('height', 100)
+        .attr('height', 80)
         .append('g')
         .attr('transform', 'translate(30,30)');
 
