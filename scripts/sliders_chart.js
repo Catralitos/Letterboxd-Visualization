@@ -18,7 +18,7 @@ function gen_sliders() {
         .max(432)
         .width(300)
         .tickFormat(f)
-        .tickValues([60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420])
+        .tickValues([40, 100,  160,  220,  280, 340,  400])
         .default([45, 432])
         .fill('#2196f3')
         .on('onchange', val => {
@@ -35,10 +35,10 @@ function gen_sliders() {
         });
 
     var gRangeRuntime = d3
-        .select('#Sliders')
+        .select('#slider-runtime')
         .append('svg')
         .attr('width', 500)
-        .attr('height', 100)
+        .attr('height', 80)
         .append('g')
         .attr('transform', 'translate(30,30)');
 
@@ -68,10 +68,10 @@ function gen_sliders() {
         });
 
     var gRangeRating = d3
-        .select('#Sliders')
+        .select('#slider-rating')
         .append('svg')
         .attr('width', 500)
-        .attr('height', 100)
+        .attr('height', 80)
         .append('g')
         .attr('transform', 'translate(30,30)');
 
@@ -83,8 +83,8 @@ function gen_sliders() {
         .max(960591)
         .width(300)
         .tickFormat(f3)
-        .ticks(5)
-        //.tickValues([60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 960000])
+        //.ticks(5)
+        .tickValues([2500, 202000, 401500, 601000, 800500, 1000000])
         .default([2534, 960591])
         .fill('#2196f3')
         .on('onchange', val => {
@@ -101,10 +101,10 @@ function gen_sliders() {
         });
 
     var gRangeNrRatings = d3
-        .select('#Sliders')
+        .select('#slider-ratings')
         .append('svg')
         .attr('width', 500)
-        .attr('height', 100)
+        .attr('height', 80)
         .append('g')
         .attr('transform', 'translate(30,30)');
 

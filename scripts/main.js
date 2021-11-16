@@ -81,10 +81,10 @@ var color_scale = {
     "Romance": "#FDBF6F",
     "Science-Fiction": "#183517",
     "Thriller": "#F1E833",
-    //TODO meter 3 cores novas
-    "Tv-movie": "#FDBF6F",
-    "War": "#183517",
-    "Western": "#F1E833"
+    // Novas
+    "Tv-movie": "#E9FFFF",
+    "War": "#D8D8D8",
+    "Western": "#540D0D"
 }
 
 // filters

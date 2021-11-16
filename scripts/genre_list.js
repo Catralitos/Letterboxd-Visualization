@@ -11,7 +11,7 @@ function gen_genre_list() {
     const list_height = genre_height * 16 + 5 * 17;
 
     d3.select("GenreList")
-        .attr("style", "width: 80%; height: " + (height_row_2 - 60) + "px; \
+        .attr("style", "width: 80%; height:1% " + (height_row_2 - 60) + "px; \
             margin-left: 10%;")
 
     svg_genre_list = d3
