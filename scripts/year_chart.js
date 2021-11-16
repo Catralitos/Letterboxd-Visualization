@@ -230,7 +230,7 @@ function updateYearChart() {
 
 
 dispatch_year.on("highlight_scatter_decade_on", function (event, d) {
-
+  
 });
 
 dispatch_year.on("highlight_scatter_decade_off", function (event, d) {
@@ -357,8 +357,9 @@ function reset() {
   updateRadarChart();
   updateLists();
   updateMapChart();
-  updateYearChart();
+  //updateYearChart();
   updateSliders();
+  gen_year_chart();
 }
 
 const tree = (data) => {
