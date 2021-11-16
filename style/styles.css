@@ -56,7 +56,7 @@ p {
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 0.5fr 0.9r 1.1fr 1fr 1fr 2fr 1fr;
+  grid-template-rows: 0.5fr 0.4r 1.6fr 1fr 1fr 2fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     "Title Title Title Title Title Title Title Title Title"

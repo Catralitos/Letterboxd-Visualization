@@ -312,7 +312,7 @@ function getRadarChartHscale() {
         .scalePow()
         .exponent(0.3)
         .domain([0, getMaxValue(movies_per_group)])
-        .range([0, width_radar_chart / 3.25]);
+        .range([0, width_radar_chart / 4,5]);
 }
 
 function getNumOfGroups() {
