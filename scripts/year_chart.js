@@ -168,11 +168,11 @@ function createCPacking() {
       );
     })
     .on("click", function (event, d) {
-      if (d.depth !== 0 && d.depth < 2){
+      if (d.depth !== 0 && d.depth < 2) {
         current_json = d;
         createCPacking();
       }
-        
+
 
       if (d.depth === 0) {
         //do nothing
@@ -206,13 +206,13 @@ function createCPacking() {
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      if (d.depth == 1) 
-      {
-        if(d.data.name!==undefined){
-          
+      if (d.depth == 1) {
+        if (d.data.name !== undefined) {
+
           return d.data.name.substring(0, 5);
-        }else{
-          console.log(d);
+        } else {
+          //console.log(d);
+          return "";
         }
       }
     })
@@ -276,8 +276,16 @@ dispatch_year.on("highlight_country_off", function (event, d) {
 
 dispatch_year.on("click_decade", function (event, d) {
   //TODO mudar a cor do elemento
-  var x = [parseInt(d.data.name.substring(0, 4)), parseInt(d.data.name.substring(0, 3) + "9")];
-  if ( JSON.stringify(filters['years']) === JSON.stringify(x)) {
+  console.log("Entrou no decade");
+  console.log("d")
+  console.log(d);
+  console.log("d.data"); 
+  console.log(d.data);  
+  var aux = d.data.name === undefined ? d.data.data.name : d.data.name;
+  console.log("aux"); 
+  console.log(aux);
+  var x = aux.length > 4 ? [parseInt(aux.substring(0, 3) + "0"), parseInt(aux.substring(0, 3) + "9")] : [parseInt(aux), parseInt(aux)];
+  if (JSON.stringify(filters['years']) === JSON.stringify(x)) {
     filters['years'] = [1924, 2021];
   } else {
     filters['years'] = x;
@@ -294,9 +302,16 @@ dispatch_year.on("click_decade", function (event, d) {
 
 
 dispatch_year.on("click_year", function (event, d) {
-  // console.log(d);
-  var x = [parseInt(d.data.name.substring(0, 4)), parseInt(d.data.name.substring(0, 4))];
-  if ( JSON.stringify(filters['years']) === JSON.stringify(x)) {
+  console.log("Entrou no year");
+  console.log("d")
+  console.log(d);
+  console.log("d.data"); 
+  console.log(d.data);  
+  var aux = d.data.name === undefined ? d.data.data.name : d.data.name;
+  console.log("aux"); 
+  console.log(aux);
+  var x = [parseInt(aux.substring(0, 4)), parseInt(aux.substring(0, 4))];
+  if (JSON.stringify(filters['years']) === JSON.stringify(x)) {
     filters['years'] = [1924, 2021];
   } else {
     filters['years'] = x;
@@ -314,27 +329,37 @@ dispatch_year.on("click_year", function (event, d) {
 
 
 dispatch_year.on("click_movie", function (event, d) {
-    var movie;
-    for (var i = 0; i < current_dataset.length; i++){
-      if (current_dataset[i].title === d.data.name){
-        movie = current_dataset[i];
-        break;
-      }
+  var movie;
+  for (var i = 0; i < current_dataset.length; i++) {
+    if (current_dataset[i].title === d.data.name) {
+      movie = current_dataset[i];
+      break;
     }
-    if (movie === undefined) return;
+  }
+  if (movie === undefined) return;
 
-    var str = movie.title + " (" + movie.year + ")\n";
-    str += "Directed by: " + movie.directors + "\n";
-    str += "Starring: " + movie.actors + "\n";
-    str += "Runtime: " + movie.runtime + "\n";
-    str += "Rating: " + movie.rating + "\n";
-    str += "Number of Ratings: " + (movie.nr_of_ratings * 1000) + "\n";
-    str += "Countries: " + movie.countries + "\n";
-    str += "Genres: " + movie.genres + "\n";
-    window.alert(str);
+  var str = movie.title + " (" + movie.year + ")\n";
+  str += "Directed by: " + movie.directors + "\n";
+  str += "Starring: " + movie.actors + "\n";
+  str += "Runtime: " + movie.runtime + "\n";
+  str += "Rating: " + movie.rating + "\n";
+  str += "Number of Ratings: " + (movie.nr_of_ratings * 1000) + "\n";
+  str += "Countries: " + movie.countries + "\n";
+  str += "Genres: " + movie.genres + "\n";
+  window.alert(str);
 });
 
-
+function reset() {
+  filters['years'] = [1924, 2021];
+  updateDataset();
+  updateScatterplot();
+  updateBarChart();
+  updateRadarChart();
+  updateLists();
+  updateMapChart();
+  updateYearChart();
+  updateSliders();
+}
 
 const tree = (data) => {
   const root = d3.hierarchy(data).sum((d) => 5);
