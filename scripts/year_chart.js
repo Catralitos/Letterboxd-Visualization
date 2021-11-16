@@ -158,20 +158,35 @@ function createCPacking() {
       );
     })
     .on("click", function (event, d) {
-      if (d.depth !== 0 && d.children.children === undefined ){
-        current_json = d;
-        createCPacking();
+      try{
+        if (d.depth !== 0 && d.children.children === undefined ){
+          current_json = d;
+          createCPacking();
+        }
       }
+      catch(e){
+        
+      }
+
 
 
       if (d.depth === 0) {
         //do nothing
-      } else if (d.depth === 3) {
+      } else if (d.data.name !== undefined) {
         dispatch_year.call(
           "click_movie",
-          this, event, d
+          this, event, d.data.name
         );
-      } else if (d.depth === 1) {
+        
+      } 
+      
+      else if (d.data.data.name !== undefined) {
+        dispatch_year.call(
+          "click_movie",
+          this, event, d.data.data.name
+        );
+      }  
+      else if (d.depth === 1) {
         dispatch_year.call(
           "click_decade",
           this, event, d
@@ -198,8 +213,13 @@ function createCPacking() {
             
             return d.x * textSize +10; 
           }else{
-            if (d.data.data.name!==undefined) 
-              return d.x * textSize + 10; 
+            if (d.data.data.name!==undefined) {
+              // console.log(d.data.data.name);
+              if(d.data.data.name.length<5)
+                return d.x * textSize + 10;
+              else  
+                return d.x * textSize - 50; 
+            }
             else{
               if (d.data.data.data.name!==undefined) 
                 return d.x * textSize - 50;
@@ -339,7 +359,7 @@ dispatch_year.on("click_year", function (event, d) {
 dispatch_year.on("click_movie", function (event, d) {
   var movie;
   for (var i = 0; i < current_dataset.length; i++) {
-    if (current_dataset[i].title === d.data.name) {
+    if (current_dataset[i].title === d) {
       movie = current_dataset[i];
       break;
     }
