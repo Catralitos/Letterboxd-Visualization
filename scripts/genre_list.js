@@ -8,16 +8,16 @@ var dispatch_list = d3.dispatch(
 
 function gen_genre_list() {
     var genre_height = 30;
-    const list_height = genre_height * 16 + 5 * 17;
+    const list_height = genre_height * 19 + 7 * 17;
 
     d3.select("GenreList")
-        .attr("style", "width: 80%; height:1% " + (height_row_2 - 60) + "px; \
+        .attr("style", "width: 100%; height:100; \
             margin-left: 10%;")
 
     svg_genre_list = d3
         .select("#GenreList")
         .append("svg")
-        .attr("viewBox", "0, 0, 150, " + list_height);
+        .attr("viewBox", "0, 0, 200, " + list_height);
 
     const genres = getAllGenres();
 
@@ -57,7 +57,7 @@ function gen_genre_list() {
 
     group
         .append("rect")
-        .attr("width", 130)
+        .attr("width", 180)
         .attr("height", genre_height)
         .attr("class", "list_rect")
         .style("fill", lb_grey)
