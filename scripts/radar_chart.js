@@ -20,10 +20,10 @@ function gen_radar_chart() {
         .select("#GenreChart")
         .append("svg")
         .attr("width", "300%")
-        .attr("height", "300%")
+        .attr("height", "200%")
         .append("g")
-        .attr("transform", "translate(" + (300 / 2) + "," +
-            (350 / 2 - padding_bottom) + ")");
+        .attr("transform", "translate(" + (250 / 2) + "," +
+            (300 / 2 - padding_bottom) + ")");
     ;
 
     movies_per_group = Object.fromEntries(current_movies_per_genre);
