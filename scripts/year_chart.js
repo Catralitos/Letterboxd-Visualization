@@ -60,7 +60,7 @@ function createCPacking() {
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
     .interpolate(d3.interpolateHcl);
 
-  console.log(root);
+  //console.log(root);
 
   var nodes = root.descendants();
 
@@ -168,7 +168,11 @@ function createCPacking() {
       );
     })
     .on("click", function (event, d) {
-
+      if (d.depth !== 0 && d.depth < 2){
+        current_json = d;
+        createCPacking();
+      }
+        
 
       if (d.depth === 0) {
         //do nothing
@@ -202,8 +206,14 @@ function createCPacking() {
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      if (d.depth == 1) {
-        return d.data.name.substring(0, 5);
+      if (d.depth == 1) 
+      {
+        if(d.data.name!==undefined){
+          
+          return d.data.name.substring(0, 5);
+        }else{
+          console.log(d);
+        }
       }
     })
     .filter((d) => d.children)
@@ -284,7 +294,7 @@ dispatch_year.on("click_decade", function (event, d) {
 
 
 dispatch_year.on("click_year", function (event, d) {
-  console.log(d);
+  // console.log(d);
   var x = [parseInt(d.data.name.substring(0, 4)), parseInt(d.data.name.substring(0, 4))];
   if ( JSON.stringify(filters['years']) === JSON.stringify(x)) {
     filters['years'] = [1924, 2021];
