@@ -104,14 +104,14 @@ function createCPacking() {
     .attr('cy', (d) => d.y * size)
     .attr('r', (d) => d.r * size)
     .on('mouseenter', function (event, d) {
-      if (d === root) {
+      if (d.depth === 0) {
         //do nothing
-      } else if (d.children.length === 0) {
+      } else if (d.depth === 3) {
         dispatch_year.call(
           "highlight_scatter_movie_on",
           this, event, d
         );
-      } else if (d.children.length === 10) {
+      } else if (d.depth === 2) {
         dispatch_year.call(
           "highlight_scatter_decade_on",
           this, event, d
@@ -134,20 +134,16 @@ function createCPacking() {
         "highlight_country_on",
         this, event, d
       );
-      dispatch_year.call(
-        "highlight_year_on",
-        this, event, d
-      );
     })
     .on('mouseleave', function (event, d) {
-      if (d === root) {
+      if (d.depth === 0) {
         //do nothing
-      } else if (d.children.length === 0) {
+      } else if (d.depth === 3) {
         dispatch_year.call(
           "highlight_scatter_movie_off",
           this, event, d
         );
-      } else if (d.children.length === 10) {
+      } else if (d.depth === 2) {
         dispatch_year.call(
           "highlight_scatter_decade_off",
           this, event, d
@@ -170,20 +166,18 @@ function createCPacking() {
         "highlight_country_off",
         this, event, d
       );
-      dispatch_year.call(
-        "highlight_year_off",
-        this, event, d
-      );
     })
     .on("click", function (event, d) {
-      if (d === root) {
+
+      if (d.depth === 0) {
         //do nothing
-      } else if (d.children.length === 0) {
+      } else if (d.depth === 3) {
+        
         dispatch_year.call(
           "click_movie",
           this, event, d
         );
-      } else if (d.children.length === 10) {
+      } else if (d.depth === 2) {
         dispatch_year.call(
           "click_decade",
           this, event, d
@@ -195,7 +189,7 @@ function createCPacking() {
         );
       }
     })
-    .attr("id", d.data.name);
+    .attr("id",(d) => d.data.name);
 
   var text = circlesG
     .append('text')
@@ -217,33 +211,6 @@ function createCPacking() {
     .clone(true)
     .lower()
     .attr('stroke', 'white');
-<<<<<<< HEAD
-
-    // var text = circlesG
-    //   .append('text')
-    //   .attr('font-family', 'sans-serif')
-    //   .attr('font-size', 10)
-    //   .attr('stroke-linejoin', 'round')
-    //   .attr('stroke-width', 3)
-    //   .attr('x', function (d) { return d.x * textSize - 10; })
-    //   .attr('y', (d) => d.y * textSize - 20)
-    //   .attr('dy', '0.31em')
-    //   .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
-    //   .text(function (d) {
-    //     if (d.depth=== 2) {
-    //       return d.data.name.substring(0, 5);
-    //     }
-    //   })
-    //   .filter((d) => d.children)
-    //   .attr('text-anchor', 'end')
-    //   .clone(true)
-    //   .lower()
-    // .style('fill', 'black'); 
-}
-=======
->>>>>>> 84b972ee8cb7270a2b1ab5ade47e4ed50c33ed8c
-
-
 
 }
 
@@ -253,35 +220,35 @@ function updateYearChart() {
 
 
 dispatch_year.on("highlight_scatter_decade_on", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_scatter_decade_off", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_scatter_year_on", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_scatter_year_off", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_scatter_movie_off", function (event, d) {
- 
+
 });
 
 dispatch_year.on("highlight_genre_on", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_genre_off", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_bar_on", function (event, d) {
- 
+
 });
 
 dispatch_year.on("highlight_bar_off", function (event, d) {
@@ -289,26 +256,27 @@ dispatch_year.on("highlight_bar_off", function (event, d) {
 });
 
 dispatch_year.on("highlight_country_on", function (event, d) {
-  
+
 });
 
 dispatch_year.on("highlight_country_off", function (event, d) {
-  
+
 });
 
 
 dispatch_year.on("click_decade", function (event, d) {
-  
+
+
 });
 
 
 dispatch_year.on("click_year", function (event, d) {
-  
+
 });
 
 
 dispatch_year.on("click_movie", function (event, d) {
-  
+
 });
 
 
