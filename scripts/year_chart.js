@@ -52,7 +52,27 @@ function createCPacking(data) {
   var circle = circlesG
     .append('circle')
     .attr('stroke', 'white')
-    .attr('fill', '#05668D')
+    .style('fill', (d) => {
+      if(d.depth==0)
+      return 'grey';
+      else if(d.depth==1)
+        return '#05668D';
+      else if(d.depth==2)
+        return '#57A367';  
+      else
+        return '#9D41E0';
+      // var countryMovies = current_dataset.filter(function (da) {
+      //     return da.countries.includes(d.properties.name);
+      // });
+      // if (countryMovies.length === 0) {
+      //     return lb_lightGrey;
+      // } else if (filters["countries"].includes(d.properties.name)
+      //     && filters["countries"].length != getAllCountries().length) {
+      //     return lb_orange;
+      // } else {
+      //     return colorScale(countryMovies.length);
+      // }
+    })
     .attr('opacity', 0.3)
     .attr('stroke-width', '2px')
     .attr('cx', (d) => d.x * size)
