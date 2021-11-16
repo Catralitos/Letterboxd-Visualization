@@ -10,28 +10,51 @@ var textSize = 1;
 var diameter = width;
 var data_path = "data/circular_data.csv";
 
+var current_json;
+
+var dispatch_year = d3.dispatch(
+  "highlight_scatter_decade_on",
+  "highlight_scatter_decade_off",
+  "highlight_scatter_year_on",
+  "highlight_scatter_year_off",
+  "highlight_scatter_movie_on",
+  "highlight_scatter_movie_off",
+  "highlight_genre_on",
+  "highlight_genre_off",
+  "highlight_bar_on",
+  "highlight_bar_off",
+  "highlight_country_on",
+  "highlight_country_off",
+  "click_decade",
+  "click_year",
+  "click_movie"
+);
+
 function gen_year_chart() {
   d3.json("data/jason.json")
     .then(function (data) {
+      current_json = data;
       /*data = d3.stratify(data)
         .parentId((d) => d.parent)
         .id((d) => d.child);*/
-      createCPacking(data);
+      createCPacking();
     })
     .catch((error) => {
       console.log(error);
     });
 }
 
-function createCPacking(data) {
+function createCPacking() {
+  d3.select("#year-chart").select("svg").remove();
+
   var svg = d3
     .select('#year-chart')
     .append('svg')
     .attr('width', '100%')
     .attr('height', 600);
-  
-  const root = tree(data);
-  
+
+  const root = tree(current_json);
+
   var color = d3.scaleLinear()
     .domain([-1, 5])
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
@@ -55,9 +78,104 @@ function createCPacking(data) {
     .attr('fill', '#05668D')
     .attr('opacity', 0.3)
     .attr('stroke-width', '2px')
-    .attr('cx', (d) => d.x * size)
+    .attr('cx', function (d) {
+      return d.x * size
+    })
     .attr('cy', (d) => d.y * size)
-    .attr('r', (d) => d.r * size);
+    .attr('r', (d) => d.r * size)
+    .on('mouseenter', function (event, d) {
+      if (d === root) {
+        //do nothing
+      } else if (d.children.length === 0) {
+        dispatch_year.call(
+          "highlight_scatter_movie_on",
+          this, event, d
+        );
+      } else if (d.children.length === 10) {
+        dispatch_year.call(
+          "highlight_scatter_decade_on",
+          this, event, d
+        );
+      } else {
+        dispatch_year.call(
+          "highlight_scatter_year_on",
+          this, event, d
+        );
+      }
+      dispatch_year.call(
+        "highlight_genre_on",
+        this, event, d
+      );
+      dispatch_year.call(
+        "highlight_bar_on",
+        this, event, d
+      );
+      dispatch_year.call(
+        "highlight_country_on",
+        this, event, d
+      );
+      dispatch_year.call(
+        "highlight_year_on",
+        this, event, d
+      );
+    })
+    .on('mouseleave', function (event, d) {
+      if (d === root) {
+        //do nothing
+      } else if (d.children.length === 0) {
+        dispatch_year.call(
+          "highlight_scatter_movie_off",
+          this, event, d
+        );
+      } else if (d.children.length === 10) {
+        dispatch_year.call(
+          "highlight_scatter_decade_off",
+          this, event, d
+        );
+      } else {
+        dispatch_year.call(
+          "highlight_scatter_year_off",
+          this, event, d
+        );
+      }
+      dispatch_year.call(
+        "highlight_genre_off",
+        this, event, d
+      );
+      dispatch_year.call(
+        "highlight_bar_off",
+        this, event, d
+      );
+      dispatch_year.call(
+        "highlight_country_off",
+        this, event, d
+      );
+      dispatch_year.call(
+        "highlight_year_off",
+        this, event, d
+      );
+    })
+    .on("click", function (event, d) {
+      if (d === root) {
+        //do nothing
+      } else if (d.children.length === 0) {
+        dispatch_year.call(
+          "click_movie",
+          this, event, d
+        );
+      } else if (d.children.length === 10) {
+        dispatch_year.call(
+          "click_decade",
+          this, event, d
+        );
+      } else {
+        dispatch_year.call(
+          "click_year",
+          this, event, d
+        );
+      }
+    })
+    .attr("id", d.data.name);
 
   var text = circlesG
     .append('text')
@@ -70,18 +188,85 @@ function createCPacking(data) {
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      return d.data.name.substring(0,5);
+      if (d.children !== undefined) {
+        return d.data.name.substring(0, 5);
+      }
+      return "";
     })
     .filter((d) => d.children)
     .attr('text-anchor', 'end')
     .clone(true)
     .lower()
     .attr('stroke', 'white');
+
+
+
 }
 
-function updateYearChart(){
-
+function updateYearChart() {
+  //DO NOTHING, porque não tou a conseguir filtrar isto
 }
+
+
+dispatch_year.on("highlight_scatter_decade_on", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_scatter_decade_off", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_scatter_year_on", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_scatter_year_off", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_scatter_movie_off", function (event, d) {
+ 
+});
+
+dispatch_year.on("highlight_genre_on", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_genre_off", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_bar_on", function (event, d) {
+ 
+});
+
+dispatch_year.on("highlight_bar_off", function (event, d) {
+
+});
+
+dispatch_year.on("highlight_country_on", function (event, d) {
+  
+});
+
+dispatch_year.on("highlight_country_off", function (event, d) {
+  
+});
+
+
+dispatch_year.on("click_decade", function (event, d) {
+  
+});
+
+
+dispatch_year.on("click_year", function (event, d) {
+  
+});
+
+
+dispatch_year.on("click_movie", function (event, d) {
+  
+});
+
 
 
 const tree = (data) => {
@@ -91,18 +276,18 @@ const tree = (data) => {
 
 function addZoom() {
   d3.select('#year-chart')
-      .selectAll('svg')
-      .call(d3
-          .zoom()
-          .scaleExtent([0.25, 8])
-          .on('zoom', zoomed));
+    .selectAll('svg')
+    .call(d3
+      .zoom()
+      .scaleExtent([0.25, 8])
+      .on('zoom', zoomed));
 }
 
 function zoomed({ transform }) {
   d3.select('#year-chart')
-      .selectAll('svg')
-      .selectAll('path')
-      .attr('transform', transform);
+    .selectAll('svg')
+    .selectAll('path')
+    .attr('transform', transform);
 }
 
 
