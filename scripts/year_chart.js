@@ -75,7 +75,27 @@ function createCPacking() {
   var circle = circlesG
     .append('circle')
     .attr('stroke', 'white')
-    .attr('fill', '#05668D')
+    .style('fill', (d) => {
+      if(d.depth==0)
+      return 'grey';
+      else if(d.depth==1)
+        return '#05668D';
+      else if(d.depth==2)
+        return '#57A367';  
+      else
+        return '#9D41E0';
+      // var countryMovies = current_dataset.filter(function (da) {
+      //     return da.countries.includes(d.properties.name);
+      // });
+      // if (countryMovies.length === 0) {
+      //     return lb_lightGrey;
+      // } else if (filters["countries"].includes(d.properties.name)
+      //     && filters["countries"].length != getAllCountries().length) {
+      //     return lb_orange;
+      // } else {
+      //     return colorScale(countryMovies.length);
+      // }
+    })
     .attr('opacity', 0.3)
     .attr('stroke-width', '2px')
     .attr('cx', function (d) {
@@ -180,16 +200,40 @@ function createCPacking() {
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      if (d.data.children !== undefined && d.data.name.substring(0, 5) !== "root" && d.data.name.substring(4) === 's') {
+      if (d.depth==1) {
         return d.data.name.substring(0, 5);
       }
-      return "";
     })
     .filter((d) => d.children)
     .attr('text-anchor', 'end')
     .clone(true)
     .lower()
     .attr('stroke', 'white');
+<<<<<<< HEAD
+
+    // var text = circlesG
+    //   .append('text')
+    //   .attr('font-family', 'sans-serif')
+    //   .attr('font-size', 10)
+    //   .attr('stroke-linejoin', 'round')
+    //   .attr('stroke-width', 3)
+    //   .attr('x', function (d) { return d.x * textSize - 10; })
+    //   .attr('y', (d) => d.y * textSize - 20)
+    //   .attr('dy', '0.31em')
+    //   .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
+    //   .text(function (d) {
+    //     if (d.depth=== 2) {
+    //       return d.data.name.substring(0, 5);
+    //     }
+    //   })
+    //   .filter((d) => d.children)
+    //   .attr('text-anchor', 'end')
+    //   .clone(true)
+    //   .lower()
+    // .style('fill', 'black'); 
+}
+=======
+>>>>>>> 84b972ee8cb7270a2b1ab5ade47e4ed50c33ed8c
 
 
 
