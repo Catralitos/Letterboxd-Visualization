@@ -9,7 +9,7 @@ var diameter = width;
 var data_path = "data/circular_data.csv";
 
 function gen_year_chart() {
-  d3.json("data/merda.json")
+  d3.json("data/jason.json")
     .then(function (data) {
       /*data = d3.stratify(data)
         .parentId((d) => d.parent)
@@ -26,7 +26,7 @@ function createCPacking(data) {
     .select('#year-chart')
     .append('svg')
     .attr('width', '100%')
-    .attr('height', '100%');
+    .attr('height', 1500);
 
   console.log(data);
 
