@@ -60,7 +60,7 @@ function createCPacking() {
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
     .interpolate(d3.interpolateHcl);
 
-  //console.log(root);
+
 
   var nodes = root.descendants();
 
@@ -84,17 +84,7 @@ function createCPacking() {
         return '#57A367';
       else
         return '#9D41E0';
-      // var countryMovies = current_dataset.filter(function (da) {
-      //     return da.countries.includes(d.properties.name);
-      // });
-      // if (countryMovies.length === 0) {
-      //     return lb_lightGrey;
-      // } else if (filters["countries"].includes(d.properties.name)
-      //     && filters["countries"].length != getAllCountries().length) {
-      //     return lb_orange;
-      // } else {
-      //     return colorScale(countryMovies.length);
-      // }
+
     })
     .attr('opacity', 0.3)
     .attr('stroke-width', '2px')
@@ -168,7 +158,7 @@ function createCPacking() {
       );
     })
     .on("click", function (event, d) {
-      if (d.depth !== 0 && d.depth < 2) {
+      if (d.depth !== 0 && d.children.children === undefined ){
         current_json = d;
         createCPacking();
       }
@@ -194,33 +184,61 @@ function createCPacking() {
       }
     })
     .attr("id", (d) => d.data.name);
-
-  var text = circlesG
-    .append('text')
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', 10)
-    .attr('stroke-linejoin', 'round')
-    .attr('stroke-width', 3)
-    .attr('x', function (d) { return d.x * textSize + 20; })
-    .attr('y', (d) => d.y * textSize - 10)
-    .attr('dy', '0.31em')
-    .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
-    .text(function (d) {
-      if (d.depth == 1) {
-        if (d.data.name !== undefined) {
-
-          return d.data.name.substring(0, 5);
-        } else {
-          //console.log(d);
-          return "";
+    
+      var text = circlesG
+      .append('text')
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', 10)
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-width', 3)
+      .attr('x', function (d) { 
+        if (d.depth == 1) 
+        {
+          if(d.data.name!==undefined){
+            
+            return d.x * textSize +10; 
+          }else{
+            if (d.data.data.name!==undefined) 
+              return d.x * textSize + 10; 
+            else{
+              if (d.data.data.data.name!==undefined) 
+                return d.x * textSize - 50;
+            }  
+  
+          }
         }
-      }
-    })
-    .filter((d) => d.children)
-    .attr('text-anchor', 'end')
-    .clone(true)
-    .lower()
-    .attr('stroke', 'white');
+        return d.x * textSize +10; 
+      })
+      .attr('y', (d) => d.y * textSize - 10)
+      .attr('dy', '0.31em')
+      .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
+      .text(function (d) {
+        if (d.depth == 1) 
+        {
+          if(d.data.name!==undefined){
+            
+            return d.data.name;
+          }else{
+            if (d.data.data.name!==undefined) 
+              return d.data.data.name;
+            else{
+              if (d.data.data.data.name!==undefined) 
+                return d.data.data.data.name;
+            }  
+  
+          }
+        }
+  
+      })
+      .filter((d) => d.children)
+      .attr('text-anchor', 'end')
+      .clone(true)
+      .lower()
+      .attr('stroke', 'white');
+    
+  
+  
+  
 
 }
 
@@ -276,14 +294,9 @@ dispatch_year.on("highlight_country_off", function (event, d) {
 
 dispatch_year.on("click_decade", function (event, d) {
   //TODO mudar a cor do elemento
-  console.log("Entrou no decade");
-  console.log("d")
-  console.log(d);
-  console.log("d.data"); 
-  console.log(d.data);  
+
   var aux = d.data.name === undefined ? d.data.data.name : d.data.name;
-  console.log("aux"); 
-  console.log(aux);
+
   var x = aux.length > 4 ? [parseInt(aux.substring(0, 3) + "0"), parseInt(aux.substring(0, 3) + "9")] : [parseInt(aux), parseInt(aux)];
   if (JSON.stringify(filters['years']) === JSON.stringify(x)) {
     filters['years'] = [1924, 2021];
@@ -302,14 +315,9 @@ dispatch_year.on("click_decade", function (event, d) {
 
 
 dispatch_year.on("click_year", function (event, d) {
-  console.log("Entrou no year");
-  console.log("d")
-  console.log(d);
-  console.log("d.data"); 
-  console.log(d.data);  
+
   var aux = d.data.name === undefined ? d.data.data.name : d.data.name;
-  console.log("aux"); 
-  console.log(aux);
+
   var x = [parseInt(aux.substring(0, 4)), parseInt(aux.substring(0, 4))];
   if (JSON.stringify(filters['years']) === JSON.stringify(x)) {
     filters['years'] = [1924, 2021];
