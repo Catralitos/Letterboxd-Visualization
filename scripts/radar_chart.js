@@ -12,7 +12,7 @@ var dispatch_radar = d3.dispatch(
 function gen_radar_chart() {
     d3.select("#GenreChart")
         .attr("style", "width: 100%; float: left; \
-            height: " + height_row_2 + "px;");
+            height: 100%;");
 
     var padding_bottom = 40;
 
@@ -22,7 +22,7 @@ function gen_radar_chart() {
         .attr("width", "300%")
         .attr("height", "200%")
         .append("g")
-        .attr("transform", "translate(" + (250 / 2) + "," +
+        .attr("transform", "translate(" + (300 / 2) + "," +
             (300 / 2 - padding_bottom) + ")");
     ;
 
@@ -312,7 +312,7 @@ function getRadarChartHscale() {
         .scalePow()
         .exponent(0.3)
         .domain([0, getMaxValue(movies_per_group)])
-        .range([0, width_radar_chart / 3.25]);
+        .range([0, width_radar_chart / 4,5]);
 }
 
 function getNumOfGroups() {
