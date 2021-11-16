@@ -17,7 +17,7 @@ function gen_genre_list() {
     svg_genre_list = d3
         .select("#GenreList")
         .append("svg")
-        .attr("viewBox", "0, 0, 150, " + list_height);
+        .attr("viewBox", "0, 0, 150, 680");
 
     const genres = getAllGenres();
 
