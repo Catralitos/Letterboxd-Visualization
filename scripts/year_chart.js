@@ -209,33 +209,6 @@ function createCPacking() {
     .clone(true)
     .lower()
     .attr('stroke', 'white');
-<<<<<<< HEAD
-
-    // var text = circlesG
-    //   .append('text')
-    //   .attr('font-family', 'sans-serif')
-    //   .attr('font-size', 10)
-    //   .attr('stroke-linejoin', 'round')
-    //   .attr('stroke-width', 3)
-    //   .attr('x', function (d) { return d.x * textSize - 10; })
-    //   .attr('y', (d) => d.y * textSize - 20)
-    //   .attr('dy', '0.31em')
-    //   .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
-    //   .text(function (d) {
-    //     if (d.depth=== 2) {
-    //       return d.data.name.substring(0, 5);
-    //     }
-    //   })
-    //   .filter((d) => d.children)
-    //   .attr('text-anchor', 'end')
-    //   .clone(true)
-    //   .lower()
-    // .style('fill', 'black'); 
-}
-=======
->>>>>>> 84b972ee8cb7270a2b1ab5ade47e4ed50c33ed8c
-
-
 
 }
 
