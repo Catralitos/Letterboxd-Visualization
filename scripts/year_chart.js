@@ -111,7 +111,7 @@ function createCPacking() {
           "highlight_scatter_movie_on",
           this, event, d
         );
-      } else if (d.depth === 2) {
+      } else if (d.depth === 1) {
         dispatch_year.call(
           "highlight_scatter_decade_on",
           this, event, d
@@ -143,7 +143,7 @@ function createCPacking() {
           "highlight_scatter_movie_off",
           this, event, d
         );
-      } else if (d.depth === 2) {
+      } else if (d.depth === 1) {
         dispatch_year.call(
           "highlight_scatter_decade_off",
           this, event, d
@@ -177,7 +177,7 @@ function createCPacking() {
           "click_movie",
           this, event, d
         );
-      } else if (d.depth === 2) {
+      } else if (d.depth === 1) {
         dispatch_year.call(
           "click_decade",
           this, event, d
