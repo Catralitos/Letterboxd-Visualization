@@ -1,0 +1,39 @@
+{
+  "name": "root",
+  "children": [
+    {
+      "name": "1920s",
+      "children": [
+        {
+          "name": "1924",
+          "children": [{ "name": "Sherlock Jr."}]
+        },
+        {
+          "name": "1927",
+          "children": [{ "name": "Sherlock Jr."}]
+        },
+        {
+          "name": "1928",
+          "children": [{ "name": "Sherlock Jr."}]
+        }
+      ]
+    },
+    {
+      "name": "1930s",
+      "children": [
+        {
+          "name": "1934",
+          "children": [{ "name": "Sherlock Jr."}]
+        },
+        {
+          "name": "1937",
+          "children": [{ "name": "Sherlock Jr."}]
+        },
+        {
+          "name": "1938",
+          "children": [{ "name": "Sherlock Jr."}]
+        }
+      ]
+    }
+  ]
+}

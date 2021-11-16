@@ -1,103 +1,94 @@
 
-var data, nestedData;
 var width = 800;
 var height = 800;
-
-function updateYearChart(){}
-
-
-var data_path = "data/ams_data.csv";
+var vWidth = 300;
+var vHeight = 200;
+var size = 1;
+var textSize = 1;
+var diameter = width;
+var data_path = "data/circular_data.csv";
 
 function gen_year_chart() {
-//   d3.csv(data_path)
-//     .then(function (ams) {
-//       data = ams;
-
-//       processData();
-//       circularPacking();
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-}
-
-function processData() {
-  var stratify = d3
-    .stratify()
-    .parentId(function (d) {
-      return d.parent;
+  d3.json("data/merda.json")
+    .then(function (data) {
+      /*data = d3.stratify(data)
+        .parentId((d) => d.parent)
+        .id((d) => d.child);*/
+      createCPacking(data);
     })
-    .id(function (d) {
-      return d.child;
+    .catch((error) => {
+      console.log(error);
     });
-  nestedData = stratify(data);
 }
 
-function circularPacking() {
-  color = d3
-    .scaleLinear()
-    .domain([0, 5])
+function createCPacking(data) {
+  var svg = d3
+    .select('#year-chart')
+    .append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%');
+
+  console.log(data);
+
+  const root = tree(data);
+  //var root = d3.hierarchy(data);
+  //d3.pack(root);
+
+  var color = d3.scaleLinear()
+    .domain([-1, 5])
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
     .interpolate(d3.interpolateHcl);
 
-  var g = d3
-    .select("#year-chart")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g");
-
-  var packLayout = d3.pack().size([width, height]);
-
-  var root = d3.hierarchy(nestedData).sum(function (d) {
-    return d.data.price;
-  });
+  console.log(root);
 
   var nodes = root.descendants();
 
-  packLayout(root);
+  var focus = root;
 
-  g.selectAll("g")
+  const circlesG = svg
+    .selectAll('circle')
     .data(nodes)
     .enter()
-    .append("g")
-    .attr("class", "node")
-    .append("circle")
-    .attr("fill", (d) => (d.children ? color(d.depth) : "white"))
-    .attr("stroke", "#ADADAD")
-    .attr("cx", function (d) {
-      return d.x;
-    })
-    .attr("cy", function (d) {
-      return d.y;
-    })
-    .attr("r", function (d) {
-      return d.r;
-    })
-    .append("title")
-    .text(function (d) {
-      return d.data.data.child;
-    });
+    .append('g');
 
-  g.selectAll(".node")
-    .append("text")
-    .attr("class", "label")
-    .attr("transform", function (d) {
-      return "translate(" + d.x + "," + d.y + ")";
-    })
-    .attr("dx", "-25")
-    .attr("dy", ".5em")
-    .style("font", "8px sans-serif")
-    .style("display", (d) => (d.children ? "none" : "inline"))
+  var circle = circlesG
+    .append('circle')
+    .attr('stroke', 'white')
+    .attr('fill', '#05668D')
+    .attr('opacity', 0.3)
+    .attr('stroke-width', '2px')
+    .attr('cx', (d) => d.x * size)
+    .attr('cy', (d) => d.y * size)
+    .attr('r', (d) => d.r * size);
+
+  var text = circlesG
+    .append('text')
+    .attr('font-family', 'sans-serif')
+    .attr('font-size', 10)
+    .attr('stroke-linejoin', 'round')
+    .attr('stroke-width', 3)
+    .attr('x', function (d) { return d.x * textSize * 0.93; })
+    .attr('y', (d) => d.y * textSize)
+    .attr('dy', '0.31em')
+    .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      return clipText(d, d.data.data.child);
-    });
+      console.log(d.data);
+      return d.data.name.substring(0,5);
+    })
+    .filter((d) => d.children)
+    .attr('text-anchor', 'end')
+    .clone(true)
+    .lower()
+    .attr('stroke', 'white');
 }
 
-function clipText(d, t) {
-  var text = t.substring(0, d.r / 2);
-  if (text.length < t.length) {
-    text = text.substring(0, text.length - Math.min(2, text.length)) + "...";
-  }
-  return text;
-}
+
+
+const tree = (data) => {
+  const root = d3.hierarchy(data).sum((d) => 5);
+  return d3.pack().size([vWidth, vHeight])(root);
+};
+
+
+
+
