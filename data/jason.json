@@ -1,0 +1,735 @@
+{
+ "name": "root",
+ "children": [
+  {
+   "name": "1920s",
+   "children": [
+    {
+     "name": "1924",
+     "children": [
+      {"name": "Sherlock Jr."}
+     ]
+    },
+    {
+     "name": "1927",
+     "children": [
+      {"name": "Sherlock Jr."},
+      {"name": "Metropolis"},
+      {"name": "Napoleon"}
+     ]
+    },
+    {
+     "name": "1928",
+     "children": [
+      {"name": "The Passion of Joan of Arc"}
+     ]
+    }
+   ]
+ },
+ {
+   "name": "1930s",
+   "children": [
+    {
+        "name": "1931",
+        "children": [
+         {"name": "City Lights"},
+         {"name": "M"}
+        ]
+       },
+       {
+        "name": "1936",
+        "children": [
+         {"name": "Modern Times"}
+        ]
+       },
+       {
+        "name": "1937",
+        "children": [
+         {"name": "Make Way for Tomorrow"}
+        ]
+       }
+   ]
+ },
+ {
+   "name": "1940s",
+   "children": [
+    {
+        "name": "1940",
+        "children": [
+         {"name": "The Great Dictator"}
+        ]
+       },
+       {
+        "name": "1941",
+        "children": [
+         {"name": "Citizen Kane"}
+        ]
+       },
+       {
+        "name": "1942",
+        "children": [
+         {"name": "Casablanca"},
+         {"name": "To Be or Not to Be"}
+        ]
+       },
+       {
+        "name": "1943",
+        "children": [
+         {"name": "The Life and Death of Colonel Blimp"}
+        ]
+       },
+       {
+        "name": "1944",
+        "children": [
+         {"name": "Double Indemnity"}
+        ]
+       },
+       {
+        "name": "1945",
+        "children": [
+         {"name": "Brief Encounter"},
+         {"name": "Children of Paradise"}
+        ]
+       },
+       {
+        "name": "1946",
+        "children": [
+         {"name": "A Matter of Life and Death"},
+         {"name": "It's a Wonderful Life"}
+        ]
+       },
+       {
+        "name": "1948",
+        "children": [
+         {"name": "Bicycle Thieves"},
+         {"name": "The Red Shoes"},
+         {"name": "The Treasure of the Sierra Madre"}
+        ]
+       },
+       {
+        "name": "1949",
+        "children": [
+         {"name": "Late Spring"},
+         {"name": "The Third Man"}
+        ]
+       }
+   ]
+ },
+ {
+   "name": "1950s",
+   "children": [
+    {
+        "name": "1950",
+        "children": [
+         {"name": "All About Eve"},
+         {"name": "Rashomon"},
+         {"name": "Sunset Boulevard"},
+         {"name": "The Young and the Damned"}
+        ]
+       },
+       {
+        "name": "1951",
+        "children": [
+         {"name": "Ace in the Hole"},
+         {"name": "Early Summer"}
+        ]
+       },
+       {
+        "name": "1952",
+        "children": [
+         {"name": "Ikiru"},
+         {"name": "Singin’ in the Rain"},
+         {"name": "Umberto D."}
+        ]
+       },
+       {
+        "name": "1953",
+        "children": [
+         {"name": "The Wages of Fear"},
+         {"name": "Tokyo Story"},
+         {"name": "Ugetsu"}
+        ]
+       },
+       {
+        "name": "1954",
+        "children": [
+         {"name": "Rear Window"},
+         {"name": "Sansho the Bailiff"},
+         {"name": "Seven Samurai"}
+        ]
+       },
+       {
+        "name": "1955",
+        "children": [
+         {"name": "Ordet"},
+         {"name": "Pather Panchall"},
+         {"name": "Rififi"},
+         {"name": "The Night of the Hunter"}
+        ]
+       },
+       {
+        "name": "1956",
+        "children": [
+         {"name": "A Man Escaped"},
+         {"name": "Aparajito"}
+        ]
+       },
+       {
+        "name": "1957",
+        "children": [
+         {"name": "12 Angry Men"},
+         {"name": "A Face in the Crowd"},
+         {"name": "Nights of Cabiria"},
+         {"name": "Paths of Glory"},
+         {"name": "Pyaasa"},
+         {"name": "Sweet Smell of Success"},
+         {"name": "The Cranes Are Flying"},
+         {"name": "The Seventh Seal"},
+         {"name": "Throne of Blood"},
+         {"name": "Tokyo Twilight"},
+         {"name": "Wild Strawberries"},
+         {"name": "Witness for the Prosecution"}
+        ]
+       },
+       {
+        "name": "1958",
+        "children": [
+         {"name": "Vertigo"}
+        ]
+       },
+       {
+        "name": "1959",
+        "children": [
+         {"name": "The 400 Blows"},
+         {"name": "The Human Condition I: No Greater Love"},
+         {"name": "The Human Condition II: Road to Eternity"},
+         {"name": "The World of Apu"}
+        ]
+       }
+   ]
+ },
+ {
+   "name": "1960s",
+   "children": [
+    {
+        "name": "1960",
+        "children": [
+         {"name": "La Dolce Vita"},
+         {"name": "Le Trou"},
+         {"name": "Macario"},
+         {"name": "Psycho"},
+         {"name": "Rocco and His Brothers"},
+         {"name": "The Apartment"}
+        ]
+       },
+       {
+        "name": "1961",
+        "children": [
+         {"name": "La Notte"},
+         {"name": "The Human Condition III: A Soldier's Prayer"},
+         {"name": "Yojimbo"}
+        ]
+       },
+       {
+        "name": "1962",
+        "children": [
+         {"name": "An Autumn Afternoon"},
+         {"name": "Harakiri"},
+         {"name": "Il Sorpasso"},
+         {"name": "Lawrence of Arabia"},
+         {"name": "The Given Word"}
+        ]
+       },
+       {
+        "name": "1963",
+        "children": [
+         {"name": "8 1/2"},
+         {"name": "High and Low"},
+         {"name": "The Big City"},
+         {"name": "Winter Light"}
+        ]
+       },
+       {
+        "name": "1964",
+        "children": [
+         {"name": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb"},
+         {"name": "I Am Cuba"},
+         {"name": "Woman in the Dunes"}
+        ]
+       },
+       {
+        "name": "1965",
+        "children": [
+         {"name": "Red Beard"},
+         {"name": "The Shop on Main Street"}
+        ]
+       },
+       {
+        "name": "1966",
+        "children": [
+         {"name": "Andrei Rublev"},
+         {"name": "Persona"},
+         {"name": "The Battle of Algiers"},
+         {"name": "The Good, the Bad and the Ugly"},
+         {"name": "War and Peace"},
+         {"name": "Who's Afraid of Virginia Woolf?"}
+        ]
+       },
+       {
+        "name": "1967",
+        "children": [
+         {"name": "Le Samouraï"},
+         {"name": "Marketa Lazarová"},
+         {"name": "Samurai Rebellion"},
+         {"name": "The Young Girls of Rochefort"}
+        ]
+       },
+       {
+        "name": "1968",
+        "children": [
+         {"name": "2001: A Space Odyssey"},
+         {"name": "Once Upon a Time in the West"},
+         {"name": "Rosemary’s Baby"}
+        ]
+       },
+       {
+        "name": "1969",
+        "children": [
+         {"name": "Army of Shadows"},
+         {"name": "Funeral Parade of Roses"},
+         {"name": "The Cremator"},
+         {"name": "Z"}
+        ]
+       }
+   ]
+ },
+ {
+  "name": "1970s",
+  "children": [
+    {
+        "name": "1971",
+        "children": [
+         {"name": "The Devils"}
+        ]
+       },
+       {
+        "name": "1972",
+        "children": [
+         {"name": "Solaris"},
+         {"name": "The Godfather"}
+        ]
+       },
+       {
+        "name": "1973",
+        "children": [
+         {"name": "Paper Moon"}
+        ]
+       },
+       {
+        "name": "1974",
+        "children": [
+         {"name": "A Woman Under the Influence"},
+         {"name": "Chinatown"},
+         {"name": "Edvard Munch"},
+         {"name": "Scenes from a Marriage"},
+         {"name": "The Godfather: Part II"},
+         {"name": "We All Loved Each Other So Much"}
+        ]
+       },
+       {
+        "name": "1975",
+        "children": [
+         {"name": "Barry Lyndon"},
+         {"name": "Dersu Uzala"},
+         {"name": "Dog Day Afternoon"},
+         {"name": "Jeanne Dielman 23 Quai du Commerce 1080 Bruxelles"},
+         {"name": "Mirror"},
+         {"name": "One Flew Over the Cuckoo's Nest"}
+        ]
+       },
+       {
+        "name": "1976",
+        "children": [
+         {"name": "Canoa: A Shameful Memory"},
+         {"name": "Network"},
+         {"name": "Taxi Driver"}
+        ]
+       },
+       {
+        "name": "1977",
+        "children": [
+         {"name": "A Special Day"},
+         {"name": "Opening Night"},
+         {"name": "Star Wars"},
+         {"name": "The Ascent"}
+        ]
+       },
+       {
+        "name": "1978",
+        "children": [
+         {"name": "Autumn Sonata"}
+        ]
+       },
+       {
+        "name": "1979",
+        "children": [
+         {"name": "Alien"},
+         {"name": "All That Jazz"},
+         {"name": "Apocalypse Now"},
+         {"name": "Stalker"}
+        ]
+       }
+  ]
+ },
+ {
+  "name": "1980s",
+  "children": [
+    {
+        "name": "1980",
+        "children": [
+         {"name": "Raging Bull"},
+         {"name": "Star Wars: Episode V - The Empire Strikes Back"},
+         {"name": "The Shining"}
+        ]
+       },
+       {
+        "name": "1981",
+        "children": [
+         {"name": "Raiders of the Lost Ark"},
+         {"name": "Son of the White Mare"},
+         {"name": "They Don’t Wear Black Tie"}
+        ]
+       },
+       {
+        "name": "1982",
+        "children": [
+         {"name": "Fanny and Alexander"},
+         {"name": "The Thing"}
+        ]
+       },
+       {
+        "name": "1983",
+        "children": [
+         {"name": "Nostalgia"}
+        ]
+       },
+       {
+        "name": "1984",
+        "children": [
+         {"name": "Amadeus"},
+         {"name": "Once Upon a Time in America"},
+         {"name": "Paris, Texas"}
+        ]
+       },
+       {
+        "name": "1985",
+        "children": [
+         {"name": "Back to the Future"},
+         {"name": "Come and See"},
+         {"name": "Mishima: A Life in Four Chapters"},
+         {"name": "Ran"},
+         {"name": "Tampopo"}
+        ]
+       },
+       {
+        "name": "1986",
+        "children": [
+         {"name": "The Sacrifice"}
+        ]
+       },
+       {
+        "name": "1987",
+        "children": [
+         {"name": "Where Is My Friend’s House?"},
+         {"name": "Wings of Desire"}
+        ]
+       },
+       {
+        "name": "1988",
+        "children": [
+         {"name": "Akira"},
+         {"name": "Cinema Paradiso"},
+         {"name": "Grave of the Fireflies"},
+         {"name": "Landscape in the Mist"},
+         {"name": "My Neighbor Totoro"}
+        ]
+       },
+       {
+        "name": "1989",
+        "children": [
+         {"name": "Do the Right Thing"}
+        ]
+       }
+  ]
+ },
+ {
+  "name": "1990s",
+  "children": [
+    {
+        "name": "1990",
+        "children": [
+         {"name": "Close-Up"},
+         {"name": "Goodfellas"}
+        ]
+       },
+       {
+        "name": "1991",
+        "children": [
+         {"name": "A Brighter Summer Day"},
+         {"name": "Raise the Red Lantern"},
+         {"name": "Terminator 2: Judgment Day"},
+         {"name": "The Silence of the Lambs"}
+        ]
+       },
+       {
+        "name": "1992",
+        "children": [
+         {"name": "Life, and Nothing More…"}
+        ]
+       },
+       {
+        "name": "1993",
+        "children": [
+         {"name": "Farewell My Concubine"},
+         {"name": "Schindler's List"}
+        ]
+       },
+       {
+        "name": "1994",
+        "children": [
+         {"name": "Chungking Express"},
+         {"name": "Pulp Fiction"},
+         {"name": "Sátántangó"},
+         {"name": "The Lion King"},
+         {"name": "The Shawshank Redemption"},
+         {"name": "Three Colors: Red"}
+        ]
+       },
+       {
+        "name": "1995",
+        "children": [
+         {"name": "Before Sunrise"},
+         {"name": "Fallen Angels"},
+         {"name": "Heat"},
+         {"name": "La Haine"},
+         {"name": "Se7en"},
+         {"name": "Toy Story"},
+         {"name": "Underground"}
+        ]
+       },
+       {
+        "name": "1996",
+        "children": [
+         {"name": "A Moment of Innocence"},
+         {"name": "Fargo"}
+        ]
+       },
+       {
+        "name": "1997",
+        "children": [
+         {"name": "Boogie Nights"},
+         {"name": "Good Will Hunting"},
+         {"name": "Happy Together"},
+         {"name": "Life Is Beautiful"},
+         {"name": "Neon Genesis Evangelion: The End of Evangelion"},
+         {"name": "Perfect Blue"},
+         {"name": "Princess Mononoke"},
+         {"name": "Taste of Cherry"}
+        ]
+       },
+       {
+        "name": "1998",
+        "children": [
+         {"name": "Central Station"},
+         {"name": "Eternity and a Day"},
+         {"name": "Saving Private Ryan"}
+        ]
+       },
+       {
+        "name": "1999",
+        "children": [
+         {"name": "Fight Club"},
+         {"name": "The Iron Giant"}
+        ]
+       }
+  ]
+ },
+ {
+  "name": "2000s",
+  "children": [
+    {
+        "name": "2000",
+        "children": [
+         {"name": "A Dog's Will"},
+         {"name": "Eureka"},
+         {"name": "In the Mood for Love"},
+         {"name": "Ritual"},
+         {"name": "Werckmeister Harmonies"},
+         {"name": "Yi Yi"}
+        ]
+       },
+       {
+        "name": "2001",
+        "children": [
+         {"name": "Mulholland Drive"},
+         {"name": "Spirited Away"},
+         {"name": "The Lord of the Rings: The Fellowship of the Ring"}
+        ]
+       },
+       {
+        "name": "2002",
+        "children": [
+         {"name": "City of God"},
+         {"name": "The Lord of the Rings: The Two Towers"},
+         {"name": "The Pianist"}
+        ]
+       },
+       {
+        "name": "2003",
+        "children": [
+         {"name": "Memories of Murder"},
+         {"name": "Oldboy"},
+         {"name": "The Best of Youth"},
+         {"name": "The Lord of the Rings: The Return of the King"}
+        ]
+       },
+       {
+        "name": "2004",
+        "children": [
+         {"name": "Before Sunset"},
+         {"name": "Eternal Sunshine of the Spotless Mind"},
+         {"name": "Howl’s Moving Castle"},
+         {"name": "Nobody Knows"},
+         {"name": "The Weeping Meadow"}
+        ]
+       },
+       {
+        "name": "2006",
+        "children": [
+         {"name": "Children of Men"},
+         {"name": "The Departed"}
+        ]
+       },
+       {
+        "name": "2007",
+        "children": [
+         {"name": "No Country for Old Men"},
+         {"name": "There Will Be Blood"}
+        ]
+       },
+       {
+        "name": "2008",
+        "children": [
+         {"name": "Love Exposure"},
+         {"name": "Still Walking"},
+         {"name": "The Dark Knight"}
+        ]
+       },
+       {
+        "name": "2009",
+        "children": [
+         {"name": "Fantastic Mr. Fox"},
+         {"name": "Inglourious Basterds"}
+        ]
+       }
+  ]
+ },
+ {
+  "name": "2010s",
+  "children": [
+    {
+        "name": "2010",
+        "children": [
+         {"name": "Incedies"},
+         {"name": "Inception"}
+        ]
+       },
+       {
+        "name": "2011",
+        "children": [
+         {"name": "A Separation"},
+         {"name": "Once Upon a Time in Anatolia"}
+        ]
+       },
+       {
+        "name": "2012",
+        "children": [
+         {"name": "It's Such a Beautiful Day"},
+         {"name": "The Hunt"}
+        ]
+       },
+       {
+        "name": "2013",
+        "children": [
+         {"name": "Prisoners"}
+        ]
+       },
+       {
+        "name": "2014",
+        "children": [
+         {"name": "Mommy"},
+         {"name": "The Grand Budapest Hotel"},
+         {"name": "Whiplash"},
+         {"name": "Winter Sleep"}
+        ]
+       },
+       {
+        "name": "2015",
+        "children": [
+         {"name": "Mad Max: Fury Road"},
+         {"name": "The Second Mother"}
+        ]
+       },
+       {
+        "name": "2016",
+        "children": [
+         {"name": "Moonlight"},
+         {"name": "The Handmaiden"},
+         {"name": "Your Name"}
+        ]
+       },
+       {
+        "name": "2017",
+        "children": [
+         {"name": "Coco"},
+         {"name": "Get Out"},
+         {"name": "Paddington 2"}
+        ]
+       },
+       {
+        "name": "2018",
+        "children": [
+         {"name": "An Elephant Sitting Still"},
+         {"name": "Shoplifters"},
+         {"name": "Spiderman: Into the Spider-Verse"}
+        ]
+       },
+       {
+        "name": "2019",
+        "children": [
+         {"name": "Little Women"},
+         {"name": "Parasite"},
+         {"name": "Portrait of a Lady on Fire"}
+        ]
+       }
+  ]
+ },
+ {
+  "name": "2020s",
+  "children": [
+    {
+        "name": "2020",
+        "children": [
+         {"name": "The Father"}
+        ]
+       },
+       {
+        "name": "2021",
+        "children": [
+         {"name": "Evangelion: 3.0+1.0 Thrice Upon a Time"}
+        ]
+       }
+  ]
+ }
+ ]
+}
