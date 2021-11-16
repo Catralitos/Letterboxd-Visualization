@@ -100,7 +100,6 @@ p {
   grid-area: GenreList;
   overflow-y: scroll;
   overflow-x: hidden;
-  font-size: 10px;
   /*background-color: yellow;*/
 }
 
