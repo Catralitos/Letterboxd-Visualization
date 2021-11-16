@@ -312,8 +312,8 @@ function updateDataset() {
         return boolYear && boolRating && boolRuntime && boolNrRatings && boolGenres && boolCountries && boolDirectors && boolActors;
     });
 
-    console.log("Current dataset")
-    console.log(current_dataset);
+    //console.log("Current dataset")
+    //console.log(current_dataset);
 
     current_movies_per_genre =
         Object
@@ -336,8 +336,8 @@ function updateDataset() {
         }
     }
 
-    console.log("Current movies per genre")
-    console.log(current_movies_per_genre);
+    //console.log("Current movies per genre")
+    //console.log(current_movies_per_genre);
 
     current_movies_per_country =
         Object
@@ -360,8 +360,8 @@ function updateDataset() {
         }
     }
 
-    console.log("Current movies per country")
-    console.log(current_movies_per_country);
+    //console.log("Current movies per country")
+    //console.log(current_movies_per_country);
 
     current_movies_per_director =
         Object
@@ -396,8 +396,8 @@ function updateDataset() {
         }
     })
 
-    console.log("Current movies per director")
-    console.log(current_movies_per_director);
+    //console.log("Current movies per director")
+    //console.log(current_movies_per_director);
 
     current_movies_per_actor =
         Object
@@ -432,8 +432,8 @@ function updateDataset() {
         }
     })
 
-    console.log("Current movies per actor")
-    console.log(current_movies_per_actor);
+    //console.log("Current movies per actor")
+    //console.log(current_movies_per_actor);
 }
 
 function containsGenres(d) {
