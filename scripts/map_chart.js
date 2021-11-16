@@ -142,7 +142,7 @@ function updateMapChart() {
         d3.select('#legend')
             .append('rect')
             .attr('x', 175 + 40 * i)
-            .attr('y', 15)
+            .attr('y', 13)
             .attr('rx', 4)
             .attr('ry', 4)
             .attr('width', 20)
