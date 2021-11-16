@@ -69,7 +69,7 @@ p {
   text-align: center;
   justify-items: center;
   align-items: center;
-  font-size: 2vh;
+  /* font-size: 2vh; */
 }
 
 #GenreList {
