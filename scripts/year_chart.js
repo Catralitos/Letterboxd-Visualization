@@ -1,8 +1,10 @@
 
+//DIV DIMENSIONS
 var width = 800;
 var height = 800;
-var vWidth = 300;
-var vHeight = 200;
+//BIGGEST CIRCLE/ROOT DIMENSION
+var vWidth = 600;
+var vHeight = 600;
 var size = 1;
 var textSize = 1;
 var diameter = width;
@@ -26,14 +28,10 @@ function createCPacking(data) {
     .select('#year-chart')
     .append('svg')
     .attr('width', '100%')
-    .attr('height', 1500);
-
-  console.log(data);
-
+    .attr('height', 600);
+  
   const root = tree(data);
-  //var root = d3.hierarchy(data);
-  //d3.pack(root);
-
+  
   var color = d3.scaleLinear()
     .domain([-1, 5])
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
@@ -72,7 +70,6 @@ function createCPacking(data) {
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
     .text(function (d) {
-      console.log(d.data);
       return d.data.name.substring(0,5);
     })
     .filter((d) => d.children)
@@ -82,12 +79,32 @@ function createCPacking(data) {
     .attr('stroke', 'white');
 }
 
+function updateYearChart(){
+
+}
 
 
 const tree = (data) => {
   const root = d3.hierarchy(data).sum((d) => 5);
   return d3.pack().size([vWidth, vHeight])(root);
 };
+
+function addZoom() {
+  d3.select('#year-chart')
+      .selectAll('svg')
+      .call(d3
+          .zoom()
+          .scaleExtent([0.25, 8])
+          .on('zoom', zoomed));
+}
+
+function zoomed({ transform }) {
+  d3.select('#year-chart')
+      .selectAll('svg')
+      .selectAll('path')
+      .attr('transform', transform);
+}
+
 
 
 
