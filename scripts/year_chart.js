@@ -169,6 +169,7 @@ function createCPacking() {
     })
     .on("click", function (event, d) {
       if (d.depth !== 0 && d.depth < 2){
+
         current_json = d;
         createCPacking();
       }
@@ -201,7 +202,7 @@ function createCPacking() {
     .attr('font-size', 10)
     .attr('stroke-linejoin', 'round')
     .attr('stroke-width', 3)
-    .attr('x', function (d) { return d.x * textSize + 20; })
+    .attr('x', function (d) { return d.x * textSize +10; })
     .attr('y', (d) => d.y * textSize - 10)
     .attr('dy', '0.31em')
     .attr('dx', (d) => (d.children ? -6 * textSize : 6 * textSize))
@@ -210,11 +211,29 @@ function createCPacking() {
       {
         if(d.data.name!==undefined){
           
-          return d.data.name.substring(0, 5);
+          return d.data.name;
         }else{
-          console.log(d);
+          // console.log("\n\n\n\n\n\n\n"+"here");
+          // console.log(d);
+          if (d.data.data.name!==undefined) 
+            return d.data.data.name;
+          else{
+            if (d.data.data.data.name!==undefined) 
+              return d.data.data.data.name;
+            else
+              return d.data.data.data.data.name;
+          }  
+
         }
       }
+      // else{
+      //   if(d.data.name!==undefined && d.data.name !== "root")
+      //     return d.data.name
+      //   else if(d.data.data.name!==undefined)
+      //     return d.data.data.name;
+      //   else if(d.data.data.data.name!==undefined)
+      //     return d.data.data.data.name;  
+      // }
     })
     .filter((d) => d.children)
     .attr('text-anchor', 'end')
