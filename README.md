@@ -1,9 +1,9 @@
 # Letterboxd-Visualization
 
+This project is a visualization of data regarding the Top 250 Narrative Features on Letterboxd. It features a variety of charts and graphs to allow users to get info on the greatest movies of all time.
 
-VI 2021-2022
+It was developed as part of Instituto Superior Técnico's Visualization of Information course in 2021 using the JavaScript d3 package.
 
-**Group 43**
 ### How To Run
 
 #### Option 1:
